@@ -20,6 +20,8 @@ http://home.luckmall.lh1010.com
 
 ![](http://home.luckmall.lh1010.com/images/wxapp_qcode.jpg)
 
+> 若图片未能加载，请前往使用手册中查看。
+
 ### 使用手册
 
 https://www.yuque.com/luckmall/ukqmgh
