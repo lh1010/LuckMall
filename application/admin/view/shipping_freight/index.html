@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>后台管理</title>
+{{include file="layouts/_head"}}
+<link rel="stylesheet" type="text/css" href="/static/admin/style/freight.css" />
+</head> 
+<body>
+<div class="main">
+    <ol class="breadcrumb">
+        <li><i class="icon_home iconfont"></i>首页</li>
+        <li>订单物流</li>
+        <li class="active">运费模板</li>
+    </ol>
+    <div class="bg-1 clearfix main-head-info">
+        <a class="btn btn-success btn-sm" href="{{:url('/admin/shipping_freight/create')}}">创建运费模板</a>
+        <span class="pull-right margin-t-5">共有数据：<strong>{{$freights->total()}}</strong> 条</span>
+    </div>
+    <div class="main-con">
+        {{if $freights->total() > 0}}
+        {{volist name="freights" id="vo"}}
+        <div class="freight-item">
+            <h2 class="freight-title">
+                {{$vo.name}}
+                <span class="freight-type">{{$vo.typeStr}}</span>
+                {{if $vo.description}}
+                <span class="freight-description"><i class="iconfont iconfont-question" data-toggle="tooltip" data-placement="top" data-original-title="{{$vo.description}}"></i></span>
+                {{/if}}
+                <span class="float-right">
+                    <a class="btn btn-primary btn-xs" href="{{:url('/admin/shipping_freight/edit')}}?id={{$vo.id}}">编辑</a>
+                    <button onclick="delAction({{$vo.id}})" class="btn btn-danger btn-xs">删除</button>
+                </span>
+            </h2>
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th width="25%">配送区域</th>
+                        <th>首{{$vo.typeStr}}（{{$vo.unit}}）</th>
+                        <th>运费（元）</th>
+                        <th>续{{$vo.typeStr}}（{{$vo.unit}}）</th>
+                        <th>运费（元）</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{if $vo.values}}
+                    {{volist name="$vo.values" id="vo_values"}}
+                    <tr>
+                        <td>{{$vo_values.ship_area_str}}</td>
+                        <td>{{$vo_values.first_key}}</td>
+                        <td>{{$vo_values.first_value}}</td>
+                        <td>{{$vo_values.second_key}}</td>
+                        <td>{{$vo_values.second_value}}</td>
+                    </tr>
+                    {{/volist}}
+                    {{/if}}
+                </tbody>
+            </table>
+        </div>
+        {{/volist}}
+        <div class="page">
+        {{$freights->render()|raw}}
+        </div>
+        {{else}}
+        <p class="color-red text-center">数据为空！</p>
+        {{/if}}
+    </div>
+</div>
+<script type="text/javascript" src="/static/admin/plugins/jquery/3.3.1/jquery.js"></script>
+<script type="text/javascript" src="/static/admin/plugins/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/static/admin/plugins/Bootstrap/3.3.7/js/bootstrap.js"></script>
+<script type="text/javascript" src="/static/admin/script/common.js"></script>
+<script type="text/javascript" src="/static/admin/script/freight.js"></script>
+<script type="text/javascript">
+function delAction(id = '')
+{
+    layer.confirm('确认删除？<br/>删除后将解除已绑定产品的关系。', function(index){
+        layer.closeAll(); var load = layer.load();
+        $.ajax({
+            url: '{{:url("/admin/shipping_freight/delete")}}?id='+id,
+            type: 'GET',
+            success: function(res) {
+                layer.close(load);
+                if (res.code == 401) {
+                    goLogin(); return false;
+                }
+                if (res.code == 200) {
+                    layer.msg('提交成功', {time: 1500}, function() {window.location.reload();});
+                } else if (res.code == 400) {
+                    layer.msg(res.message); return false;
+                } else {
+                    layer.msg('操作失败'); return false;
+                }
+            }
+        });     
+    });
+} 
+</script>
+</body>
+</html>

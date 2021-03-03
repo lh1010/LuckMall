@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>后台管理</title>
+{{include file="layouts/_head"}}
+<style type="text/css">
+    body {
+        min-width: 0px;
+        max-width: 100%;
+    }
+    p {
+        text-align: center;
+    }
+    .form {
+        width: 80%;
+        text-align: center;
+        margin: 0 auto;
+    }
+</style>
+</head>
+<body>
+<div class="main">
+    <p>输入账户余额</p>
+    <div class="form">
+        <input type="hidden" name="user_id" value="{{$user.id}}">
+        <div class="form-group">
+            <input class="form-control" name="wallet" value="{{$user.wallet}}" placeholder="请输入账户余额">
+        </div>
+        <div class="form-group" >
+            <button type="submit" onclick="topUp();" class="btn btn-primary">提交</button>
+        </div>
+    </div>
+</div>
+{{include file="layouts/_foot"}}
+<script type="text/javascript">
+function topUp() {
+    if ($('input[name="wallet"]').val() == '') {
+        layer.msg('请输入有效金额');
+        return false;
+    }
+    layer.confirm('请确认输入金额？',function(index){
+        layer.closeAll(); var load = layer.load();
+        $.ajax({
+            type: 'POST',
+            url: '/admin/user/topUp',
+            data: {
+                user_id: $('input[name="user_id"]').val(),
+                wallet: $('input[name="wallet"]').val(),
+            },
+            success: function(res) {
+                layer.closeAll();
+                if (res.code == 401) {
+                    goLogin(); return false;
+                }
+                if (res.code == 200) {
+                    layer.msg('提交成功', { time: 1500 }, function () { window.parent.location.reload(); });
+                } else if (res.code == 400) {
+                    layer.msg(res.message); return false;
+                } else {
+                    layer.msg('操作失败'); return false;
+                }
+            }
+        });     
+    }); 
+}
+</script>
+</body>
+</html>

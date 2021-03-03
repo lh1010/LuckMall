@@ -1,0 +1,52 @@
+.order_box {
+  width: 100%;
+  background-color: #fff;
+}
+.order_box .top {
+  padding: 20rpx 0;
+  border-bottom: 1px solid #eee;
+  font-weight: 600;
+}
+.order_box .items {
+  padding: 10rpx 0;
+}
+.order_box .items .item {
+  display: flex;
+  padding: 10rpx 0;
+}
+.order_box .items .item .key {
+  width: 180rpx;
+}
+.order_box .items .item .value {
+  width: 520rpx;
+  color: #666;
+}
+.order_box .product_items .product_item {}
+.order_box .product_items .product_item {
+  width: 100%;
+  height: 200rpx;
+  padding: 30rpx 0; 
+  position: relative;
+}
+.order_box .product_items .product_item .product_image {
+  width: 200rpx;
+  height: 200rpx;
+  float: left;
+}
+.order_box .product_items .product_item .info {
+  width: 480rpx;
+  float: right;
+}
+.order_box .product_items .product_item .info .name {
+  color: #333;
+  font-size: 30rpx;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+}
+.order_box .product_items .product_item .info .price {
+  margin-top: 6rpx;
+}

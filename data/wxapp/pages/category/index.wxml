@@ -1,0 +1,24 @@
+<view class="wrap_container">
+  <view class="search" bindtap="toSearchTap">
+    <input type="text" placeholder="输入商品名称" disabled="true"></input>
+    <i class="iconfont icon_search"></i>
+  </view>
+  <view class="category">
+    <scroll-view class="category-left" scroll-y="true" scroll-with-animation="true">
+      <view class="item {{current_category_id == item.id ? 'active' : ''}}" wx:for="{{categorys}}" wx:key="key" data-id="{{item.id}}" bindtap="switchTap"><view class="name">{{item.name}}</view></view>
+    </scroll-view>
+    <scroll-view class="category-right {{current_category_id == item.id ? '' : 'hide'}}" scroll-y="true" wx:for="{{categorys}}" wx:key="key">
+      <image mode="widthFix" class="cover" src="{{item.wechat_app_cover}}" wx:if="{{item.wechat_app_cover}}"></image>
+      <button type="warn" data-id="{{item.id}}" bindtap="toProductListTap">进入{{item.name}}频道</button>
+      <view class="items" wx:for="{{item.twoCategorys}}" wx:key="key" wx:for-item="item_two">
+        <view class="title" data-id="{{item_two.id}}" bindtap="toProductListTap">{{item_two.name}}</view>
+        <view class="items-box">
+          <view class="item" wx:for="{{item_two.threeCategorys}}" wx:key="key" wx:for-item="item_three" data-id="{{item_three.id}}" bindtap="toProductListTap">
+            <image class="img" src="{{item_three.wechat_app_cover}}"></image>
+            <view class="name">{{item_three.name}}</view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</view>

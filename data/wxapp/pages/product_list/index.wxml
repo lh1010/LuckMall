@@ -1,0 +1,39 @@
+<view class="search">
+  <view class="container" bindtap="toSearchTap">
+    <i class="iconfont icon_search"></i>
+    <input type="text" placeholder="输入商品名称" value="{{keyword ? keyword : ''}}" disabled="true"></input>
+  </view>
+</view>
+<view class="products_nav">
+  <view class="item {{order_ident == 'default' ? 'color' : ''}}" bindtap="switchOrderTap" data-ident="default">综合</view>
+  <view class="item {{order_ident == 'sale' ? 'color' : ''}}" bindtap="switchOrderTap" data-ident="sale">销量</view>
+  <view class="item {{order_ident == 'new' ? 'color' : ''}}" bindtap="switchOrderTap" data-ident="new">新品</view>
+  <view class="item {{order_ident == 'price' ? 'color' : ''}}" bindtap="switchOrderTap" data-ident="price">价格</view>
+
+</view>
+<view class="products_items">
+  <view class="item" wx:key="key" wx:for="{{products}}" bindtap="toProductTap" data-sku="{{item.sku}}">
+    <image class="thumbnail" src="{{item.image}}"></image>
+    <view class="info">
+      <view class="name">{{item.name}}</view>
+      <view class="attr" wx:if="{{item.specifications != false}}">
+        <span wx:for="{{item.specifications}}" wx:key="key_specification" wx:for-item="item_specification">{{item_specification.specification_option_value}}</span>
+      </view>
+      <view class="price color"><em>¥</em> {{item.sale_price}}</view>
+    </view>
+  </view>
+</view>
+<view class="weui-loadmore" hidden="{{loading}}">
+  <view class="weui-loading"></view>
+  <view class="weui-loadmore__tips">正在加载</view>
+</view>
+<view class="weui-loadmore" hidden="{{loaded}}">
+  <view class="weui-loadmore__tips">已加载全部</view>
+</view>
+<view wx:if="{{res_total == 0}}">
+  <view class="empty_data">
+    <image src="/images/empty_data.png"></image>
+    <view class="message">暂无商品~</view>
+  </view>
+</view>
+

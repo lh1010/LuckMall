@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{{:Config('system.app_name')}}</title>
+{{include file='layouts/_layout'}}
+</head>
+<body>
+{{include file='layouts/_site_nav'}}
+{{include file='layouts/_head'}}
+{{include file='layouts/_menu'}}
+<div class="banner adver-ident" data-adver-id="2" data-adver-type="default"></div>
+<div class="advers-index">
+	<div class="container">
+		<h2 class="title-index">热销推荐</h2>
+		<div class="items">
+			<div class="container adver-ident" data-adver-id="3" data-adver-type="section"></div>
+		</div>
+	</div>
+</div>
+<div class="container adver-ident margin-bottom-20" data-adver-id="4" data-adver-type="default"></div>
+{{volist name="data.products" id="vo"}}
+<div class="products">
+	<div class="container">
+		<h3 class="title-index">
+			<div class="left"><i></i><a href="{{:url('product/products', ['category_id' => $vo.id])}}"><span class="zh">{{$vo.name}}</span></a></div>
+		</h3>
+		<div class="products-box">
+			<div class="items">
+				{{volist name="$vo.products" id="vo_product"}}
+				<a title="{{$vo_product.name}}" class="item" href="{{:url('product/show', ['sku' => $vo_product.sku])}}">
+					<div class="item-box">
+						<div class="tag"></div>
+						<div class="thumbnail lazy_loading"><img class="thumbnail lazy" data-original="{{$vo_product.image}}"></div>
+						<div class="title">{{$vo_product.name}}</div>
+						<div class="price">￥{{$vo_product.sale_price}}</div>
+					</div>
+				</a>
+				{{/volist}}
+			</div>	
+		</div>
+	</div>
+</div>
+{{/volist}}
+<div class="products">
+	<div class="container">
+		<h3 class="lick-title-index"><span><i class="iconfont">&#xe82a;</i>精品推荐</span></h2>
+		<div class="products-box products-like" id="today_recommend"></div>
+	</div>
+</div>
+{{php}}$friendlinks = getFriendlink();{{/php}}
+{{if !empty($friendlinks)}}
+<div class="links">
+	<div class="container">
+		<div class="links-title"><span>友情链接</span></div>
+		<div class="links-content">
+			{{volist name="$friendlinks" id="vo"}}
+			<a href="{{$vo.url}}" target="_blank" title="">{{$vo.name}}</a>
+			{{/volist}}
+		</div>
+	</div>
+</div>
+{{/if}}
+{{include file='shared/_right_sidebar'}}
+{{include file='layouts/_foot_article'}}
+{{include file='layouts/_foot'}}
+<script type="text/javascript" src="/static/index/plugins/jquery.lazyload.js?v={{:Config('version.pc.version')}}"></script>
+<script type="text/javascript" src="/static/index/script/section.js?v={{:Config('version.pc.version')}}"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+	getTodayRecommentd();
+	$("img.lazy").lazyload();
+})
+</script>
+</body>
+</html>

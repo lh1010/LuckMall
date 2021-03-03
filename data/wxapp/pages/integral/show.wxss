@@ -1,0 +1,90 @@
+page {
+  min-height: 100%;
+  background-color: #F2f2f2;
+}
+
+.top {}
+.top_container {
+  margin: 40rpx auto 40rpx;
+  overflow: hidden;
+  background-color: #ffffff;
+  height: 200rpx;
+  line-height: 200rpx;
+  border-radius: 20rpx;
+}
+.top .avatar {
+  float: left;
+  padding-left: 30rpx;
+  height: 100%;
+  padding-top: 25rpx;
+}
+.top .avatar image {
+  width: 140rpx;
+  height: 140rpx;
+  border: 1rpx solid #eee;
+  border-radius: 50%;
+}
+.top .integral {
+  float: left;
+  padding-left: 20rpx;
+  height: 100%;
+  line-height: 200rpx;
+}
+.top .integral .span1 {
+  color: #e64340;
+  font-weight: 600;
+  font-size: 50rpx;
+  margin-right: 6rpx;
+}
+.top .integral .span2 {
+  color: #999;
+  font-size: 80%;
+}
+.top .order {
+  float: right;
+  padding-right: 30rpx;
+  height: 100%;
+  line-height: 200rpx;
+}
+.top .order .btn span {
+  padding: 10rpx 30rpx;
+  border: 1px solid #fc6c1f;
+  color: #e64340;
+  border-radius: 40rpx;
+}
+
+.items {
+  background-color: #fff;
+}
+.items .title {
+  text-align: center;
+  padding: 20rpx 0;
+  border-bottom: 1px solid #eee;
+}
+.items .item {
+  padding: 20rpx 0;
+  overflow: hidden;
+  border-bottom: 1px solid #eee;
+  position: relative;
+}
+.items .item:last-child {
+  border-bottom: none;
+}
+.items .item .left {
+  float: left;
+  width: 600rpx;
+}
+.items .item .description {
+  margin-bottom: 10rpx;
+}
+.items .item .date {
+  font-size: 80%;
+  color: #666;
+}
+.items .item .integral {
+  position: absolute;
+  right: 0;
+  color: #e64340;
+  font-weight: 600;
+  font-size: 40rpx;
+}

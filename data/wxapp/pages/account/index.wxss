@@ -1,0 +1,143 @@
+page {
+  min-height: 100%;
+  background-color: #F2f2f2;
+}
+
+.user_info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  padding: 60rpx 0;
+}
+.user_info .avatar {
+  width: 160rpx;
+  height: 160rpx;
+  border: 1rpx solid #eee;
+  border-radius: 50%;
+  margin-bottom: 20rpx;
+}
+.user_info .nickname {
+  font-size: 28rpx;
+}
+.user_info .btn_login {
+  padding: 0 36rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: #353535;
+  border: 1px solid #353535;
+  background-color: #fff;
+}
+
+
+.account_box {
+  background-color: #fff;
+  overflow: hidden;
+  margin: 0 auto;
+  margin-top: 20rpx;
+}
+.account_box .title {
+  height: 100rpx;
+  line-height: 100rpx;
+  padding: 0 20rpx;
+  border-bottom: 1px solid #eee;
+}
+.account_box .title .left {
+  float: left;
+}
+.account_box .title .right {
+  float: right;
+  color: #999;
+  font-size: 80%;
+}
+.account_box .title .right i::before {
+  content: '\e62a';
+}
+.account_box .items {
+  overflow: hidden;
+  padding: 20rpx 0;
+}
+.account_box .items .item {
+  float: left;
+  width: 25%;
+}
+.account_box .items .item .iconfont {
+  text-align: center;
+  line-height: 96rpx;
+  font-size: 48rpx;
+  color: #787878;
+}
+.account_box .items .item .txt {
+  font-size: 80%;
+  line-height: 48rpx;
+  color: #666;
+  text-align: center;
+}
+.account_order .items .item .icon1::before {
+  content: '\e609';
+}
+.account_order .items .item .icon2::before {
+  content: '\e669';
+}
+.account_order .items .item .icon3::before {
+  content: '\e61b';
+}
+.account_order .items .item .icon4::before {
+  content: '\e658';
+}
+.account_order .items .item .icon5::before {
+  content: '\e636';
+}
+.account_tool .items .item {
+  float: left;
+  width: 25%;
+}
+.account_tool .items .item .icon1::before {
+  content: '\e603';
+  color: #0fa6f4;
+}
+.account_tool .items .item .icon2::before {
+  content: '\e60b';
+  color: #ff6a01;
+}
+.account_tool .items .item .icon3::before {
+  content: '\e671';
+  color: #ff6a01;
+}
+.account_tool .items .item .icon4::before {
+  content: '\e624';
+  color: #0fa6f4;
+}
+
+.account_item {
+  width: 100%;
+  background-color: #fff;
+  border-bottom: 1px solid #eee;
+  height: 100rpx;
+  line-height: 100rpx;
+}
+.account_item .container {
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.account_item.version {
+  text-align: center;
+  font-size: 80%;
+}
+.account_item .dt {}
+.account_item .dd {}
+.account_item .dd button {
+  display:block;
+  margin:0 auto;
+}
+.account_item .dd .iconfont {
+  color: #999;
+  font-size: 80%;
+}
+.account_item .dd .icon_more::before {
+  content: '\e62a';
+}
+

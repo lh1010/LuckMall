@@ -1,0 +1,8 @@
+<view class="cover">
+  <image src="/images/logo.png" mode="aspectFit"></image>
+</view>
+<view class="btns">
+  <view class="container">
+    <button class="btn" type="primary" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">开启授权登录</button>
+  </view>
+</view>

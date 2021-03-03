@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>头像信息 个人中心 {{:Config('system.app_name')}}</title>
+{{include file='layouts/_layout'}}
+<link rel="stylesheet" type="text/css" href="/static/index/style/user.css?v={{:Config('version.pc.version')}}" />
+</head>
+<body>
+{{include file='layouts/_site_nav'}}
+<div class="user">
+	{{include file='account/_account_head'}}
+	<div class="user-box">
+		<div class="container">
+			{{include file='account/_account_menu'}}
+			<div class="user-box-right">
+				<div class="rcon">
+					<div class="tabmenu">
+						<div class="user-status">
+							<span>
+								<a href="{{:url('account/user')}}">
+									<span>基本信息</span>
+									<span class="vertical-line">|</span>
+								</a>
+							</span>
+							<span class="active">
+								<a href="{{:url('account/avatar')}}">
+									<span>头像信息</span>
+								</a>
+							</span>
+						</div>
+					</div>
+					<div class="content-info">
+						<div id="c-3" class="">
+							<div class="update-face">
+								<div class="update-face-left">
+									<div class="update-btn">
+										<div class="btn">
+											<a href="javascript:void(0);" class="upload-img">
+												<label for="upload-file">选择您要上传的头像</label>
+											</a>
+											<input accept=".JPG,.GIF,.PNG,.JPEG,.BMP" type="botton" value="本地上传" class="file-botton" name="upload-file" id="upload_avatar_botton">
+											<input type="hidden" name="avatar" value="{{$user.avatar}}" AUTOCOMPLETE="off">
+											<form action="{{:url('api/upload/userAvatar')}}" method="post" id="upload_avatar_form" enctype="multipart/form-data" class="none">
+												<input type="file" name="avatarFile" id="upload_avatar_file" />
+											</form>
+										</div>
+										<p class="explain">仅支持 JPG、PNG、JPEG 格式，文件小于4MB</p>
+									</div>
+									<div class="update-image">
+										<img id="avatar" src="{{$user.avatar}}">
+									</div>
+									<div class="update-face-btn">
+										<button onclick="saveAvatar()">保存</button>
+									</div>
+								</div>
+								<div class="update-face-right">
+									<div class="smt">
+										<h3>效果预览</h3>
+									</div>
+									<div class="smc">
+										你上传的图片会自动生成2种尺寸，请注意小尺寸的头像是否清晰
+										<div class="img-cont img-m-cont">
+											<img id="avatar_120_120" src="{{$user.avatar}}">
+										</div>
+										120*120像素
+										<div class="/img-cont img-s-cont">
+											<img id="avatar_50_50" src="{{$user.avatar}}">
+										</div>
+										50*50像素
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{{include file='layouts/_foot'}}
+<script type="text/javascript" src="/static/index/plugins/jquery.form.js?v={{:Config('version.pc.version')}}"></script>
+<script type="text/javascript">
+	$('#upload_avatar_botton').click(function() {
+		$('#upload_avatar_file').click();
+	})
+
+	$('#upload_avatar_file').change(function() {
+		var load = layer.load();
+		$("#upload_avatar_form").ajaxSubmit(function(data) {
+			layer.close(load);
+			if (data.code == 401) {
+				goLogin();
+				return false;
+			} else if (data.code == 200) {
+				$('input[name="avatar"]').val(data.data.image);
+				$('#avatar').attr('src', data.data.image);
+				$('#avatar_50_50').attr('src', data.data.image_50x50);
+				$('#avatar_120_120').attr('src', data.data.image_120x120);
+			} else if (data.code == 400) {
+				layer.msg(data.message);
+			} else {
+				layer.msg('操作失败');
+			}
+		});
+	})
+
+	function saveAvatar()
+	{
+		var load = layer.load();
+		$.ajax({
+			url: '/api/user/updateAvatar',
+			type: 'post',
+			data: {
+				avatar: $('input[name="avatar"]').val()
+			},
+			success: function(data) {
+				layer.close(load);
+				if (data.code == 401) {
+					goLogin();
+					return false;
+				} else if (data.code == 200) {
+					layer.msg('保存成功', {time: 1500}, function() {
+						window.location.reload();
+						return false;
+					})
+				} else if (data.code == 400) {
+					layer.msg(data.message);
+				} else {
+					layer.msg('操作失败');
+				}
+			}
+		})
+	}
+</script>
+</body>
+</html>

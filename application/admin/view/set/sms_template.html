@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>后台管理</title>
+{{include file="layouts/_head"}}
+<style type="text/css">
+.set_menu a {
+    font-weight: 600;
+}
+.set_menu a:hover {
+    color: #777 !important;
+}
+.set_menu a:visited {
+    color: #777 !important;
+}
+.set_menu li.active a {
+    color: #333 !important;
+}
+</style>
+</head>
+<body>
+<div class="main">
+	<ol class="breadcrumb">
+        <li><i class="icon_home iconfont"></i>首页</li> 
+	  	<li>设置中心</li>
+	  	<li class="active">短信设置</li>
+	</ol>
+	<div class="bg-danger clearfix main-head-info error-info"></div>
+    <nav class="navbar navbar-default set_menu">
+        <ul class="nav navbar-nav">
+            <li><a href="{{:url('/admin/set/system')}}">基础配置</a></li>
+            <li><a href="{{:url('/admin/set/payment')}}?id=1">支付方式</a></li>
+            <li><a href="{{:url('/admin/set/oauth')}}?id=qq">互联登录</a></li>
+            <li class="active"><a href="{{:url('/admin/set/sms')}}?id=aliyun">短信设置</a></li>
+            <li><a href="{{:url('/admin/set/mail')}}">邮件设置</a></li>
+            <li><a href="{{:url('/admin/set/client')}}?id=wx_app">应用配置</a></li>
+        </ul>
+    </nav>
+	<div class="main-con">
+		<ul class="nav nav-tabs" >
+            <li><a href="{{:url('/admin/set/sms')}}?id=aliyun">阿里云短信服务</a></li>
+            <li class="active"><a href="{{:url('/admin/set/sms_template')}}">短信模板</a></li>
+        </ul>
+		<table class="table table-bordered table-hover margin-t-20">
+            <thead>
+                <tr>
+                    <th>模板CODE</th>
+                    <th>模板名称</th>
+                    <th>模板内容</th>
+                    <th>模板类型</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{volist name="sms_template" id="vo"}}
+                <tr>
+                    <td>{{$vo.tpl_code ? $vo.tpl_code : '未设置'}}</td>
+                    <td>{{$vo.name}}</td>
+                    <td>{{$vo.content}}</td>
+                    <td>{{$vo.type}}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary btn-xs" onclick="layerOpen('/admin/set/set_sms_template_code.html?id={{$vo.id}}', '{{$vo.tpl_code ? '修改' : '设置'}}code', '768px', '380px')">{{$vo.tpl_code ? '修改' : '设置'}}code</button>
+                    </td>
+                </tr>
+                {{/volist}}
+            </tbody>
+        </table>
+	</div>
+</div>
+{{include file="layouts/_foot"}}
+<script type="text/javascript">
+
+</script>
+</body>
+</html>

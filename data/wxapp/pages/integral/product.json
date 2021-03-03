@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "积分商品",
+  "usingComponents": {
+    "popup": "/components/popup/index"
+  }
+}

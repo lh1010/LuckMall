@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>微信支付 {{:Config('system.app_name')}}</title>
+    <link href="/static/index/style/wechat_pay.css?v={{:Config('version.pc.version')}}" rel="stylesheet">
+</head>
+<body>
+    <div class="header">
+        <div class="header-title w990">
+            <div class="alipay-logo"></div>
+            <span class="logo-title">我的收银台</span>
+        </div>
+    </div>
+    <div class="content w990">
+        <div class="order clearfix">
+            <div class="orderDetail-base">
+                <span class="order-pay">{{:Config('system.app_name')}} - 订单支付 </span>
+                <span class="pay-price">
+                    <strong>{{$payment_log.total_price}}</strong> 元
+                </span>
+            </div>
+            <a class="order-ext-trigger">交易详情</a>
+            <div class="order-detail-container none">
+                <table>
+                    <tr>
+                        <td class="sub-th">支付编号：</td>
+                        <td>{{$payment_log.number}}</td>
+                    </tr>
+                    <tr>
+                        <td class="sub-th">交易金额：</td>
+                        <td>￥{{$payment_log.total_price}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="scan-pay">
+            <div class="qrcode-area">
+                <div class="qrcode-header">
+                    <p>扫一扫付款（元）</p>
+                    <p class="qrcode-header-money">{{$payment_log.total_price}}</p>
+                </div>
+                <div class="qrcode-img-wrapper">
+                    <div class="qrcode-img-area"><img src='{{$qrCode}}' alt='扫码支付'></div>
+                    <div class="qrcode-img-explain clearfix">
+                        <img src="/static/index/images/wechat-scan.png" alt="扫一扫标识" />
+                        <div>
+                            打开手机微信
+                            <br>扫一扫继续付款
+                        </div>
+                    </div>
+                </div>
+                <div class="qrcode-foot">
+                    <a href="https://weixin.qq.com/" class="qrcode-downloadApp" target="_blank">首次使用请下载手机微信</a>
+                </div>
+            </div>
+            <div class="qrguide-area">
+                <img src="/static/index/images/wechat-scan1.jpg" class="qrguide-area-img">
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript"
+        src="/static/index/plugins/jquery/3.3.1/jquery.js?v={{:Config('version.pc.version')}}"></script>
+    <script type="text/javascript"
+        src="/static/index/plugins/layer/3.1.1/layer.js?v={{:Config('version.pc.version')}}"></script>
+    <script type="text/javascript" src="/static/index/script/common.js?v={{:Config('version.pc.version')}}"></script>
+    <script>
+        $('.order-ext-trigger').click(function () {
+            $('.order-detail-container').toggle();
+        })
+        setInterval("checkorder()", 3000);
+        function checkorder() {
+            $.ajax({
+                url: '/api/payment/check_is_pay',
+                data: {
+                    order_id: '{{$payment_log.order_id}}'
+                },
+                type: 'POST',
+                success: function (res) {
+                    if (res.code == 200) {
+                        layer.msg('支付成功，正在跳转...', { time: 3000 }, window.location.href = "/account/order_show.html?id={{$payment_log.order_id}}");
+                    }
+                }
+            })
+        }
+    </script>
+</body>
+</html>

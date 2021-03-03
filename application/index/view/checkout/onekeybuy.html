@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>结算页面 {{:Config('system.app_name')}}</title>
+{{include file='layouts/_layout'}}
+</head>
+<body>
+{{include file='layouts/_site_nav_990'}}
+<div class="head">
+	<div class="w990">
+		<div class="logo-box">
+			<a href="{{:Config('system.app_name')}}" class="logo"><img src="{{:Config('system.app_logo')}}"></a>
+		</div>
+		<div class="cart-progress">
+		    <ul>
+		        <li class="finish finish-01">
+		            <i>1</i>
+		            <span>
+		                <a href="{{:url('cart/index')}}">我的购物车</a>
+		            </span>
+		            <b></b>
+		        </li>
+		        <li class="finish finish-02">
+		            <i>2</i>
+		            <span>确认订单</span>
+		            <b></b>
+		        </li>
+		        <li class="finish">
+		            <i>3</i>
+		            <span>付款</span>
+		            <b></b>
+		        </li>
+		        <li class="finish">
+		            <i>4</i>
+		            <span>支付成功</span>
+		            <b></b>
+		        </li>
+		    </ul>
+		</div>
+	</div>
+</div>
+<div class="checkout">
+	<div class="w990 checkout-box">
+		<!-- 收货地址 start -->
+		<div class="address-container border-line">
+			<div class="main-box">
+				<h2 class="title">地址选择</h2>
+				<div class="address">
+	                <div class="clearfix address-list">
+	                	{{if !empty($addresses)}}
+	                	{{volist name="$addresses" id="vo"}}
+	                	<div class="address-box {{if $vo.status == 1}}active{{/if}}" data-address-id='{{$vo.id}}'>
+		                    <div class="address-box-info" title="{{$vo.province_name}} {{$vo.city_name}} {{$vo.district_name}} {{$vo.detailed_address}} {{$vo.phone}}">
+		                        <div class="name"> {{$vo.name}}</div>
+		                        <div class="detaile">{{$vo.province_name}} {{$vo.city_name}} {{$vo.district_name}}</div>
+		                        <div class="detaile">{{$vo.detailed_address}}</div>
+		                        <div class="number-phone">{{$vo.phone}}</div>
+		                    </div>
+		                    <div class="addr-operate">
+		                        <a href="javascript:void(0)" class="address-edit color" data-address-id="1030" title="修改地址" onclick="updateAddress({{$vo.id}})">修改</a>
+		                        <a href="javascript:void(0)" class="address-delete color" data-address-id="1030" title="删除地址" onclick="destroyAddress({{$vo.id}})">删除</a>
+		                        {{if $vo.status == 1}}
+		                        <span class="deftip">默认地址</span>
+		                        {{/if}}
+		                    </div>
+		                </div>
+		                {{/volist}}
+		                {{/if}}
+	                </div>
+		            <div class="addr-control">
+		                <a href="javascript:void(0)" onclick="createAddress()" class="addr-add" title="增加新地址">
+		                    <i>+</i>
+		                    <span>使用新地址</span>
+		                </a>
+		            </div>
+		        </div>
+			</div>
+		</div>
+		<!-- 收货地址 end -->
+		<!-- 商品清单 satrt -->
+		<div class="product-list border-line">
+			<div class="main-box">
+				<h2 class="title">商品清单</h2>
+				<div class="order-product"></div>
+			</div>
+		</div>
+		<!-- 商品清单 end -->
+		<!-- 提交订单 start -->
+		<!-- 添加.bottom实现悬浮 -->
+		<div class="confirm-pay">
+		    <div class="total-count">
+		        <div class="total-count-pay">
+		            <div class="total-count-pay-info">
+		                <span class="first">订单总额：¥<span class="total_price">计算中</span></span>
+		            </div>
+		            <div class="total-count-pay-info" id="pay_info">计算中</div>
+		        </div>
+		    </div>
+		    <div class="back-to-cart">
+		        <a href="{{:url('product/show', ['sku' => Request()->sku])}}" class="color">返回商品页</a>
+		    </div>
+		    <div class="submit-box">
+		        <div class="float-right">
+		            <a href="javascript:void(0);" onclick="createOrder();" class="submit-btn bg-color">提交订单</a>
+		        </div>
+		    </div>      
+		</div>
+		<!-- 提交订单 end -->
+	</div>
+</div>
+<input type="hidden" name="type" value="onekeybuy" />
+<input type="hidden" name="sku" value="{{:Request()->sku}}" />
+<input type="hidden" name="count" value="{{:Request()->count}}" />
+{{include file='layouts/_foot'}}
+<script type="text/javascript" src="/static/index/script/checkout.js?v={{:Config('version.pc.version')}}"></script>
+<script type="text/javascript">
+initData();
+</script>
+</body>
+</html>

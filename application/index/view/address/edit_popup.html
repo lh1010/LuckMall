@@ -1,0 +1,200 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>更新地址 {{:Config('system.app_name')}}</title>
+{{include file='layouts/_layout'}}
+<link rel="stylesheet" type="text/css" href="/static/index/style/layer.css?v={{:Config('version.pc.version')}}" />
+<style type="text/css">
+	body {
+		max-width: 520px; 
+		min-width: 520px;
+		background-color: #fff;
+		margin: 0 auto;
+	}
+</style>
+</head>
+<body>
+<div class="layer-address">
+	<form class="form-horizontal" id="fm" method="post" action="{{:url('api/address/update')}}" autocomplete="off">
+		<input type="hidden" name="id" value="{{$address.id}}">
+		<div class="form-group form-group-spe">
+			<label class="input-left">
+				<span class="color-red">*</span> <span>收货人：</span>
+			</label>
+			<div class="form-control-box">
+				<input type="text" class="form-control" name="name" value="{{$address.name}}">
+			</div>
+		</div>
+		<div class="form-group form-group-spe">
+			<label class="input-left">
+				<span class="color-red">*</span> <span>收货地址：</span>
+			</label>
+			<div class="form-control-box">
+				<select class="select-city" name="province_id">
+					<option value="">请选择</option>
+					{{if $citys}}
+					{{volist name="$citys" id="vo"}}
+					{{if $address.province_id == $vo.id}}
+					<option selected="selected" value="{{$vo.id}}">{{$vo.name}}</option>
+					{{else}}
+					<option value="{{$vo.id}}">{{$vo.name}}</option>
+					{{/if}}
+					{{/volist}}
+					{{/if}}
+				</select>
+				<select name="city_id" class="select-city" >
+					<option value="">请选择</option>
+					{{if $address.citys}}
+					{{volist name="$address.citys" id="vo"}}
+					{{if $address.city_id == $vo.id}}
+					<option selected="selected" value="{{$vo.id}}">{{$vo.name}}</option>
+					{{else}}
+					<option value="{{$vo.id}}">{{$vo.name}}</option>
+					{{/if}}
+					{{/volist}}
+					{{/if}}
+				</select>
+				<select name="district_id" class="select-city" >
+					<option value="">请选择</option>
+					{{if $address.districts}}
+					{{volist name="$address.districts" id="vo"}}
+					{{if $address.district_id == $vo.id}}
+					<option selected="selected" value="{{$vo.id}}">{{$vo.name}}</option>
+					{{else}}
+					<option value="{{$vo.id}}">{{$vo.name}}</option>
+					{{/if}}
+					{{/volist}}
+					{{/if}}
+				</select>
+			</div>
+		</div>
+		<div class="form-group form-group-spe">
+			<label class="input-left">
+				<span class="color-red">*</span> <span>详细地址：</span>
+			</label>
+			<div class="form-control-box">
+				<textarea type="text" class="form-control width-250" name="detailed_address">{{$address.detailed_address}}</textarea>
+			</div>
+		</div>
+		<div class="form-group form-group-spe">
+			<label class="input-left">
+				<span class="color-red">*</span> <span>手机号：</span>
+			</label>
+			<div class="form-control-box">
+				<input type="text" class="form-control" name="phone" value="{{$address.phone}}">
+			</div>
+		</div>
+		<div class="form-group form-group-spe">
+			<label class="input-left"><span>&nbsp;</span></label>
+			<span class="checkbox">
+				<label>
+					<input type="checkbox" name="default_address" value="1" {{if $address.status == 1}}checked{{/if}}>
+					<span>设置为默认收货地址</span>
+				</label>
+			</span>
+		</div>
+		<div class="act">
+			<input type="submit" value="保存收货地址">
+		</div>
+	</form>
+</div>
+<script type="text/javascript" src="/static/index/plugins/jquery/3.3.1/jquery.js?v={{:Config('version.pc.version')}}"></script>
+<script type="text/javascript" src="/static/index/plugins/layer/3.1.1/layer.js?v={{:Config('version.pc.version')}}"></script>
+{{include file="shared/_jquery_validation"}}
+<script type="text/javascript">
+$("#fm").validate({
+	rules: {
+		name: {required: true},
+		detailed_address: {required: true},
+		phone: {required: true, phoneCN: true},
+	},
+	messages: {
+		name: '收货人姓名不能为空',
+		detailed_address: '详细地址不能为空',
+		phone: {
+			required: '手机号不能为空',
+			phoneCN: '手机号格式不正确',
+		},
+	},
+	submitHandler: function() {
+		if (validateCity()) return false;
+		var load = layer.load();
+		$("#fm").ajaxSubmit(function(data) {
+			layer.close(load);
+			if (data.code == 200) {
+				layer.close(layer.index);
+                window.parent.location.reload();
+			} else if (data.code == 400) {
+				layer.msg(data.message);
+			} else {
+				layer.msg('操作失败');
+			}
+		});
+	}
+});
+
+function validateCity()
+{
+	if ($("select[name='province_id']").val() == '' || $("select[name='city_id']").val() == '' || $("select[name='district_id']").val() == '') {
+		layer.msg('收货地址不能为空');
+		return true;
+	}
+}
+
+$(".select-city").change(function() {
+	var name = $(this).attr('name');
+	if (name == 'district_id') return false;
+	var id = $(this).val();
+	initSelectCity(name);
+	if ($(this).val() == '') return false;
+	var str = '';
+	$.ajax({
+		url: '/api/city/getCitys',
+		type: 'post',
+		data: {
+			parent_id: $(this).val()
+		},
+		success: function(data) {
+			if (data.code == 200) {
+				for (var i = data.data.length - 1; i >= 0; i--) {
+					str += '<option value="'+data.data[i].id+'">'+data.data[i].name+'</option>';
+				}
+				if (name == 'province_id') {
+					$("select[name='city_id']").show();
+					$("select[name='city_id']").append(str);
+				}
+				if (name == 'city_id') {
+					$("select[name='district_id']").show();
+					$("select[name='district_id']").append(str);
+				}
+			} else {
+				layer.msg('操作异常');
+				return false;
+			}
+		}
+	})
+})
+
+function initSelectCity(name = '')
+{
+	if (name == 'province_id') {
+		$("select[name='city_id']").hide();
+		$("select[name='city_id']").html('<option value="">请选择</option>');
+		$("select[name='district_id']").hide();
+		$("select[name='district_id']").html('<option value="">请选择</option>');
+	}
+	if (name == 'city_id') {
+		$("select[name='district_id']").hide();
+		$("select[name='district_id']").html('<option value="">请选择</option>');
+	}
+}
+
+$('.address-label').click(function() {
+	$('input[name="label"]').val($(this).html());
+
+})
+</script>
+
+</body>
+</html>

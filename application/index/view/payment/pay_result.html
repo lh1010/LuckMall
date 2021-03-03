@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>支付结果 {{:Config('system.app_name')}}</title>
+{{include file='layouts/_layout'}}
+</head>
+<body>
+{{include file='layouts/_site_nav_990'}}
+<div class="head">
+	<div class="w990">
+		<div class="logo-box">
+			<a href="{{:Config('system.app_url')}}" class="logo"><img src="{{:Config('system.app_logo')}}"></a>
+		</div>
+		<div class="cart-progress">
+		    <ul>
+		        <li class="finish finish-01">
+		            <i>1</i>
+		            <span>
+		                <a href="{{:url('cart/index')}}">我的购物车</a>
+		            </span>
+		            <b></b>
+		        </li>
+		        <li class="finish finish-02">
+		            <i>2</i>
+		            <span>确认订单</span>
+		            <b></b>
+		        </li>
+		        <li class="finish finish-03">
+		            <i>3</i>
+		            <span>付款</span>
+		            <b></b>
+		        </li>
+		        <li class="finish finish-04">
+		            <i>4</i>
+		            <span>支付结果</span>
+		            <b></b>
+		        </li>
+		    </ul>
+		</div>
+	</div>
+</div>
+<div class="checkout">
+	<div class="w990">
+		{{if $order.status > 10}}
+		<!-- payment success start -->
+		<div class="payment-success">
+			<div class="payment-success-con">
+				<i></i>
+				<div class="payment-success-msg">
+					<h3 class="color">支付成功</h3>
+					<p>
+						共计支付<a class="color">¥{{$order.total_price}}</a>
+					</p>
+				</div>
+			</div>
+			<div class="payment-success-order">
+				<p>购买商品已在处理中，我们将尽快为您发货！</p>
+				<p class="warn">
+					<span class="color">重要提醒：</span>
+					我们不会以订单异常、系统升级等为由，要求您点击任何链接进行退款、重新付款、额外付款操作。请认准该网站唯一官方电话 {{:Config('system.phone')}} 。
+				</p>
+				<div class="success-order-list">
+					<ul>
+						<li>
+							<span class="transaction">订单编号：<font><a href="{{:url('account/order_show')}}?id={{$order.id}}" target="_blank" class="color">{{$order.number}}</a></font></span>
+							<span class="payable">应付金额：<font class="color">¥{{$order.total_price}}</font></span>
+							<span class="delivery"></span>
+							<span class="pay-btn"><a href="{{:url('account/order_show')}}?id={{$order.id}}" target="_blank" class="color">查看详情</a></span>
+						</li>
+					</ul>
+				</div>
+				<div class="go-shop"><a href="{{:url('account/order')}}" class="go-shop-btn bg-color">前往订单中心</a></div>
+			</div>
+		</div>
+		<!-- payment success end -->
+		{{else}}
+		<!-- payment failed start -->
+		<div class="payment-fail">
+			<div class="payment-fail-con">
+				<i></i>
+				<div class="payment-fail-msg">
+					<h3 class="color">尚未支付成功！</h3>
+					<p>如果您已付款，可能因交易量激增导致交易单延迟处理（最长数秒至数分钟）</p>
+					<p>
+						您可稍后 <a href="javascript:location.reload();" class="color">刷新本页面</a> 或前往 <a href="{{:url('account/order')}}" target="_blank" class="color">我的订单</a> 查看支付情况
+					</p>
+				</div>
+			</div>
+			<div class="payment-fail-order">
+				<p>以下订单尚未支付成功，请您尽快完成支付！</p>
+				<div class="fail-order-list">
+					<ul>
+						<li>
+							<span class="transaction">
+								订单编号：<font class="color"><a href="{{:url('account/order_show')}}?id={{$order.id}}" target="_blank" class="color">{{$order.number}}</a></font>
+							</span>
+							<span class="payable">应付金额：<font class="color">¥{{$order.total_price}}</font></span>
+							<span class="delivery"></span>
+							<span class="pay-btn"><a href="{{:url('account/order_show')}}?id={{$order.id}}" target="_blank" class="color">查看详情</a></span>
+						</li>
+					</ul>
+					<div class="fail-order-summary">
+						<div class="fail-order-info">
+							<p>应付款金额：¥{{$order.total_price}}</p>
+						</div>
+						<div class="fail-order-summary-btn">
+							<a href="{{:url('checkout/pay')}}?order_id={{$order.id}}" class="submit-btn bg-color">点击付款</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="payment-fail-reason">
+				<h2>付款遇到问题了，先看看是不是由于下面的原因：</h2>
+				<ul>
+					<li>
+						<h3>所需支付金额超过了银行支付限额</h3>
+						<p>建议您登录网上银行提高上限额度，或是分若干次充值到您的账户余额，即能使用账户余额轻松支付。</p>
+					</li>
+					<li>
+						<h3>支付宝、百度钱包或者网银页面显示错误或者空白</h3>
+						<p>部分网银对不同浏览器的兼容性有限，导致无法正常支付，建议您使用IE浏览器进行支付操作。</p>
+					</li>
+					<li>
+						<h3>网上银行已扣款，交易单仍显示“未付款”</h3>
+						<p>可能由于银行的数据没有即时传输，请不要担心，请稍后刷新页面查看。如较长时间仍显示未付款，可联系客服（400-078-5268）为您解决。</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- payment failed end -->
+		{{/if}}
+	</div>
+</div>
+{{include file='layouts/_foot'}}
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>后台管理</title>
+{{include file="layouts/_head"}}
+<link rel="stylesheet" type="text/css" href="/static/admin/style/product.css" />
+</head>
+<body>
+<div class="main">
+    <ol class="breadcrumb">
+        <li><i class="icon_home iconfont"></i>首页</li>
+        <li>产品管理</li>
+        <li><a href="{{:url('/admin/product')}}">产品列表</a></li>
+        <li class="active">选择分类</li>
+    </ol>
+    <div class="main-head-info error-info bg-danger"></div>
+    <div class="main-con">
+        <div class="select-product-category">
+            <ul class="spc-step">
+                <li class="current">
+                    <i class="icon iconfont">&#xe638;</i> 选择分类 <i class="iconfont arrow">&#xe62a;</i>
+                </li>
+                <li>
+                    <i class="icon iconfont">&#xe605;</i> 填写产品详情 <i class="iconfont arrow">&#xe62a;</i>
+                </li>
+                <li>
+                    <i class="icon iconfont">&#xe658;</i> 产品发布成功</i>
+                </li>
+            </ul>
+            <div class="spc-categorys">
+                <div class="item" id="spc1">
+                    <ul>
+                        {{volist name="$categorys" id="vo"}}
+                        <li class="iconfont" data-id="{{$vo.id}}">{{$vo.name}}</li>
+                        {{/volist}}
+                    </ul>
+                </div>
+                <div class="item on" id="spc2"></div>
+                <div class="item on" id="spc3"></div>
+            </div>
+            <div class="spc-message">请选择产品分类</div>
+            <div class="spc-btn on"><button>下一步，填写产品信息</button></div>
+            <input type="hidden" name="last_category_id">
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/static/admin/plugins/jquery/3.3.1/jquery.js"></script>
+<script type="text/javascript" src="/static/admin/plugins/Bootstrap/3.3.7/js/bootstrap.js"></script>
+<script type="text/javascript" src="/static/admin/script/common.js"></script>
+<script type="text/javascript" src="/static/admin/plugins/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/static/admin/script/product.js"></script>
+</body>
+</html>

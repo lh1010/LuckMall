@@ -1,0 +1,39 @@
+<wxs src="../../utils/tool.wxs" module="tool" />
+<view class="wrap_container" wx:if="{{!product_skus.length > 0}}">
+  <image class="icon_product_empty" src="/images/empty_data.png"></image>
+  <view class="txt_box">暂无收藏呀～</view>
+  <view class="to_index_btn" bindtap="toIndexTap">去逛逛</view>
+</view>
+<view wx:if="{{product_skus.length > 0}}">
+  <view class="cp_top">
+    <view class="container">
+      <view class="left">收藏数量 <span class="color">{{product_skus.length}}</span></view>
+      <view class="right">
+        <span class="btn {{manage_ident ? 'hide' : ''}}" catchtap="manageTap">管理</span>
+        <span class="btn {{!manage_ident ? 'hide' : ''}}" catchtap="manageTap">取消</span>
+      </view>
+    </view>
+  </view>
+  <view class="cp_items">
+    <view class="item" wx:for="{{product_skus}}" wx:key="key" bindtap="toProductTap" data-sku="{{item.sku}}">
+      <view class="container">
+        <view class="checkbox" hidden="{{manage_ident ? false : true}}" bindtap="selectTap" data-sku="{{item.sku}}"><i class="iconfont {{tool.indexOf(selected_skus, item.sku) ? 'icon_selected' : ''}}"></i></view>
+        <image class="product_image" src="{{item.image}}"></image>
+        <view class="info">
+          <view class="name">{{item.name}}{{selected_skus.indexOf(item.sku)}}</view>
+          <view class="product_specification">
+            规格：<span wx:for="{{item.specifications}}" wx:for-item="item_specification">{{item_specification.specification_option_value}}</span>
+          </view>
+          <view class="price color">¥ {{item.sale_price}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="cp_foot_blank" hidden="{{manage_ident ? false : true}}"></view>
+  <view class="cp_foot" hidden="{{manage_ident ? false : true}}">
+    <view class="container">
+      <view class="checkbox" bindtap="allSelectTap"><i class="iconfont {{product_skus.length == selected_skus.length ? 'icon_selected' : ''}}"></i> <span>全选（{{selected_skus.length}}）</span></view>
+      <view class="btn" bindtap="removeCollectProductsTap"><span>移除选中</span></view>
+    </view>
+  </view>
+</view>

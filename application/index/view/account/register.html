@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>注册 {{:Config('system.app_name')}}</title>
+{{include file='layouts/_layout'}}
+</head>
+<body>
+{{include file='layouts/_site_nav'}}
+<div class="simple-head">
+	<div class="container">
+		<a href="{{:Config('system.app_url')}}" class="logo"><img src="{{:Config('system.app_logo')}}"></a>
+	</div>
+</div>
+<div class="register">
+	<div class="container">
+		<div class="register-content">
+			<div class="register-type">
+				<p class="login-info">已经注册，现在就 <a href="{{:url('account/login')}}" title="去登录" class="color">登录</a></p>
+			</div>
+			<div class="register-wrap">
+				<div class="register-message error-info none"></div>
+				<div class="register-wrap-content">
+					<div class="register-adver adver-ident" data-adver-id="6" data-adver-type="default"></div>
+					<!-- 手机号注册 start -->
+					<form class="form-horizontal" id="fm_register" action="{{:url('api/account/register')}}" method="post" >
+						<div class="form-group form-group-spe">
+							<label class="input-left">
+								<span class="color-red">*</span>
+								<span>手机号：</span>
+							</label>
+							<div class="form-control-box">
+								<input type="text" class="form-control" name="phone">
+							</div>
+						</div>	
+						<div class="form-group form-group-spe">
+							<label class="input-left">
+								<span class="color-red">*</span>
+								<span>密码：</span>
+							</label>
+							<div class="form-control-box">			
+								<input type="password" class="form-control" maxlength="20" name="password" autocomplete="off">		
+							</div>
+						</div>				
+						<div class="form-group form-group-spe">
+							<label class="input-left">
+								<span class="color-red">*</span>
+								<span>验证码：</span>
+							</label>
+							<div class="form-control-box">
+								<input type="text" class="input-small" name="code" maxlength="5">
+								<label class="captcha">
+									<img class="captcha-image" src="{{:captcha_src()}}" alt="点击换图" title="点击换图" onclick="this.src='{{:captcha_src()}}?'+Math.random();" >
+								</label>			
+							</div>
+						</div>
+						<div class="form-group form-group-spe">
+							<label class="input-left">
+								<span class="color-red">*</span>
+								<span>短信验证码：</span>
+							</label>
+							<div class="form-control-box">
+								<input type="text" class="input-small" name="phoneCode" maxlength="4">
+								<a href="javascript:void(0);" onclick="sendPhoneCode_register()" class="phonecode">获取验证码</a>		
+							</div>
+						</div>										
+						<div class="form-group margin-t-b-10">
+							<label class="input-left">&nbsp;</label>
+							<div class="form-control-box">
+								<label>
+									<input type="checkbox" name="userAgreement" class="checkbox" checked="checked">
+									<span>我已阅读并同意<a href="javascript:void(0);" class="user_protocol">《用户注册协议》</a></span>
+								</label>
+							</div>
+						</div>
+						<div class="reg-btn">
+							<div class="form-group form-group-spe">
+								<label class="input-left">&nbsp;</label>
+								<div class="form-control-box">
+									<input type="submit" class="btn-img btn-entry bg-color"value="同意协议并注册">				
+								</div>
+							</div>				
+						</div>				
+					</form>
+					<!-- 手机号注册 end -->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{{include file='layouts/_foot_article'}}
+{{include file='layouts/_foot'}}
+{{include file='shared/_jquery_validation'}}
+<script type="text/javascript" src="/static/index/script/account.js?v={{:Config('version.pc.version')}}"></script>
+</body>
+</html>

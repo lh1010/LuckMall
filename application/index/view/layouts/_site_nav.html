@@ -1,0 +1,40 @@
+<div class="site-nav">
+	<div class="container">
+		<div class="site-nav-left">
+			<span>欢迎来到{{:Config('system.app_name')}}</span>
+			{{if Cookie('_token') && Cookie('nickname')}}
+			<span><a href="{{:url('account/index')}}">{{:Cookie('nickname')}}</a></span>
+			<span><a href="{{:url('account/logout')}}">退出</a></span>
+			{{else}}
+			<span><a href="{{:url('account/login')}}">请登录</a></span>
+			<span><a href="{{:url('account/register', ['type' => 'email'])}}">免费注册</a></span>
+			{{/if}}
+		</div>
+		<div class="site-nav-right">
+			<ul>
+				<li><a href="{{:Config('system.app_url')}}" class="nav-a">商城首页</a></li>
+				<li class="onhover">
+					<a href="javascript:void(0);" class="nav-a myinfo"><i class="icon iconfont">&#xe689;</i>我的商城<b></b></a>
+					<div class="layer">
+						<span class="layer-mask"></span>
+						<a href="{{:url('account/order')}}">已买到的宝贝</a>
+						<a href="{{:url('account/address')}}">我的地址管理</a>
+						<a href="{{:url('account/collectProduct')}}">我收藏的商品</a>
+					</div>
+				</li>
+				<li><a href="{{:url('cart/index')}}" class="nav-a">购物车 <span class="color" id="cart_count">0</span> 件</a></li>
+				<li class="onhover">
+					<a href="" class="nav-a mobile"><i class="icon iconfont">&#xe64c;</i>手机版<b></b></a>
+					<div class="layer-qrcode layer">
+						<span class="layer-mask"></span>
+						<a target="_top">
+							<img src="/static/index/images/wechat.png" alt="微信小程序">
+						</a>
+						<p>微信小程序</p>
+					</div>
+				</li>
+				<li><a href="/help/18.html" class="nav-a">商家支持</a></li>
+			</ul>
+		</div>
+	</div>
+</div>

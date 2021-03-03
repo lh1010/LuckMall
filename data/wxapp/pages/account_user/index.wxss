@@ -1,0 +1,20 @@
+.item_avatar {}
+.item_avatar .avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border: 1rpx solid #eee;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+.item_avatar .iconfont {
+  margin-left: 10rpx;
+  font-size: 70%;
+  color: #ccc;
+}
+.item_avatar .icon_more::before {
+  content: '\e62a';
+}
+
+.lgout {
+  margin-top: 30rpx;
+}

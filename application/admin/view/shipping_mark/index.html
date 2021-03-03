@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>后台管理</title>
+{{include file="layouts/_head"}}
+</head>
+<body>
+<div class="main">
+    <ol class="breadcrumb">
+        <li><i class="icon_home iconfont"></i>首页</li>
+        <li>订单物流</li>
+        <li class="active">配送方式</li>
+    </ol>
+    <div class="bg-1 clearfix main-head-info">
+        <a class="btn btn-success btn-sm" href="{{:url('/admin/shipping_mark/create')}}">创建配送方式</a>
+        <span class="pull-right margin-t-5">共有数据：<strong>{{$marks->total()}}</strong> 条</span>
+    </div>
+    <div class="main-con">
+        {{if $marks->total() > 0}}
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" name="" value=""></th>
+                    <th>配送方式名称</th>
+                    <th>配送方式描述</th>
+                    <th>排序</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{volist name="marks" id="vo" key="key" }}
+                <tr id="{{$vo.id}}">
+                    <td><input type="checkbox" /></td>
+                    <td>{{$vo.name}}</td>
+                    <td width="50%" title="{{$vo.description}}">{{:mb_strlen($vo.description) > 50 ? mb_substr($vo.description, 0, 50, 'utf-8').'...' : $vo.description}}</td>
+                    <td>{{$vo.sort}}</td>
+                    <td>{{if $vo.status == 1}}<span class="label label-success">开启</span>{{else}}<span class="label label-danger">关闭</span>{{/if}}</td>
+                    <td>
+                        <a class="btn btn-primary btn-xs" href="{{:url('/admin/shipping_mark/edit')}}?id={{$vo.id}}">编辑</a>
+                        <button type="button" class="btn btn-danger btn-xs" onClick="delAction({{$vo.id}})">删除</button>
+                    </td>
+                </tr>
+                {{/volist}}
+            </tbody>
+        </table>
+        <div class="page">
+        {{$marks->render()|raw}}
+        </div>
+        {{else}}
+        <p class="color-red text-center">数据为空！</p>
+        {{/if}}
+    </div>
+</div>
+{{include file="layouts/_foot"}}
+<script type="text/javascript">
+function delAction(id = '') {
+    layer.confirm('确认删除？', function(index){
+        layer.closeAll(); var load = layer.load();
+        $.ajax({
+            type: 'GET',
+            url: '/admin/shipping_mark/delete?id='+id,
+            dataType: 'json',
+            success: function(res) {
+                layer.close(load);
+                if (res.code == 401) {
+                    goLogin(); return false;
+                }
+                if (res.code == 200) {
+                    layer.msg('提交成功', {time: 1500}, function() {window.location.reload();});
+                } else if (res.code == 400) {
+                    layer.msg(res.message); return false;
+                } else {
+                    layer.msg('操作失败'); return false;
+                }
+            }
+        });     
+    });
+}    
+</script>
+</body>
+</html>

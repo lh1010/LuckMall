@@ -1,0 +1,41 @@
+.user_info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  padding: 60rpx 0;
+}
+.user_info .avatar {
+  width: 160rpx;
+  height: 160rpx;
+  border: 1rpx solid #eee;
+  border-radius: 50%;
+  margin-bottom: 16rpx;
+}
+.user_info .nickname {
+  font-size: 28rpx;
+}
+.btns {
+  margin-top: 50rpx;
+}
+.btns .btn {
+  margin-bottom: 30rpx;
+}
+.btns .wx_phone_login {
+  background-color: #e64340;
+}
+.agreement {
+  position: fixed;
+  bottom: 40rpx;
+  left: 0;
+  right: 0;
+  font-size: 80%;
+}
+.agreement .container {
+  width: 80%;
+  text-align: center;
+}
+.agreement .link {
+  color: #e64340;
+}

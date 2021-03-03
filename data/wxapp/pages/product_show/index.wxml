@@ -1,0 +1,108 @@
+<view class="wrap_container">
+  <!-- 轮播图 satrt -->
+  <view class="swiper-container">
+    <swiper class="swiper_box" indicator-dots="true" indicator-active-color="#fff" circular>
+      <swiper-item wx:for="{{product.images}}" wx:key="key"><image src="{{item.image_430x430}}" class="slide-image" mode="aspectFill" lazy-load="true" /></swiper-item>     
+    </swiper>
+  </view>
+  <!-- 轮播图 end -->
+  <!-- 商品基础信息 start -->
+  <view class="product-info">
+    <view class="product-name">{{product.name}}</view>
+    <view class="product-share" hidden="true">分享有赏，好友下单后可得 5 积分奖励</view>
+    <view class="product-profile">
+      <view class="sale-price"><text>¥</text> {{product.sale_price}}</view>
+      <view class="original-price" hidden="{{product.original_price > 0 ? false : true}}"><text>¥</text> {{product.original_price}}</view>
+    </view>
+    <view class="product-info-fx">
+      <view class='item'>
+        <button open-type="share"><image src="/images/share/share1.png"></image></button>
+      </view>
+    </view>
+  </view>
+  <!-- 商品基础信息 end -->
+  <view class="blank_div"></view>
+  <!-- 商品规格物流 start -->
+  <view class="product-select-box" bindtap="popup_specification">
+    <view class="dt">规格</view>
+    <view class="dd">
+      <view class="txt">
+      <span wx:if="{{product.specifications}}" wx:for="{{product.specifications}}" wx:for-item="item_specification" wx:key="key_specification">{{item_specification.specification_option_value}}</span>
+      <span wx:if="{{!product.specifications.length}}">无</span>
+      </view>
+      <view class="iconfont more"></view>
+    </view>
+  </view>
+  <!-- 商品规格物流 end -->
+  <view class="blank_div"></view>
+  <!-- 商品详情 start -->
+  <view class="product-content-container">
+    <view class="pc-attribute">
+      <view class="item" wx:for="{{product.attributes}}" wx:key="key">
+        <view class="left">{{item.product_attribute_name}}</view>
+        <view class="right">{{item.product_attribute_value}}</view>
+      </view>
+    </view>
+    <view class="product-content" wx:if="{{content != '' && content != '<p><br></p>'}}">
+      <rich-text nodes="{{content}}"></rich-text>
+    </view>
+  </view>
+  <!-- 商品详情 end -->
+  <!-- 底部 start -->
+  <view class="product-foot-blank"></view>
+  <view class="product-foot">
+    <view class="left">
+      <view class="item" bindtap="call"><i class="iconfont icon_1"></i></view>
+      <view class="item" bindtap="toCartTap"><i class="iconfont icon_2"></i><span class="cart_count" wx:if="{{cart_count > 0}}">{{cart_count}}</span></view>
+      <view class="item" catchtap="setCollect"><i class="iconfont icon_3 {{product.is_collect == 1 ? 'on' : ''}}"></i></view>
+    </view>
+    <view class="right">
+      <view class="btn add_cart" data-type="add_cart" bindtap="buyWayTab">加入购物车</view>
+      <view class="btn one_key_buy" data-type="one_key_buy" bindtap="buyWayTab">立即购买</view>
+    </view>
+  </view>
+  <!-- 底部 end -->
+</view>
+<!-- 销售规格弹出层 start -->
+<popup popup_visible="{{popup_visible_specification}}">
+  <view slot="content">
+    <view class="show-popup" catchtouchmove="true">
+      <view class="popup-mask" bindtap="close_popup_specification"></view>
+      <view class="popup-contents">
+        <view class="pop-goods-info">
+          <view class="pop-img-box">
+            <image src="{{product.image}}" class="goods-thumbnail" bindtap="previewImage" />
+          </view>
+          <view class="pop-goods-des">
+            <view class="pop-goods-title">{{product.name}}</view>
+            <view class="pop-goods-price">
+              ¥ <text class="t1">{{product.sale_price}}</text>
+              <text class="pop-goods-price-original" hidden="{{product.original_price > 0 ? false : true}}"><text>¥</text> {{product.original_price}}</text>
+            </view>
+          </view>
+          <image class="pop-goods-close" src="/images/icon/close0.svg" bindtap="close_popup_specification"></image>
+        </view>
+        <view class="size-label-box" hidden="{{product.product_specifications ? false : true}}">
+          <view class="item" wx:for="{{product.product_specifications}}" wx:key="key">
+            <view class="label">{{item.specification_name}}</view>
+            <view class="label-item-box">
+              <view class="label-item {{item_option.selected ? 'active' : ''}} {{item_option.valid ? '' : 'no_click'}}" wx:for="{{item.options}}" wx:for-item="item_option" wx:key="key" data-sku="{{item_option.sku}}" bindtap="selectSpecificationTab">{{item_option.specification_option_value}}</view>
+            </view>
+          </view>
+        </view>
+        <view class="buy-num-box">
+          <view class="num-label">购买数量 <span>（剩余 {{product.stock}} 件）</span></view>
+          <view class="num-box">
+            <view class="num-jian {{buy_count <= 1 ? 'hui' : ''}}" data-type="jian" bindtap="setCountTab">-</view>
+            <view class="num-input">{{buy_count}}</view>
+            <view class="num-jia {{buy_count >= product.stock ? 'hui' : ''}}" data-type="jia" bindtap="setCountTab">+</view>
+          </view>
+        </view>
+        <view class="popup-join-btn {{product.stock == 0 ? 'no_click' : ''}}" hidden="{{buy_way_ident == 'add_cart' ? false : true}}" bindtap="buyTap">加入购物车</view>
+        <view class="popup-join-btn {{product.stock == 0 ? 'no_click' : ''}}" hidden="{{buy_way_ident == 'one_key_buy' ? false : true}}" bindtap="buyTap">立即购买</view>
+      </view>
+    </view>
+  </view>
+</popup>
+<!-- 销售规格弹出层 end -->
+

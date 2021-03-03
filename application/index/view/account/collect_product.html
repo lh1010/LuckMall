@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>商品收藏 我的关注 {{:Config('system.app_name')}}</title>
+{{include file='layouts/_layout'}}
+<link rel="stylesheet" type="text/css" href="/static/index/style/user.css?v={{:Config('version.pc.version')}}" />
+</head>
+<body>
+{{include file='layouts/_site_nav'}}
+<div class="user">
+	{{include file='account/_account_head'}}
+	<div class="user-box">
+		<div class="container">
+			{{include file='account/_account_menu'}}
+			<div class="user-box-right">
+				<div class="rcon">
+					<div class="tabmenu">
+						<div class="user-status">
+							<span class="active">
+								<a href="javascript:void(0);">
+									<span>商品收藏</span>
+								</a>
+							</span>
+						</div>
+					</div>
+					<div class="content-info">
+						<!-- collect product start -->
+						<div class="collect-list">
+							<div class="floatbar">
+								<div class="bar-float">
+									<div class="select">
+										<ul>
+											<li class="sel-item">
+												<a class="sel-link sel-select">全部商品<em> {{$collectProducts->total()}}</em></a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div id="table_list">
+								<div id="fav-list">
+									{{if $collectProducts->total() > 0}}
+									<ul class="img-item-list clearfix">
+										{{volist name="$collectProducts" id="vo"}}
+										<li class="fav-item" >
+											<div class="controller-box">
+												<div class="controller-img-box">
+													<a href="{{:url('product/show', ['sku' => $vo.sku])}}" target="_blank" class="controller-img-link"><img class="controller-img" src="{{$vo.image}}"></a>
+												</div>
+												<a class="add-cat-btn" href="javascript:void(0);" onclick="addCart({{$vo.sku}}, 1, 0)">加入购物车</a>
+												<a class="del-btn" href="javascript:void(0);" onclick="cancelCollectProduct({{$vo.sku}})">移除</a>
+											</div>
+											<div class="item-title" title="{{$vo.name}}">
+												<a href="{{:url('product/show', ['sku' => $vo.sku])}}" target="_blank">
+													{{if !empty($vo.specifications)}}
+													{{volist name="$vo.specifications" id="vo_specification"}}
+													<span>{{$vo_specification.specification_option_value}}</span>
+													{{/volist}}
+													{{/if}}
+													{{$vo.name}}
+												</a>
+											</div>
+											<div class="price-container">
+												<div class="price-box">
+													<div class="price"><strong class="color">¥{{$vo.sale_price}}</strong></div>
+												</div>
+											</div>
+										</li>
+										{{/volist}}
+									</ul>
+									<div class="page">
+										{{$collectProducts->render()|raw}}
+									</div>
+									{{else}}
+									<div class="noresult">
+										<p><img src="/static/index/images/noresult.png"></p>
+										<p>没有符合条件的记录</p>
+									</div>
+									{{/if}}
+								</div>
+							</div>
+						</div>
+						<!-- collect product end -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{{include file='layouts/_foot'}}
+<script type="text/javascript" src="/static/index/script/account.js?v={{:Config('version.pc.version')}}"></script>
+<script type="text/javascript" src="/static/index/script/cart.js?v={{:Config('version.pc.version')}}"></script>
+</body>
+</html>

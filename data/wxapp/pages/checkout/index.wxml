@@ -1,0 +1,123 @@
+<view class="ck_address" wx:if="{{address}}" catchtap="selectAddressPopupTap">
+  <view class="container">
+    <view class="checkbox"><i class="iconfont"></i></view>
+    <view class="info">
+      <view class="name">{{address.name}} {{address.phone}}</view>
+      <view class="detail_address">{{address.province_name}} {{address.city_name}} {{address.district_name}}  {{address.detailed_address}}</view>
+    </view>
+    <view class="more"><i class="iconfont"></i></view>
+  </view>
+</view>
+<view class="ck_address" wx:if="{{!address}}" bindtap="toAccountAddressTap">
+  <view class="container">
+    <view class="checkbox"><i class="iconfont"></i></view>
+    <view class="info">
+      <view class="empty">设置收货地址</view>
+    </view>
+    <view class="more"><i class="iconfont"></i></view>
+  </view>
+</view>
+<view class="blank_div"></view>
+<view class="ck_products">
+  <view class="container">
+    <view class="title">共 {{product_count}} 件商品</view>
+    <view class="item" wx:for="{{products}}" wx:key="key">
+        <image class="product_image" src="{{item.image}}" bindtap="toProductTap" data-sku="{{item.sku}}"></image>
+        <view class="info">
+          <view class="name" bindtap="toProductTap" data-sku="{{item.sku}}">{{item.name}}</view>
+          <view class="product_specification"  wx:if="{{item.specifications.length > 0}}">规格：<span wx:for="{{item.specifications}}" wx:for-item="item_specification">{{item_specification.specification_option_value}}</span></view>
+          <view class="price color">¥ {{item.sale_price}}</view>
+        </view>
+        <view class="number">x{{item.count}}</view>
+    </view>
+  </view>
+</view>
+<view class="blank_div"></view>
+<view class="ck_total">
+  <view class="item" hidden="true">
+    <view class="container">
+      <view class="dt">优惠券</view>
+      <view class="dd">
+        <view class="right iconfont icon_more">请选择</view>
+      </view>
+    </view>
+  </view>
+  <view class="item buy_message">
+    <view class="container">
+      <view class="dt">买家留言</view>
+    </view>
+  </view>
+  <view class="item buy_message buy_message_text">
+    <view class="container">
+      <view class="section">
+        <textarea placeholder="选填，可填写您与卖家达成一致的要求" placeholder-style="color: #ccc;" bindinput="setMessageValue" />
+      </view>
+    </view>
+  </view>
+</view>
+<view class="blank_div"></view>
+<view class="ck_total ck_total_price">
+  <view class="item">
+    <view class="container">
+      <view class="dt">商品总额</view>
+      <view class="dd">
+        <view class="right color">¥ {{product_total_price}}</view>
+      </view>
+    </view>
+  </view>
+  <view class="item">
+    <view class="container">
+      <view class="dt">运费</view>
+      <view class="dd">
+        <view class="right color">¥ {{shipping_freight_total_price}}</view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="blank_div"></view>
+<view class="ck_payment">
+  <view class="container">
+    <view class="title">支付方式</view>
+    <view class="items">
+      <view class="item {{payment_id == item.id ? 'on' : ''}}" wx:for="{{payments}}" wx:key="key" data-id="{{item.id}}" catchtap="selectPaymentTap">
+        <view class="left">
+          <image src="{{item.mobile_image}}"></image>{{item.show_name}}
+        </view>
+        <view class="right">{{item.description}}</view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="blank_div"></view>
+<view class="ck_foot_blank"></view>
+<view class="ck_foot">
+  <view class="container">
+    <view class="btn" catchtap="{{is_click ? 'createOrderTap' : ''}}"><span>提交订单</span></view>
+    <view class="total_price">合计：<span class="color">¥ {{total_price}}</span></view>
+  </view>
+</view>
+<!-- 选择地址弹出层 start -->
+<popup popup_visible="{{popup_visible_address}}">
+  <view slot="content">
+    <view class="popup_address">
+      <view class="popup_address_top">
+        <view class="title">选择地址</view>
+        <view class="popup_address_close" bindtap="close_popup_address"><i class="iconfont"></i></view>
+      </view>
+      <view class="addresses">
+        <view class="item {{item.id == address.id ? 'on' : ''}}" wx:for="{{addresses}}" wx:key="key" catchtap="selectAddressTap" data-id="{{item.id}}">
+          <view class="container">
+            <view class="info">
+              <view class="name">{{item.name}} {{item.phone}}</view>
+              <view class="detail_address">{{item.province_name}} {{item.city_name}} {{item.district_name}}  {{item.detailed_address}}</view>
+            </view>
+            <view class="icon" wx:if="{{item.id == address.id}}"><i class="iconfont"></i></view>
+          </view>
+        </view>
+        <view class="container"><view class="btn" bindtap="toAccountAddressTap">管理地址</view></view>
+      </view>
+    </view>
+  </view>
+</popup>
+<!-- 选择地址弹出层 end -->
+

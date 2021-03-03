@@ -1,0 +1,177 @@
+page {
+  min-height: 100%;
+  background-color: #F2f2f2;
+}
+.order_nav_blank {
+  height: 102rpx;
+}
+.order_nav {
+  width: 100%;
+  height: 102rpx;
+  line-height: 102rpx;
+  background-color: #fff;
+  display: flex;
+  position: fixed;
+  top: 0;
+  z-index: 99;
+}
+.order_nav .item {
+  flex: 1;
+  text-align: center;
+}
+.order_nav .item span.on {
+  color: #e64340;
+  border-bottom: 1px solid #e64340;
+  padding-bottom: 5px;
+}
+
+.orders .order {
+  width: 100%;
+  background-color: #fff;
+  margin-top: 30rpx;
+}
+.orders .order .order_top {
+  width: 100%;
+  height: 88rpx;
+  line-height: 88rpx;
+  border-bottom: 1px solid #eee;
+}
+.orders .order .order_top .container {
+  display: flex;
+  justify-content: space-between;
+}
+.orders .order .item {
+  width: 100%;
+  height: 220rpx;
+  padding: 30rpx 0; 
+  position: relative;
+}
+.orders .order .item .product_image {
+  width: 220rpx;
+  height: 220rpx;
+  float: left;
+}
+.orders .order .item .info {
+  width: 460rpx;
+  float: right;
+}
+.orders .order .item .info .name {
+  color: #333;
+  font-size: 30rpx;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+}
+.orders .order .item .info .product_specification {
+  margin-top: 6rpx;
+  color: #666;
+  font-size: 24rpx;
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow:ellipsis;
+}
+.orders .order .item .info .product_specification span {
+  margin-right: 6rpx;
+}
+.orders .order .info .price {
+  margin-top: 6rpx;
+}
+.orders .order .item .number {
+  position: absolute;
+  right: 0;
+  bottom: 20rpx;
+  font-size: 80%;
+  color: #666;
+}
+.orders .order .order_total {
+  width: 100%;
+  line-height: 88rpx;
+  text-align: right;
+  border-bottom: 1px solid #eee;
+}
+.orders .order .order_foot {
+  width: 100%;
+  height: 120rpx;
+  line-height: 120rpx;
+}
+.orders .order .order_foot .message {
+  float: right;
+}
+.orders .order .order_foot .btn {
+  float: right;
+  margin-left: 16rpx;
+}
+.orders .order .order_foot .btn span {
+  padding: 16rpx 58rpx;
+  background-color: #e64340;
+  border: 1px solid #e64340;
+  color: #fff;
+  border-radius: 100rpx;
+}
+.orders .order .order_foot .btn_cancel span {
+  background-color: #fff;
+  border: 1px solid #eee;
+  color: #999;
+}
+/* 选择支付方式 start */
+.select_payment {
+  background-color: #f7f7f7;
+  border-top-left-radius: 20rpx;
+  border-top-right-radius: 20rpx;
+}
+.select_payment_top {
+  position: relative;
+  height: 120rpx;
+  line-height: 120rpx;
+}
+.select_payment_top .close {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 15rpx;
+}
+.select_payment_top .close i::before {
+  content: '\e604';
+  font-size: 40rpx;
+  color: #666;
+}
+.select_payment_top .title {
+  text-align: center;
+}
+.select_payment .items {
+  padding: 0 0 10rpx 0;
+}
+.select_payment .items .item {
+  border: 1px solid #eee;
+  padding: 20rpx 0;
+  overflow: hidden;
+  margin-bottom: 20rpx;
+}
+.select_payment .items .item.on .left {
+  color: #e64340;
+}
+.select_payment .items .item .left {
+  float: left;
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.select_payment .items .item .left image {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 10rpx;
+}
+.select_payment .items .item .right {
+  float: left;
+  width: 49%;
+  text-align: center;
+  color: #666;
+  font-size: 90%;
+  border-left: 1px solid #eee;
+}
+/* 选择支付方式 end */

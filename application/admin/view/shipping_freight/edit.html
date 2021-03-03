@@ -1,0 +1,147 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>后台管理</title>
+{{include file="layouts/_head"}}
+<link rel="stylesheet" type="text/css" href="/static/admin/style/freight.css" />
+</head>
+<body>
+<div class="main">
+	<ol class="breadcrumb">
+		<li><i class="icon_home iconfont"></i>首页</li>
+	  	<li>设置中心</li>
+	  	<li><a href="javascript:history.go(-1);">运费模板</a></li>
+	  	<li class="active">编辑运费模板</li>
+	</ol>
+	<div class="bg-danger clearfix main-head-info error-info"></div>
+	<div class="main-con">
+		<form class="form-horizontal margin-t-30" id="form" method="post" action="{{:url('/admin/shipping_freight/update')}}">
+			<input type="hidden" name="id" value="{{$freight.id}}">
+		  	<div class="tab-box">	
+			  	<div class="form-group">
+			    	<span class="col-sm-2 control-label"><span class="color-red">*</span> 模板名称：</span>
+			    	<div class="col-sm-8 input-group"><input class="form-control" value="{{$freight.name}}" name="name"></div>
+			  	</div>
+			  	<div class="form-group">
+				    <span class="col-sm-2 control-label">简要描述：</span>
+				    <div class="col-sm-8 input-group">
+				      <textarea class="form-control" rows="3" name="description">{{$freight.description}}</textarea>
+				    </div>
+				</div>
+			    <div class="form-group">
+				    <span class="col-sm-2 control-label"><span class="color-red">*</span> 计价方式：</span>
+				    <div class="col-sm-2 input-group ">
+				    	<div class="radio" id="types">
+				    		<label><input type="radio" {{if $freight.type == 1}} checked="true" {{/if}} name="type" value="1">件数</label>
+				    		<label><input type="radio" {{if $freight.type == 2}} checked="true" {{/if}} name="type" value="2">重量</label>
+				    		<label><input type="radio" {{if $freight.type == 3}} checked="true" {{/if}} name="type" value="3">体积</label>
+				    	</div>
+				    </div>
+			    </div>
+			    <div class="form-group">
+				    <span class="col-sm-2 control-label">启用默认：</span>
+				    <div class="col-sm-2 input-group ">
+				    	<div class="radio">
+				    		<label><input type="radio" {{if $freight.default_freight == 0}} checked="true" {{/if}} name="default_type" value="0">否</label>
+				    		<label><input type="radio" {{if $freight.default_freight == 1}} checked="true" {{/if}} name="default_type" value="1">是</label>
+				    	</div>
+				    </div>
+			    </div>
+			</div>
+			<table class="table table-bordered table-hover" id="freight">
+				<thead>
+					<tr>
+						<th class="width-100"></th>
+						<th class="width-200">配送区域</th>
+						<th class="width-200">首{{$freight.typeStr}}</th>
+						<th class="width-200">运费</th>
+						<th class="width-200">续{{$freight.typeStr}}</th>
+						<th class="width-200">运费</th>
+						<th class="width-100">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td colspan="7" class="text-left"><a class="btn btn-success btn-xs" href="javascript:void(0);" onclick="appendFreight(1)">新增自定义区域 +</a></td>
+					</tr>
+				</tbody>
+				<tbody class="border-none" id="freight_box">
+					{{volist name="$freight.values" id="vo"}}
+					<tr {{if $vo.ship_area == 0}} class="default_freight" {{/if}}>
+						{{if $vo.ship_area == 0}} 
+						<td style="vertical-align: middle !important;">默认模板</td>
+						{{else}}
+						<td></td>
+						{{/if}}
+						<td>
+							<input class="form-control input_ship_area" value="{{$vo.ship_area_str}}" readonly="true" {{if $vo.ship_area != 0}} onclick="selectAreas()" {{/if}}>
+							<input type="hidden" value="{{$vo.ship_area}}" name="ship_area[]">
+						</td>
+						<td>
+							<div class="input-group"><input class="form-control" value="{{$vo.first_key}}" name="first_key[]"><span class="input-group-addon">{{$freight.unit}}</span></div>
+						</td>
+						<td>
+							<div class="input-group"><input class="form-control" value="{{$vo.first_value}}" name="first_value[]"><span class="input-group-addon">元</span></div>
+						</td>
+						<td>
+							<div class="input-group"><input class="form-control" value="{{$vo.second_key}}" name="second_key[]"><span class="input-group-addon">{{$freight.unit}}</span></div>
+						</td>
+						<td>
+							<div class="input-group"><input class="form-control" value="{{$vo.second_value}}" name="second_value[]"><span class="input-group-addon">元</span></div>
+						</td>
+						<td style="vertical-align: middle !important">
+							{{if $vo.ship_area != 0}} 
+							<a class="btn btn-danger btn-xs" href="javascript:void(0);" onclick="deleteFreight()">删除</a>
+							{{/if}}
+						</td>
+					</tr>
+					{{/volist}}
+				</tbody>
+			</table>
+			<div class="foot_btn_blank"></div>
+            <div class="foot_btn">
+                <div class="box">
+                    <button type="submit" class="btn btn-primary">提交信息</button>
+                </div>
+            </div>
+		</form>
+	</div>
+</div>
+{{include file='shipping_freight/_ship_area'}}
+{{include file="layouts/_foot"}}
+{{include file="shared/_jquery_validation"}}
+<script type="text/javascript" src="/static/admin/script/freight.js"></script>
+<script type="text/javascript">
+$("#form").validate({
+	rules: {
+		name: {required: true},
+		type: {required: true},
+		freight_way_id: {required: true}
+	},
+	messages: {
+		name: '模板名称不能为空',
+		type: '计价方式不能为空',
+	},
+	submitHandler:function(){
+		layer.confirm('确认提交？', function() {
+			layer.closeAll(); var load = layer.load();
+			$("#form").ajaxSubmit(function(res) {
+                layer.close(load);
+                if (res.code == 401) {
+                    goLogin(); return false;
+                }
+                if (res.code == 200) {
+                    layer.msg('提交成功', {time: 1500}, function() {window.location.href = '{{:url("/admin/shipping_freight")}}'});
+                } else if (res.code == 400) {
+                    layer.msg(res.message); return false;
+                } else {
+                    layer.msg('操作失败'); return false;
+                }
+			});
+		});	
+	}
+});
+</script>
+</body>
+</html>

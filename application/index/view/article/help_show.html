@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{{$article.title}} 帮助中心 {{:Config('system.app_name')}}</title>
+{{include file='layouts/_layout'}}
+</head>
+<body>
+{{include file='layouts/_site_nav'}}
+{{include file='layouts/_head'}}
+{{include file='layouts/_menu'}}
+<div class="article">
+	<div class="container">
+		<div class="article-nav">
+			<a href="{{:Config('system.app_url')}}">首页</a> > <span>帮助中心</span>
+		</div>
+		<div class="article-box">
+			<div class="left">
+				{{volist name="$categorys" id="vo"}}
+				<dl>
+					{{if $article.category_id == $vo.id}}
+					<dt class="on">{{$vo.name}}<i class="iconfont up"></i></dt>
+					{{else}}
+					<dt>{{$vo.name}}<i class="iconfont down"></i></dt>
+					{{/if}}
+					<dd {{if $article.category_id == $vo.id}}style="display: block;"{{/if}}>
+						{{volist name="$vo.articles" id="vo_article"}}
+						<a href="{{:url('article/help_show', ['article_id' => $vo_article.id])}}" {{if $article.id == $vo_article.id}}class="color"{{/if}}>{{$vo_article.title}}</a>
+						{{/volist}}
+					</dd>
+				</dl>
+				{{/volist}}
+			</div>
+			<div class="right">
+				<div class="detail">
+					<h2 class="title">{{$article.title}}</h2>
+					<div class="content">{{$article.content|raw}}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{{include file='layouts/_foot'}}
+<script type="text/javascript">
+	$(".article-box dt").click(function() {
+		if($(this).hasClass('on') == false) {
+			$(this).addClass('on');
+			$(this).find('i').removeClass('down').addClass('up');
+			$(this).siblings('dd').slideToggle();
+		} else {
+			$(this).removeClass('on');
+			$(this).find('i').removeClass('up').addClass('down');
+			$(this).siblings('dd').slideToggle();
+		}
+	})
+</script>
+</body>
+</html>

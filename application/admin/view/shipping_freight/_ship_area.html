@@ -1,0 +1,19 @@
+<div class="ship-area none">
+	<div class="ship-area-selected none">
+		<div class="checkbox"></div>
+	</div>
+	<div class="ship-area-select">
+		<select size="6" name="province" onchange="getCistys('city')" >
+			<option value="">选择省份</option>
+			{{volist name="$parentCitys" id="vo"}}
+			<option value="{{$vo.id}}">{{$vo.name}}</option>
+			{{/volist}}
+		</select>
+		<select size="6" name="city" class="none" onchange="getCistys('area')"></select>
+		<select name="area" class="none" size="6" ></select>
+	</div>
+	<div class="ship-area-btn">
+		<a href="javascript:void(0);" onclick="addCity()" class="btn btn-primary">添加</a>
+		<a href="javascript:void(0);" onclick="affirmCity()" class="btn btn-success">确定</a>
+	</div>
+</div>

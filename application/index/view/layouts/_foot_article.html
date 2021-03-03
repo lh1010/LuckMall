@@ -1,0 +1,26 @@
+<div class="foot">
+	{{php}}$help = getHelp();{{/php}}
+	<div class="container">
+		<div class="foot-service">
+			<img src="/static/index/images/foot1.jpg" />
+		</div>
+		<div class="foot-article">
+			<div class="left">
+				{{volist name="$help" id="vo"}}
+				<div class="item">
+					<h3 class="title">{{$vo.name}}</h3>
+					<ul>
+						{{volist name="$vo.articles" id="vo_article"}}
+						<li><a href="{{:url('article/help_show', ['article_id' => $vo_article.id])}}">{{$vo_article.title}}</a></li>
+						{{/volist}}
+					</ul>
+				</div>
+				{{/volist}}
+			</div>
+			<div class="right">
+				<h5>官方微信</h5>
+				<div class="wechat"><img src="/static/index/images/wechat.png"></div>
+			</div>
+		</div>
+	</div>
+</div>

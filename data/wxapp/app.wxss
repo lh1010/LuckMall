@@ -1,0 +1,56 @@
+.wrap_container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+.container {
+  width: 700rpx;
+  margin: 0 auto;
+}
+.color {
+  color: #e64340 !important;
+}
+.hide {
+  display: none;
+}
+.show {
+  display: block;
+}
+.weui_loadmore_bg_white {
+  background-color: #fff;
+  width: 100%;
+  overflow: hidden;
+}
+.blank_div {
+  width: 100%;
+  height: 20rpx;
+  background-color: #F2f2f2;
+}
+.empty_data {
+  width: 700rpx;
+  height: auto;
+  text-align: center;
+  margin: 0 auto;
+  padding-top: 100rpx;
+}
+.empty_data image {
+  width: 200rpx;
+  height: 200rpx;
+}
+.empty_data .message {
+  color: #999;
+  font-size: 90%;
+  margin-top: 30rpx;
+}
+
+@import 'assets/iconfont/iconfont.wxss';
+.iconfont{
+  font-family:"iconfont" !important;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}

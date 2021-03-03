@@ -1,0 +1,45 @@
+<div class="right-sidebar">
+	<div class="right-sidebar-main">
+		<div class="quick-links">
+			<ul>
+				<li>
+					<a class="quick-links-a" href="{{:url('account/index')}}"><i class="iconfont">&#xe614;</i></a>
+					<div class="popup">个人中心</div>
+				</li>
+				<li class="sidebar-cart" id="right_sidebar_cart">
+					<a class="quick-links-a" href="{{:url('cart/index')}}"><i class="iconfont">&#xe61b;</i></a>
+					<a href="{{:url('cart/index')}}">
+						<div class="sidebar-cart-text">购物车</div>
+						<div class="sidebar-cart-count" id="right_sidebar_cart_count">0</div>
+					</a>
+				</li>
+				<li>
+					<a class="quick-links-a" href="{{:url('account/collectProduct')}}"><i class="iconfont">&#xe82a;</i></a>
+					<div class="popup">我收藏的商品</div>
+				</li>
+			</ul>
+		</div>
+		<div class="quick-toggle">
+			<ul>
+				<li class="sidebar-customer-service">
+					<a class="quick-links-a" href="javascript:void(0);"><i class="iconfont">&#xe7bb;</i></a>
+					<div class="popup-default">
+						<a href="javascript:void(0);"><i class="iconfont">&#xe666;</i>{{:Config('system.qq')}}</a>
+						<a href="javascript:void(0);"><i class="iconfont">&#xe79f;</i>{{:Config('system.wangwang')}}{{:Config('system.wangwang')}}</a>
+						<a href="javascript:void(0);" title="{{:Config('system.phone')}}"><i class="iconfont">&#xe7bb;</i>{{:Config('system.phone')}}</a>
+					</div>
+				</li>
+				<li class="sldebar-qrcode">
+					<a class="quick-links-a" href="javascript:void(0);"><i class="iconfont">&#xe646;</i></a>
+					<div class="popup-default">
+						<img src="/static/index/images/wechat.png">
+					</div>
+				</li>
+				<li>
+					<a class="quick-links-a" href="javascript:scrollTo();"><i class="iconfont">&#xe65b;</i></a>
+					<div class="popup">返回顶部</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>

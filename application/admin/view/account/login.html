@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<title>后台管理登录</title>
+	<link rel="stylesheet" href="/static/admin/login/css/login.css">
+</head>
+<body>
+<div class="canvas-wrap">
+	<div id="canvas" class="gradient"></div>
+</div>
+<div class="logo_box">
+	<h3>后台管理登录</h3>
+	<form action="#" id="form_sub" method="post">
+		{{:token()}}
+		<div class="input_outer">
+			<span class="u_user"></span>
+			<input name="username" id="username" class="text" type="text" placeholder="请输入用户名" />
+		</div>
+		<div class="input_outer">
+			<span class="us_uer"></span>
+			<input name="password" id="password" class="text" style="z-index:100;" value="" type="password" placeholder="请输入密码" />
+		</div>
+		<div class="mb2"><a class="act-but submit" onclick="login();" style="color: #FFFFFF">登录</a>
+		</div>
+	</form>
+</div>
+<script type="text/javascript" src="/static/admin/login/js/color.js"></script>
+<script type="text/javascript" src="/static/admin/plugins/jquery/3.3.1/jquery.js"></script>
+<script type="text/javascript" src="/static/admin/plugins/layer/2.4/layer.js"></script>
+<script type="text/javascript">
+function login()
+{
+	var load = layer.load();
+	$.ajax({
+		url: '{{:url("/admin/account/doLogin")}}',
+		type: 'post',
+		data: {
+			username: $("#username").val(),
+			password: $("#password").val(),
+			__token__: $("input[name='__token__']").val()
+		},
+		success:function(data) {
+			layer.close(load);
+			if(data.code == 400) {
+				layer.msg(data.message, {time : 1000}, function() {
+					return false;
+				});
+			}
+			if(data.code == 200) {
+				layer.msg('登录成功...', {time: 1000}, function() {
+					window.location.href = '/admin';
+					return false;
+				});
+			}
+		}
+	})
+}
+</script>
+</body>
+</html>

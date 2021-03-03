@@ -1,0 +1,222 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>个人主页 个人中心 {{:Config('system.app_name')}}</title>
+{{include file='layouts/_layout'}}
+<link rel="stylesheet" type="text/css" href="/static/index/style/user.css?v={{:Config('version.pc.version')}}" />
+</head>
+<body>
+{{include file='layouts/_site_nav'}}
+<div class="user">
+	{{include file='account/_account_head'}}
+	<div class="user-box">
+		<div class="container">
+			{{include file='account/_account_menu'}}
+			<div class="user-box-right">
+				<div class="user-box-welcome">
+					<div class="user-box-welcome-left">
+						<div class="user-info">
+							<!-- 我的账户信息 start -->
+							<div class="myInfo">
+								<div class="myInfoFront">
+									<div class="imgHeaderBox">
+										<a href="" class="headerImg"><img src="/static/index/images/default_user_portrait_0.png"></a>
+										<div class="updateInfo">
+											<div class="opacityBox"></div>
+											<a href="" class="realBox">修改资料</a>
+										</div>
+									</div>
+									<p class="name"><a href="">{{$Think.Cookie.uname}}</a></p>
+									<p class="VIP">
+										<a href="" class="imgVip imgVip1"><img src="/static/index/images/user-grade-0.jpg"></a>
+										<a href="" class="txtExplain">注册会员</a>
+									</p>
+									<p class="safe">
+										账户安全<span class="safeGrade">低</span>
+									</p>
+									<div class="progressBar">
+										<span class="progress progress2"></span>
+									</div>
+									<p class="safe-grade-info">
+										<span class="email">
+											<a href=""><i class="iconfont">&#xe82a;</i>已绑定</a>
+										</span>
+										<span class="phone">
+											<a href=""><i class="iconfont">&#xe82a;</i>未绑定</a>
+										</span>
+										<span class="pay-password">
+											<a href=""><i class="iconfont">&#xe82a;</i>未开启</a>
+										</span>
+									</p>
+								</div>
+							</div>
+							<!-- 我的账户信息 end -->
+							<!-- 我的资产及订单 start -->
+							<div class="myCapital">
+								<div class="money">
+									<ul class="clearfix">
+										<li class="first">
+											<div class="title"><span>我的余额</span></div>
+											<div class="pic"><a href="" title="我的余额"><i class="user_bg"></i></a></div>
+											<p><!-- <a href="">显示余额</a> --><a href="">¥0</a></p>
+										</li>
+										<li class="second">
+											<div class="title"><span>我的成长值</span></div>
+											<div class="pic"><a href="" title="我的成长值"><i class="user_bg"></i></a></div>
+											<p><a href="">0</a></p>
+										</li>
+										<li class="third">
+											<div class="title"><span>我的红包</span></div>
+											<div class="pic"><a href="" title="我的红包"><i class="user_bg"></i></a></div>
+											<p><a href="">0张</a></p>
+										</li>
+									</ul>
+								</div>
+								<div class="pending">
+									<ul>
+										<li><a href="">待付款<font class="color">2</font></a></li>
+										<li><a href="">待发货<font class="color">0</font></a></li>
+										<li><a href="">待收货<font class="color">0</font></a></li>
+										<li><a href="">待评价<font class="color">0</font></a></li>
+										<li><a href="">退款<font class="color">0</font></a></li>
+									</ul>
+								</div>
+							</div>
+							<!-- 我的资产及订单 end -->
+						</div>
+						<!-- 我的收藏 start -->
+						<div class="myCollect">
+							<ul class="tabs">
+								<li class="active"><h3><a href="#tab1">商品收藏</a></h3></li>
+								<li class=""><h3><a href="#tab2">店铺关注</a></h3></li>
+							</ul>
+							<a href="" class="more">查看更多</a>
+							<div class="tab-container">
+								<div class="model collect-goods" >
+									<div class="model-con">
+										<ul>
+											<li>
+												<a href="" class="img"><img src="/static/index/images/product/1.jpg"></a>
+												<a href="" class="name">MONKI2019夏季新款 时尚抽绳腰带全棉运动短裤休闲裤女0562177</a>
+												<p class="color">¥60</p>
+											</li>
+											<li>
+												<a href="" class="img"><img src="/static/index/images/product/1.jpg"></a>
+												<a href="" class="name">MONKI2019夏季新款 时尚抽绳腰带全棉运动短裤休闲裤女0562177</a>
+												<p class="color">¥60</p>
+											</li>
+											<li>
+												<a href="" class="img"><img src="/static/index/images/product/1.jpg"></a>
+												<a href="" class="name">MONKI2019夏季新款 时尚抽绳腰带全棉运动短裤休闲裤女0562177</a>
+												<p class="color">¥60</p>
+											</li>
+											<li>
+												<a href="" class="img"><img src="/static/index/images/product/1.jpg"></a>
+												<a href="" class="name">MONKI2019夏季新款 时尚抽绳腰带全棉运动短裤休闲裤女0562177</a>
+												<p class="color">¥60</p>
+											</li>
+											<li>
+												<a href="" class="img"><img src="/static/index/images/product/3.jpg"></a>
+												<a href="" class="name">MONKI2019夏季新款 时尚抽绳腰带全棉运动短裤休闲裤女0562177</a>
+												<p class="color">¥60</p>
+											</li>
+										</ul>
+									</div>
+								</div>
+								<div class="model collect-shop none">
+									<div class="model-con">
+										<ul>
+											<li>
+												<a href="" class="img"><img src="/static/index/images/shop/1.jpg" ></a>
+												<a href="" class="name">夏色萌动自营旗舰店</a>
+											</li>
+											<li>
+												<a href="" class="img"><img src="/static/index/images/shop/1.jpg" ></a>
+												<a href="" class="name">夏色萌动自营旗舰店</a>
+											</li>
+											<li>
+												<a href="" class="img"><img src="/static/index/images/shop/1.jpg" ></a>
+												<a href="" class="name">夏色萌动自营旗舰店</a>
+											</li>
+											<li>
+												<a href="" class="img"><img src="/static/index/images/shop/1.jpg" ></a>
+												<a href="" class="name">夏色萌动自营旗舰店</a>
+											</li>
+											<li>
+												<a href="" class="img"><img src="/static/index/images/shop/1.jpg" ></a>
+												<a href="" class="name">夏色萌动自营旗舰店</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- 我的收藏 end -->
+					</div>
+					<div class="user-welcome-right">
+						<div class="model shop-notice">
+							<h3><i class="bg-color"></i><span>商城公告</span></h3>
+							<div class="notice-con">用户中心公告！双十一大促销！因可能存在系统缓存、页面更新导致价格变动异常等不确定性情况出现，如您发现活动商品标价或促销信息有异常，请您立即联系我们，以便我们及时补正！</div>
+						</div>
+						<div class="model model-spe">
+							<h3><i class="bg-color"></i><span>我的购物车</span></h3>
+							<div class="model-con">
+								<ul>
+									<li>
+										<a href="" class="img"><img src="/static/index/images/product/4.jpg"></a>
+										<p class="price">¥34</p>
+									</li>
+									<li>
+										<a href="" class="img"><img src="/static/index/images/product/4.jpg"></a>
+										<p class="price">¥34</p>
+									</li>
+									<li>
+										<a href="" class="img"><img src="/static/index/images/product/4.jpg"></a>
+										<p class="price">¥34</p>
+									</li>
+									<li>
+										<a href="" class="img"><img src="/static/index/images/product/4.jpg"></a>
+										<p class="price">¥34</p>
+									</li>
+								</ul>
+								<div class="see-all">
+									<a href="">查看购物车（<em class="color">5</em>）</a>
+								</div>
+							</div>
+						</div>
+						<div class="model model-spe none">
+							<h3><i class="bg-color"></i><span>我的足迹</span></h3>
+							<div class="model-con">
+								<ul>
+									<li>
+										<a href="" class="img"><img src="/static/index/images/product/4.jpg"></a>
+										<p class="price">¥34</p>
+									</li>
+									<li>
+										<a href="" class="img"><img src="/static/index/images/product/4.jpg"></a>
+										<p class="price">¥34</p>
+									</li>
+									<li>
+										<a href="" class="img"><img src="/static/index/images/product/4.jpg"></a>
+										<p class="price">¥34</p>
+									</li>
+									<li>
+										<a href="" class="img"><img src="/static/index/images/product/4.jpg"></a>
+										<p class="price">¥34</p>
+									</li>
+								</ul>
+								<div class="see-all">
+									<a href="">查看全部（<em class="color">102</em>）</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{{include file='layouts/_foot'}}
+</body>
+</html>

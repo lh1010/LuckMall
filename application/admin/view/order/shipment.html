@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>后台管理</title>
+{{include file="layouts/_head"}}
+<style type="text/css">
+body {
+	min-width: 0;
+}
+</style>
+</head>
+<body>
+<div class="main">
+	<div class="bg-danger clearfix main-head-info error-info"></div>
+	<div class="main-con">
+		<form class="form-horizontal margin-t-30" id="form" method="post" action="{{:url('/admin/order/shipment')}}" >
+			<input type="hidden" name="order_id" value="{{$order.id}}">
+		  	<div class="form-group">
+				<span class="col-sm-2 control-label"> 订单编号：</span>
+				<div class="col-sm-8 input-group"><p class="form-control-static">{{$order.number}}</p></div>
+			</div>
+			<div class="form-group">
+				<span class="col-sm-2 control-label"> 订单金额：</span>
+				<div class="col-sm-8 input-group"><p class="form-control-static">¥ {{$order.total_price}}</p></div>
+			</div>
+			<div class="form-group">
+				<span class="col-sm-2 control-label"><span class="color-red">*</span> 配送方式：</span>
+				<div class="col-sm-2 input-group">
+					<select class="form-control" name="shipping_mark_id">
+	                    <option value="">请选择</option>
+	                    {{volist name="shipping_marks" id="vo"}}
+	                    <option value="{{$vo.id}}">{{$vo.name}}</option>
+	                    {{/volist}}
+	                </select>
+				</div>
+			</div>
+			<div class="form-group">
+				<span class="col-sm-2 control-label"><span class="color-red">*</span> 快递单号：</span>
+				<div class="col-sm-8 input-group"><input class="form-control" name="tracking_number" value=""></div>
+			</div>
+			<div class="foot_btn_blank"></div>
+            <div class="foot_btn">
+                <div class="box">
+                    <button type="submit" class="btn btn-primary">提交</button>
+                </div>
+            </div>
+		</form>
+	</div>
+</div>
+{{include file="layouts/_foot"}}
+{{include file="shared/_jquery_validation"}}
+<script type="text/javascript">
+$("#form").validate({
+	rules: {
+		shipping_mark_id: {required: true},
+		tracking_number: {required: true},
+	},
+	messages: {
+		shipping_mark_id: '配送方式不能为空',
+		tracking_number: '快递单号不能为空',
+	},
+	submitHandler:function(){
+		layer.confirm('确认提交？', function() {
+			var load = layer.load();	
+			$("#form").ajaxSubmit(function(res) {
+				layer.close(load);
+				if (res.code == 401) {
+                    goLogin(); return false;
+                }
+				if (res.code == 400) {
+					layer.msg(res.message); return false;
+				}
+				if (res.code == 200) {
+					layer.msg('提交成功', {time: 1500}, function() {
+						window.parent.location.reload();
+						var index = parent.layer.getFrameIndex(window.name);
+						parent.layer.close(index);
+					});
+					return false;
+				}
+			});
+		});	
+	}
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<view class="user_info">
+  <image class="avatar" src="{{userInfo.avatarUrl ? userInfo.avatarUrl : '/images/avatar.png'}}"></image>
+  <text class="nickname">{{userInfo.nickName}}</text>
+</view>
+<view class="btns">
+  <view class="container">
+    <button class="btn wx_phone_login" type="primary" open-type="getPhoneNumber" bindgetphonenumber="wxapp_phone_login">一键绑定微信手机号</button>
+    <!-- <button class="phone_login" type="default" bindtap="phoneLoginTap">使用其他手机号</button> -->
+  </view>
+</view>
+
+<view class="agreement">
+  <view class="container">未注册过的手机号将自动创建新的账号，且代表您已同意华耀<span class="link" bindtap="jumpPage" data-url="/pages/article/show?id=3">《用户协议》</span>和<span class="link" bindtap="jumpPage" data-url="/pages/article/show?id=1">《隐私政策》</span></view>
+</view>

@@ -1,0 +1,27 @@
+<div class="user-nav bg-color">
+	<div class="container">
+		<div class="logo-info">
+			<a href="{{:url('account/index')}}"><img src="/static/index/images/user_center_logo.png"></a>
+		</div>
+		<div class="user-link">
+			<a href="{{:url('account/index')}}" class="a-myshop">我的商城</a>
+			<a href="{{:Config('system.app_url')}}" class="a-goindex">返回商城首页</a>
+		</div>
+		<div class="navitems">
+			<ul>
+				<li><a href="{{:url('account/index')}}">首页</a></li>
+				<li class="navitems-li-2 padding-0">
+					<div class="dl">
+						<div class="dt"><span>账户设置</span><i class="iconfont"></i></div>
+						<div class="dd">
+							<a href="{{:url('account/user')}}"><span>个人信息</span></a>
+							<a href="{{:url('account/bind')}}"><span>账号绑定</span></a>
+							<a href="{{:url('account/address')}}"><span>地址管理</span></a>
+							<a href="{{:url('account/security')}}"><span>安全设置</span></a>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>	
+	</div>
+</div>

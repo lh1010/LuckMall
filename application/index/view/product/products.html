@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{{$data.title}} {{:Config('system.app_name')}}</title>
+{{include file='layouts/_layout'}}
+</head>
+<body>
+{{include file='layouts/_site_nav'}}
+{{include file='layouts/_head'}}
+{{include file='layouts/_menu'}}
+<div class="productlist">
+	<div class="container">
+		<div class="pl-nav">
+			{{$data.nav|raw}}
+		</div>
+		<div class="pl-select-general margin-top-20">
+			<div class="oper oper-sort {{if Request()->sort == ''}}color{{/if}}" data-ident=''>默认</div>
+			<div class="oper oper-sort {{if Request()->sort == 'sale'}}color{{/if}}" data-ident='sale'>销量<i class="iconfont {{if Request()->sort == 'sale' && Request()->order == 2}} down {{else}} up {{/if}}"></i></div>
+			<div class="oper oper-sort {{if Request()->sort == 'new'}}color{{/if}}" data-ident='new'>新品<i class="iconfont {{if Request()->sort == 'new' && Request()->order == 2}} down {{else}} up {{/if}}"></i></div>
+			<div class="oper oper-sort {{if Request()->sort == 'popularity'}}color{{/if}}" data-ident='popularity'>人气<i class="iconfont {{if Request()->sort == 'popularity' && Request()->order == 2}} down {{else}} up {{/if}}"></i></div>
+			<div class="oper oper-sort {{if Request()->sort == 'price'}}color{{/if}}" data-ident='price'>价格<i class="iconfont {{if Request()->sort == 'price' && Request()->order == 2}} down {{else}} up {{/if}}"></i></div>
+			<div class="oper oper-price">
+				<span class="oper-price-name">价格</span>
+				<span class="oper-price-input"><input type="text" placeholder="¥" id="min_price" value="{{:Request()->min_price}}" onkeyup="javascript:if (!isFloat($(this).val())) $(this).val('');" autocomplete="off"></span> - <span class="oper-price-input"><input type="text" placeholder="¥" id="max_price" value="{{:Request()->max_price}}" onkeyup="javascript:if (!isFloat($(this).val())) $(this).val('');" autocomplete="off"></span>
+				<span class="oper-price-btn oper-btn" onclick="setUrl()">确定</span>
+			</div>
+		</div>
+		<div class="productlist-box">
+			{{if $data.products->total() > 0}}
+			{{volist name="$data.products" id="vo"}}
+			<div class="item">
+				<div class="thumbnail lazy_loading"><a class="a" href="{{:url('product/show', ['sku' => $vo.skus[0]['sku']])}}"><img class="lazy" src="{{:Config('image.product.image_default')}}" data-original="{{$vo.skus[0]['image']}}"></a></div>
+				<div class="images">
+					{{volist name="$vo.skus" id="vo_sku" key="key_sku"}}
+					{{if $key_sku <= 5}}
+					<a href="javascript:void(0);" class="product_skus_image" data-sku="{{$vo_sku.sku}}" data-sale_price="{{$vo_sku.sale_price}}" data-image="{{$vo_sku.image}}" {{if !empty($vo_sku.specifications)}} title='{{volist name="$vo_sku.specifications" id="vo_specification"}} {{$vo_specification.specification_option_value}} {{/volist}}' {{/if}}><img src="{{$vo_sku.image}}"></a>
+					{{/if}}
+					{{/volist}}
+				</div>
+				<div class="price">
+					<span class="sale-price"><em>¥</em><span>{{$vo.skus[0]['sale_price']}}</span></span>
+				</div>
+				<div class="name"><a class="a" href="{{:url('product/show', ['sku' => $vo.skus[0]['sku']])}}">{{$vo.name}}</a></div>
+			</div>
+			{{/volist}}
+		</div>
+		<div class="page">
+			{{$data.products->appends(Request()->get())->render()|raw}}
+		</div>
+		{{else}}
+		<div class="noresult">
+			<p><img src="/static/index/images/noresult.png"></p>
+			<p>没有符合条件的记录</p>
+		</div>
+		{{/if}}
+	</div>
+</div>
+{{include file='shared/_right_sidebar'}}
+{{include file='layouts/_foot_article'}}
+{{include file='layouts/_foot'}}
+<script type="text/javascript" src="/static/index/plugins/jquery.lazyload.js?v={{:Config('version.pc.version')}}"></script>
+<script type="text/javascript" src="/static/index/script/product.js?v={{:Config('version.pc.version')}}"></script>
+<script type="text/javascript" src="/static/index/script/cart.js?v={{:Config('version.pc.version')}}"></script>
+<script type="text/javascript" src="/static/index/plugins/jquery.fly/fly.js?v={{:Config('version.pc.version')}}"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+	$("img.lazy").lazyload();
+	product_skus_image_switch();
+});
+</script>
+</body>
+</html>

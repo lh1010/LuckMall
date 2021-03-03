@@ -1,0 +1,39 @@
+<!-- 使用微信组件 -->
+<view class="page">
+  <view class="page__bd">
+    <form bindsubmit="updateUser">
+      <view class="weui-cells weui-cells_after-title"> 
+        <!-- input 输入框 start -->
+        <view class="weui-cell">
+          <view class="weui-cell__hd">
+            <view class="weui-label">ID号</view>
+          </view>
+          <view class="weui-cell__bd">{{user.id}}</view>
+        </view>
+        <view class="weui-cell item_avatar">
+          <view class="weui-cell__hd">
+            <view class="weui-label">头像</view>
+          </view>
+          <view class="weui-cell__bd" bindtap="uploadAvatar">
+            <image class="avatar" src="{{avatar != '' ? avatar : user.avatar}}" ></image>
+            <input name="avatar" hidden="true" value="{{avatar != '' ? avatar : user.avatar}}" />
+          </view>
+        </view>
+        <view class="weui-cell">
+          <view class="weui-cell__hd">
+            <view class="weui-label">昵称</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input name="nickname" class="weui-input" type="text" placeholder="请输入昵称" value="{{user.nickname}}" />
+          </view>
+        </view>
+        <!-- input 输入框 end -->
+        <view class="blank_div"></view>
+      </view>
+      <view class="weui-btn-area">
+        <button type="primary" class="save-btn" formType="submit">保存资料</button>
+        <button type="warn" class="lgout" bindtap="logoutTap">退出登录</button>
+      </view>
+    </form>  
+  </view>
+</view>

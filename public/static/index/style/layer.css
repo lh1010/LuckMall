@@ -1,0 +1,38 @@
+/*自定义layer弹出层*/
+body .mylayer-open .layui-layer-title{background:#f7f7f7; color:#666; border: none;}
+body .mylayer-open .layui-layer-btn{border-top:1px solid #E9E7E7}
+body .mylayer-open .layui-layer-btn a{background:#333;}
+
+/*付款信息弹框*/
+.layer-payment {padding: 0 0 50px 0}
+.layer-payment .content-info{}
+.layer-payment .content-info div.warning{ width: 100%; text-align: center; padding: 40px 0 20px;overflow: hidden;}
+.layer-payment .content-info div.warning i{ width: 64px; height: 64px; background: url(../images/warning.png) no-repeat; display: inline-block; vertical-align: middle;}
+.layer-payment .content-info div.warning span{ width: auto; height: 64px; line-height: 64px; margin-left: 10px; font-size: 14px; color: #333; display: inline-block; vertical-align: middle;}
+.layer-payment .content-info div.prompt{ height: 30px; line-height: 30px; text-indent: 60px; font-size: 12px;}
+.layer-payment .content-info div.btns{ padding: 30px 0 20px 60px;}
+.layer-payment .content-info div.btns a{ background: #E31939; display: inline-block; text-align: center; font-size: 14px; cursor: pointer; padding: 5px 15px; color: #fff; border-radius: 2px; border: none; line-height: 18px;}
+.layer-payment .content-info div.btns a:not(:first-child) {margin-left: 8px;}
+.layer-payment .content-info div.btns a:hover {color: #fff !important;}
+
+/*编辑地址弹框*/
+.layer-address {
+    padding: 20px 0 20px 0; 
+    display: inline-block;
+}
+.layer-address .form-horizontal {
+    width: 520px;
+    float: left;
+}
+.layer-address .form-horizontal label.input-left {
+    width: 90px;
+}
+.layer-address .form-horizontal .act {
+    margin-top: 0;
+    margin-left: 110px;
+}
+.layer-address label.error {
+    color: red;
+    font-size: 12px;
+    margin-left: 5px;
+}

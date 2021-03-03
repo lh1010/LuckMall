@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>后台管理</title>
+{{include file="layouts/_head"}}
+</head>
+<body>
+<div class="main">
+    <ol class="breadcrumb">
+        <li><i class="icon_home iconfont"></i>首页</li>
+        <li>积分商城</li>
+        <li class="active">兑换记录</li>
+    </ol>
+    <div class="main-head text-left">
+        <form class="form-inline">
+            <input type="text" class="form-control" name="keyword" value="{{:Request()->keyword}}" placeholder="订单编号">
+            <button type="submit" class="btn btn-primary">搜索</button>
+        </form>
+    </div>
+    <div class="bg-1 clearfix main-head-info">
+        <span class="pull-right margin-t-5">共有数据：<strong>{{$orders->total()}}</strong> 条</span>
+    </div>
+    <div class="main-con">
+        {{if $orders->total() > 0}}
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>订单编号</th>
+                    <th>封面图</th>
+                    <th>兑换产品</th>
+                    <th>兑换积分</th>
+                    <th>兑换会员</th>
+                    <th>收货地址</th>
+                    <th>兑换时间</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{volist name="orders" id="vo" key="key" }}
+                <tr>
+                    <td>{{$vo.id}}</td>
+                    <td><img src="{{$vo.product_image}}" class="wh-50x50"></td>
+                    <td>{{$vo.product_name}}</td>
+                    <td>{{$vo.product_integral}}</td>
+                    <td>{{$vo.nickname}}</td>
+                    <td>{{$vo.name}} {{$vo.province_name}} {{$vo.city_name}} {{$vo.district_name}} {{$vo.detailed_address}} {{$vo.phone}}</td>
+                    <td>{{$vo.create_time}}</td>
+                </tr>
+                {{/volist}}
+            </tbody>
+        </table>
+        <div class="page">
+        {{$orders->appends(Request()->get())->render()|raw}}
+        </div>
+        {{else}}
+        <p class="color-red text-center">数据为空！</p>
+        {{/if}}
+    </div>
+</div>
+{{include file="layouts/_foot"}}
+</body>
+<script type="text/javascript">
+    function delAction()
+    {
+        layer.alert('功能待开发！');
+    }
+</script>
+</html>

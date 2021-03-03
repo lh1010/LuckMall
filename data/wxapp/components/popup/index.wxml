@@ -1,0 +1,4 @@
+<view class="popup_mask {{popup_visible ? 'popup_mask_show' : ''}}" bindtap="closePopup"></view>
+<view class="popup {{popup_visible ? 'popup_show' : ''}}">
+  <slot name="content"></slot>
+</view>

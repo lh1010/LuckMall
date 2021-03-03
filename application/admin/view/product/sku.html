@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>后台管理</title>
+{{include file="layouts/_head"}}
+</head>
+<body>
+<div class="main">
+    <ol class="breadcrumb">
+        <li><i class="icon_home iconfont"></i>首页</li>
+        <li>产品管理</li>
+        <li class="active">SKU列表</li>
+    </ol>
+    <div class="main-head text-left">
+        <form class="form-inline" action="" method="get">
+            <select class="form-control" name="category_id">
+                <option value="">全部分类</option>
+                {{volist name="$categorys" key="key" id="vo"}}
+                {{if Request()->category_id == $vo.id}}
+                <option selected="true" value="{{$vo.id}}">{{php}}for($i=1; $i<$vo['level']; $i++) {echo '&nbsp;&nbsp;&nbsp;&nbsp;';}{{/php}}{{$vo.name}}</option>
+                {{else}}
+                <option value="{{$vo.id}}">{{php}}for($i=1; $i<$vo['level']; $i++) {echo '&nbsp;&nbsp;&nbsp;&nbsp;';}{{/php}}{{$vo.name}}</option>
+                {{/if}}
+                {{/volist}}
+            </select>
+            <input type="text" class="form-control" name="keyword" value="{{:Request()->keyword}}" placeholder="SKU / 产品名" >
+            <button type="submit" class="btn btn-primary">搜索</button>
+        </form>
+    </div>
+    <div class="bg-1 clearfix main-head-info">
+        <span class="pull-right margin-t-5">共有数据：<strong>{{$skus->total()}}</strong> 条</span>
+    </div>
+    <div class="main-con">
+        {{if $skus->total() > 0}}
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>主图</th>
+                    <th>SKU</th>
+                    <th>产品名</th>
+                    <th>销售规格</th>
+                    <th>库存</th>
+                    <th>价格</th>
+                    <th>状态</th>
+                    <th>添加时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{volist name="skus" id="vo" key="key" }}
+                <tr>
+                    <td><img src="{{$vo.image}}" class="wh-60x60" /></td>
+                    <td>{{$vo.sku}}</td>
+                    <td class="text-l">{{$vo.name}}</td>
+                    <td>
+                        {{if !empty($vo.specifications)}}
+                        {{volist name="vo.specifications" id="vo_specification"}}
+                        <span style="margin-right: 8px"><color>{{$vo_specification.specification_name}}</color>：<color style="color: green; font-weight: 600">{{$vo_specification.specification_option_value}}</color></span>
+                        {{/volist}}
+                        {{else}}
+                        无
+                        {{/if}}
+                    </td>
+                    <td>{{$vo.stock}}</td>
+                    <td>¥ {{$vo.sale_price}}</td>
+                    <td>
+                        {{if $vo.product_status == 1}}<span class="label label-success">上架</span>{{else}}<span class="label label-danger radius">下架</span>{{/if}}
+                    </td>
+                    <td>{{$vo.create_time|substr=0,10}}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary btn-xs" onclick="layerOpen('/admin/product/editSku.html?id={{$vo.id}}', '编辑', '840px', '450px')">编辑</button>
+                    </td>
+                </tr>
+                {{/volist}}
+            </tbody>
+        </table>
+        <div class="page">
+        {{$skus->appends(Request()->get())->render()|raw}}
+        </div>
+        {{else}}
+        <p class="color-red text-center">数据为空！</p>
+        {{/if}}
+    </div>
+</div>
+{{include file="layouts/_foot"}}
+</body>
+</html>

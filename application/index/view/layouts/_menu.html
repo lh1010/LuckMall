@@ -1,0 +1,51 @@
+<div class="category">
+	<div class="container">
+		<div class="home-category bg-color">
+			<div class="dt">
+				<a href="{{:url('category/index')}}"><i class="share-a_a2"></i>全部产品分类</a>
+			</div>
+			<div class="dd {{if $Request.pathinfo != '' || empty($productCategorys) }}none{{/if}}">
+				{{volist name="productCategorys" id="vo"}}
+				<div class="item">
+					<div class="item-home">
+						<div class="left">
+							<i class="iconfont">{{if isset($vo.icon)}} {{$vo.icon|raw}} {{else}} &#xe64c; {{/if}}</i>
+							<a href="{{:url('product/products', ['category_id' => $vo.id])}}">{{$vo.name}}</a>
+						</div>
+						<i class="right-arrow">&gt;</i>
+					</div>
+					<div class="item-layer">
+						<div class="left">
+							<div class="subitems">
+								{{volist name="$vo.twoCategorys" id="vo_two"}}
+								<dl>
+									<dt>
+										<a href="{{:url('product/products', ['category_id' => $vo_two.id])}}">
+											<em>{{$vo_two.name}}</em>
+											<i>&gt;</i>
+										</a>
+									</dt>
+									<dd>
+										{{volist name="$vo_two.threeCategorys" id="vo_three"}}
+										<a href="{{:url('product/products', ['category_id' => $vo_three.id])}}">{{$vo_three.name}}</a>
+										{{/volist}}
+									</dd>
+								</dl>
+								{{/volist}}
+							</div>
+						</div>
+					</div>
+				</div>
+				{{/volist}}
+			</div>
+		</div>
+		<div class="all-category">
+			{{php}}$navs = getNav();{{/php}}
+			<ul>
+				{{volist name="$navs" id="vo"}}
+				<li><a href="{{$vo.url}}" {{if $vo.open_type == 2}}target="_blank"{{/if}}>{{$vo.name}}</a></li>
+				{{/volist}}
+			</ul>
+		</div>
+	</div>
+</div>

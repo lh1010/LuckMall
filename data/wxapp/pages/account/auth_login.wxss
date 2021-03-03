@@ -1,0 +1,13 @@
+.cover {
+  text-align: center;
+  margin-top: 100rpx;
+}
+.cover image {
+  max-width: 90%;
+}
+.btns {
+  margin-top: 100rpx;
+}
+.btns .btn {
+  background-color: #e64340;
+}

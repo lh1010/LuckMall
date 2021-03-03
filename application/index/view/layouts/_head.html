@@ -1,0 +1,23 @@
+<div class="head">
+	<div class="container">
+		<div class="logo-box">
+			<a href="{{:Config('app.app_url')}}" class="logo">
+				<img src="{{:Config('system.app_logo')}}">
+			</a>
+			<div class="logo-right adver-ident" data-adver-id="7" data-adver-type="default"></div>
+		</div>
+		<div class="search">
+			<form method="get" action="{{:url('product/products')}}" autocomplete="off">
+				<div class="search-box">
+					<div class="search-input">
+						<div class="search-input-con">
+							<input type="text" name="k" placeholder="请输入关键字" value="{{:Request()->k}}">
+						</div>
+					</div>
+					<input type="submit" value="搜索" class="button">
+				</div>
+			</form>
+			<ul class="hot-query" id="search_hot_word"></ul>
+		</div>
+	</div>
+</div>

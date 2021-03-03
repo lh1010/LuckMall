@@ -1,0 +1,71 @@
+<view class="user_info" hidden="{{is_login}}">
+  <image class="avatar" src="/images/avatar.png"></image>
+  <button class="btn_login" data-url="/pages/account/auth_login" bindtap="jumpPage">立即登录</button>
+</view>
+<view class="user_info" hidden="{{!is_login}}" bindtap="jumpPage" data-url="/pages/account_user/index">
+  <image class="avatar" src="{{user.avatar}}"></image>
+  <text class="nickname">{{user.nickname}}</text>
+</view>
+<view class="account_box account_order">
+  <view class="title">
+    <view class="left">我的订单</view>
+    <view class="right" bindtap="jumpPage" data-url="{{is_login ? '/pages/order_list/index' : '/pages/account/auth_login'}}">
+      全部订单 <i class="iconfont"></i>
+    </view>
+  </view>
+  <view class="items">
+    <view class="item" bindtap="jumpPage" data-url="{{is_login ? '/pages/order_list/index?status=10' : '/pages/account/auth_login'}}">
+      <view class="iconfont icon1"></view>
+      <view class="txt">待付款</view>
+    </view>
+    <view class="item" bindtap="jumpPage" data-url="{{is_login ? '/pages/order_list/index?status=20' : '/pages/account/auth_login'}}">
+      <view class="iconfont icon2"></view>
+      <view class="txt">待发货</view>
+    </view>
+    <view class="item" bindtap="jumpPage" data-url="{{is_login ? '/pages/order_list/index?status=30' : '/pages/account/auth_login'}}">
+      <view class="iconfont icon3"></view>
+      <view class="txt">待收货</view>
+    </view>
+    <view class="item" bindtap="jumpPage" data-url="{{is_login ? '/pages/order_list/index?status=40' : '/pages/account/auth_login'}}">
+      <view class="iconfont icon4"></view>
+      <view class="txt">已完成</view>
+    </view>
+  </view>
+</view>
+<view class="account_box account_tool">
+  <view class="title">
+    <view class="left">我的服务</view>
+  </view>
+  <view class="items">
+    <view class="item" bindtap="jumpPage" data-url="/pages/qiandao/index">
+      <view class="iconfont icon1"></view>
+      <view class="txt">我的签到</view>
+    </view>
+    <view class="item" bindtap="jumpPage" data-url="{{is_login ? '/pages/account_address/index' : '/pages/account/auth_login'}}">
+      <view class="iconfont icon2"></view>
+      <view class="txt">地址管理</view>
+    </view>
+    <view class="item" bindtap="jumpPage" data-url="{{is_login ? '/pages/account_collect_product/index' : '/pages/account/auth_login'}}">
+      <view class="iconfont icon3"></view>
+      <view class="txt">收藏商品</view>
+    </view>
+    <view class="item" bindtap="jumpPage" data-url="{{is_login ? '/pages/account_user/index' : '/pages/account/auth_login'}}">
+      <view class="iconfont icon4"></view>
+      <view class="txt">设置中心</view>
+    </view>
+  </view>
+</view>
+<view class="blank_div"></view>
+<view class="account_item" bindtap="jumpPage" wx:for="{{articles}}" wx:key="key" data-url="/pages/article/show?id={{item.id}}">
+  <view class="container">
+    <view class="dt">{{item.title}}</view>
+    <view class="dd">
+      <i class="iconfont icon_more"></i>
+    </view>
+  </view>
+</view>
+<view class="blank_div"></view>
+<view class="account_item version">
+  LuckMall Version 1.01
+</view>
+<view class="blank_div"></view>

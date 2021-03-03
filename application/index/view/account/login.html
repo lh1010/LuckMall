@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>欢迎登录 {{:Config('system.app_name')}}</title>
+{{include file='layouts/_layout'}}
+</head>
+<body>
+{{include file='layouts/_site_nav'}}
+<div class="simple-head">
+	<div class="container">
+		<a href="{{:Config('system.app_url')}}" class="logo"><img src="{{:Config('system.app_logo')}}"></a>
+	</div>
+</div>
+<div class="login">
+		<div class="login-banner adver-ident" data-adver-id="5" data-adver-type="default"></div>
+		<div class="container">
+			<div class="login-form">
+				<div class="login-content">
+					<div class="login-content-title">还没有账号？<a href="{{:url('account/register')}}">立即注册</a></div>
+					<div class="login-content-radio">
+						<ul><li class="on" data-ident="login_default">普通登录</li><li data-ident="login_message">动态密码登录</li></ul>
+					</div>
+					<div class="msg-error error-info none"></div>
+					<!-- 普通登陆 start -->
+					<div class="form" id="login_default">
+						<form method="POST" id="fm_login" method="post" action="{{:url('api/account/login')}}" autocomplete="off">
+							<div class="form-group item-name">
+								<div class="form-control-box">
+									<i class="icon"></i>
+									<input type="text" name="username" class="text" placeholder="手机号 / 邮箱" >
+								</div>
+							</div>
+							<div class="form-group item-password">
+								<div class="form-control-box">
+									<i class="icon"></i>
+									<input type="password" name="password" class="text" placeholder="密码">
+								</div>
+							</div>
+							<div class="safety">
+								<a class="forget-password" href="">忘记密码？</a>
+							</div>
+							<div class="login-btn">
+								<input type="submit" class="btn-img btn-entry bg-color" value="立即登录">
+							</div>
+							<div class="item-coagent">
+								<a href="{{:url('oauth/weixin')}}?entrance=login" class="website-login">
+									<i class="weixin"></i>
+								</a>
+								<a href="{{:url('oauth/qq')}}?entrance=login" class="website-login">
+									<i class="qq"></i>
+								</a>
+								<a href="{{:url('oauth/weibo')}}?entrance=login" class="last website-login">
+									<i class="sina"></i>
+								</a>
+							</div>
+						</form>			
+					</div>
+					<!-- 普通登陆 end -->
+					<!-- 动态登陆 start -->
+					<div class="form none" id="login_message">
+						<form  action="{{:url('api/account/login')}}?type=sms" method="POST" id="fm_login_message" autocomplete="off">
+							<div class="form-group item-name">
+								<div class="form-control-box">
+									<i class="icon"></i>
+									<input type="text" name="phone" class="text" placeholder="手机号">
+								</div>
+							</div>
+							<div class="form-group form-group-spe form-group-phonecode">
+								<div class="form-control-box fl">
+									<i class="icon"></i>
+									<input type="text" id="smsCaptcha" name="phoneCode" class="text" placeholder="动态密码">
+									<a href="javascript:void(0);" onclick="sendPhoneCode_login()" class="phonecode">获取验证码</a>
+								</div>
+							</div>
+							<div class="login-btn">
+								<input type="submit" name="submit" class="btn-img btn-entry bg-color" value="立即登录">
+							</div>
+							<div class="item-coagent">
+								<a href="{{:url('oauth/weixin')}}?entrance=login" class="website-login">
+									<i class="weixin"></i>
+								</a>
+								<a href="{{:url('oauth/qq')}}?entrance=login" class="website-login">
+									<i class="qq"></i>
+								</a>
+								<a href="{{:url('oauth/weibo')}}?entrance=login" class="last website-login">
+									<i class="sina"></i>
+								</a>
+							</div>
+						</form>			
+					</div>
+					<!-- 动态登陆 end -->
+				</div>
+			</div>
+		</div>
+</div>
+{{include file='layouts/_foot_article'}}
+{{include file='layouts/_foot'}}
+{{include file='shared/_jquery_validation'}}
+<script type="text/javascript" src="/static/index/script/account.js?v={{:Config('version.pc.version')}}"></script>
+</body>
+</html>

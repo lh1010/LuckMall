@@ -1,0 +1,35 @@
+<view class="order_box">
+  <view class="container">
+    <view class="top">兑换商品</view>
+    <view class="product_items">
+      <view class="product_item">
+        <image class="product_image" src="{{order.product_image}}"></image>
+        <view class="info">
+          <view class="name">{{order.product_name}}</view>
+          <view class="price color">{{order.product_integral}} 积分</view>
+        </view>
+      </view>
+    </view>
+
+  </view>
+</view>
+<view class="blank_div"></view>
+<view class="order_box">
+  <view class="container">
+    <view class="top">配送信息</view>
+    <view class="items">
+      <view class="item">
+        <view class="key">收货人：</view>
+        <view class="value">{{order.name}}</view>
+      </view>
+      <view class="item">
+        <view class="key">联系方式：</view>
+        <view class="value">{{order.phone}}</view>
+      </view>
+      <view class="item">
+        <view class="key">收货地址：</view>
+        <view class="value">{{order.province_name}} {{order.city_name}} {{order.district_name}} {{order.detailed_address}}</view>
+      </view>
+    </view>
+  </view>
+</view>

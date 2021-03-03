@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "编辑地址",
+  "usingComponents": {
+    "popup": "/components/popup/index"
+  }
+}

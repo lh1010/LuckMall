@@ -1,0 +1,27 @@
+<div class="head">
+	<div class="w990">
+		<div class="logo-box">
+			<a href="{{:Config('system.app_url')}}" class="logo">
+				<img src="{{:Config('system.app_logo')}}">
+			</a>
+			<a href="" class="logo-right">
+				<img src="/static/index/images/mall_logo_right_da_image_0.gif">
+			</a>
+		</div>
+		<div class="search">
+			<form method="get" action="{{:url('product/products')}}" autocomplete="off">
+				<div class="search-box">
+					<div class="search-input">
+						<div class="search-input-con">
+							<div class="search-input-con">
+								<input type="text" name="k" placeholder="请输入关键字" value="{{:Request()->k}}" autocomplete="off">
+							</div>
+						</div>
+					</div>
+					<input type="submit" value="搜索" class="button">
+				</div>
+			</form>	
+			<ul class="hot-query" id="search_hot_word"></ul>
+		</div>
+	</div>
+</div>

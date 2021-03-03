@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>后台管理</title>
+{{include file="layouts/_head"}}
+</head>
+<body>
+<div class="main">
+    <ol class="breadcrumb">
+        <li><i class="icon_home iconfont"></i>首页</li>
+        <li>产品管理</li>
+        <li class="active">产品分类</li>
+    </ol>
+    <div class="bg-1 clearfix main-head-info">
+        <a class="btn btn-success btn-sm" href="{{:url('/admin/product_category/create')}}">创建分类</a>
+        <span class="pull-right margin-t-5">共有 <strong>{{php}}echo count($categorys);{{/php}}</strong> 条数据</span>
+    </div>
+    <div class="main-con">
+        {{if $categorys}}
+        <table class="table table-no-border table-hover">
+            <thead>
+                <tr>
+                    <th width="30"></th>
+                    <th width="60">排序</th>
+                    <th class="text-left">分类名</th>
+                    <th>子分类数量</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{volist name="categorys" key="key" id="vo"}}
+                <tr class="group_{{$vo.parent_id}}">
+                    <td class="{{$vo.parent_id}}">{{if $vo.parent_id eq 0}}<a href="javascript:void(0);" onclick="toggle_group(this)" style="font-size: 16px;">[-]</a>{{/if}}</td>
+                    <td>{{$vo.sort}}</td>
+                    <td class="text-left">{{php}}for($i=1; $i<$vo['level']; $i++) {echo '|—— ';}{{/php}}{{$vo.name}}<a class="category-addchildboard" href="/admin/product_category/create?parent_id={{$vo.id}}">添加子分类</a></td>
+                    <td>{{$vo.child_category_count}}</td>
+                    <td>
+                        {{if $vo.status == 1}}
+                        <span class="label label-success">开启</span>
+                        {{else}}
+                        <span class="label label-danger radius">关闭</span>
+                        {{/if}}
+                    </td>
+                    <td>
+                        <a class="btn btn-primary btn-xs" href="{{:url('/admin/product_category/edit')}}?id={{$vo.id}}">编辑</a>
+                        <button type="button" class="btn btn-danger btn-xs" onClick="delAction({{$vo.id}})">删除</button>
+                    </td>
+                </tr>
+                {{/volist}}
+            </tbody>
+        </table>
+        {{else}}
+        <p class="color-red text-center">数据为空！</p>
+        {{/if}}
+    </div>
+</div>
+{{include file="layouts/_foot"}}
+<script type="text/javascript">
+function toggle_group(thisNode) {
+    if ($(thisNode).html() == '[-]') {
+        $(thisNode).html('[+]');
+    } else {
+        $(thisNode).html('[-]');
+    }
+    $(thisNode).parents('.group_0').nextUntil('.group_0').toggleClass('hide');
+}
+
+function delAction(id){
+    layer.confirm('确认删除？', function(index){
+        layer.closeAll(); var load = layer.load();
+        $.ajax({
+            type: 'GET',
+            url: '{{:url("/admin/product_category/delete")}}?id='+id,
+            success: function(res) {
+                layer.close(load);
+                if (res.code == 401) {
+                    goLogin(); return false;
+                }
+                if (res.code == 200) {
+                    layer.msg('提交成功', {time: 1500}, function() {window.location.reload();});
+                } else if (res.code == 400) {
+                    layer.msg(res.message); return false;
+                } else {
+                    layer.msg('操作失败'); return false;
+                }
+            }
+        });     
+    });
+}   
+</script>
+</body>
+</html>

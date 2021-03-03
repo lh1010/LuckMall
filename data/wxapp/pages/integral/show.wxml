@@ -1,0 +1,38 @@
+<view class="top">
+  <view class="top_container container">
+    <view class="avatar"><image src="{{data.avatar}}"></image></view>
+    <view class="integral">
+      <span class="span1">{{data.integral}}</span>
+      <span class="span2">积分</span>
+    </view>
+    <view class="order">
+      <view class="btn" bindtap="jumpPage" data-url="/pages/qiandao/index"><span>去签到</span></view>
+    </view>
+  </view>
+</view>
+
+<view class="items" wx:if="{{res_total > 0}}">
+  <view class="container">
+    <view class="title">积分明细</view>
+    <view class="item" wx:for="{{logs}}" wx:key="key">
+      <view class="left">
+        <view class="description">{{item.description}}</view>
+        <view class="date">{{item.create_time}}</view>
+      </view>
+      <view class="integral">{{item.integral_addition}}</view>
+    </view>
+  </view>
+</view>
+<view class="weui-loadmore" wx:if="{{loading}}">
+  <view class="weui-loading"></view>
+  <view class="weui-loadmore__tips">正在加载</view>
+</view>
+<view class="weui-loadmore" wx:if="{{loaded}}">
+  <view class="weui-loadmore__tips">已加载全部</view>
+</view>
+<view class="products_items" wx:if="{{res_total == 0}}">
+  <view class="empty_data">
+    <image src="/images/empty_data.png"></image>
+    <view class="message">暂无积分明细~</view>
+  </view>
+</view>

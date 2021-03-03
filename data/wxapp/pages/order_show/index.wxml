@@ -1,0 +1,152 @@
+<view class="status">
+  <view class="container" wx:if="{{order.status == -10}}">
+    <view class="iconfont icon1"></view>
+    <view class="status_content">
+      <view class="status_txt">{{order.status_str}}</view>
+      <view class="status_tip">该订单已取消</view>
+    </view>
+  </view>
+  <view class="container" wx:if="{{order.status == 10}}">
+    <view class="iconfont icon1"></view>
+    <view class="status_content">
+      <view class="status_txt">{{order.status_str}}</view>
+      <view class="status_tip">您的订单未支付，请尽快支付</view>
+    </view>
+  </view>
+  <view class="container" wx:if="{{order.status == 20}}">
+    <view class="iconfont icon2"></view>
+    <view class="status_content">
+      <view class="status_txt">{{order.status_str}}</view>
+      <view class="status_tip">等待卖家发货</view>
+    </view>
+  </view>
+  <view class="container" wx:if="{{order.status == 30}}">
+    <view class="iconfont icon3"></view>
+    <view class="status_content">
+      <view class="status_txt">{{order.status_str}}</view>
+      <view class="status_tip">请确认收货</view>
+    </view>
+  </view>
+  <view class="container" wx:if="{{order.status == 40}}">
+    <view class="iconfont icon4"></view>
+    <view class="status_content">
+      <view class="status_txt">{{order.status_str}}</view>
+      <view class="status_tip">您的订单已完成，祝您生活愉快</view>
+    </view>
+  </view>
+</view>
+<view class="blank_div"></view>
+<view class="order_box">
+  <view class="container">
+    <view class="top">订单详情</view>
+    <view class="items">
+      <view class="item">
+        <view class="key">订单编号：</view>
+        <view class="value">{{order.number}}</view>
+      </view>
+      <view class="item">
+        <view class="key">下单时间：</view>
+        <view class="value">{{order.create_time}}</view>
+      </view>
+      <view class="item">
+        <view class="key">支付方式：</view>
+        <view class="value">{{order.payment_name}}</view>
+      </view>
+      <view class="item">
+        <view class="key">商品金额：</view>
+        <view class="value">¥ {{order.product_total_price}}</view>
+      </view>
+      <view class="item">
+        <view class="key">快递费用：</view>
+        <view class="value">¥ {{order.shipping_freight_total_price}}</view>
+      </view>
+    </view>
+    <view class="product_total">
+        实付金额：<span class="color">¥ {{order.total_price}}</span>
+    </view>
+  </view>
+</view>
+<view class="blank_div"></view>
+<view class="order_box">
+  <view class="container">
+    <view class="top">所购商品</view>
+    <view class="product_items">
+      <view class="product_item" wx:for="{{order.order_snaps}}" wx:key="key">
+        <image class="product_image" src="{{item.product_image}}"></image>
+        <view class="info">
+          <view class="name">{{item.product_name}}</view>
+          <view class="product_specification" wx:if="{{item.specifications.length > 0}}">
+            规格：<span wx:for="{{item.specifications}}" wx:for-item="item_specification" wx:key="key_specification">{{item_specification.specification_option_value}}</span>
+          </view>
+          <view class="price color">¥ {{item.sale_price}}</view>
+        </view>
+        <view class="number">x{{item.count}}</view>
+      </view>
+    </view>
+    <view class="product_total">
+        共 {{order.order_snaps.length}} 件商品，总金额： <span class="color">¥ {{order.product_total_price}}</span>
+    </view>
+  </view>
+</view>
+<view class="blank_div"></view>
+<view class="order_box">
+  <view class="container">
+    <view class="top">配送信息</view>
+    <view class="items">
+      <view class="item">
+        <view class="key">收货人：</view>
+        <view class="value">{{order.name}}</view>
+      </view>
+      <view class="item">
+        <view class="key">联系方式：</view>
+        <view class="value">{{order.phone}}</view>
+      </view>
+      <view class="item">
+        <view class="key">收货地址：</view>
+        <view class="value">{{order.province_name}} {{order.city_name}} {{order.district_name}} {{order.detailed_address}}</view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="order_foot_blank"></view>
+<view class="order_foot">
+  <view class="container" wx:if="{{order.status == -10}}">
+    <view class="message">订单已取消</view>
+    <view class="btn btn_cancel left" catchtap="deleteOrderTap"><span>删除订单</span></view>
+  </view>
+  <view class="container" wx:if="{{order.status == 10}}">
+    <view class="btn" catchtap="showSelectPaymentTap"><span>立即付款</span></view>
+    <view class="btn btn_cancel" catchtap="cancelOrderTap"><span>取消订单</span></view>
+  </view>
+  <view class="container" wx:if="{{order.status == 20}}">
+    <view class="message">等待卖家发货</view>
+  </view>
+  <view class="container" wx:if="{{order.status == 30}}">
+    <view class="btn" catchtap="confirmReceiptTap"><span>确认收货</span></view>
+  </view>
+  <view class="container" wx:if="{{order.status == 40}}">
+    <view class="message">订单已完成</view>
+  </view>
+</view>
+<!-- 选择支付方式 start -->
+<popup popup_visible="{{popup_visible_select_payment}}">
+  <view slot="content">
+    <view class="select_payment">
+      <view class="container">
+        <view class="select_payment_top">
+          <view class="title">选择支付方式</view>
+          <view class="close" bindtap="closeSelectPaymentTap"><i class="iconfont"></i></view>
+        </view>
+        <view class="items">
+          <view class="item" wx:for="{{payments}}" wx:key="key" data-id="{{item.id}}" catchtap="selectPaymentTap">
+            <view class="left">
+              <image src="{{item.mobile_image}}"></image>{{item.show_name}}
+            </view>
+            <view class="right"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</popup>
+<!-- 选择支付方式 end -->

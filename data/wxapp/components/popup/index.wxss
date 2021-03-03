@@ -1,0 +1,34 @@
+.popup_mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+  transition: all 0.2s ease-in-out;
+  opacity: 0;
+  visibility: hidden;
+}
+.popup_mask_show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.popup {
+  position: fixed;
+  width: 100%;
+  box-sizing: border-box;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform: translate3d(0, 100%, 0);
+  transform-origin: center;
+  transition: all 0.2s ease-in-out;
+  z-index: 9999;
+  visibility: hidden;
+}
+.popup_show {
+  transform: translate3d(0, 0, 0);
+  visibility: visible;
+}

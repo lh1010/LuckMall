@@ -1,0 +1,90 @@
+<view class="page">
+  <view class="page__bd">
+    <form bindsubmit="updateAddress">
+      <view class="weui-cells weui-cells_after-title"> 
+        <!-- input 输入框 start -->
+        <view class="weui-cell">
+          <view class="weui-cell__hd">
+            <view class="weui-label">姓名</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input name="name" class="weui-input" type="text" placeholder="请输入姓名" value="{{address.name}}" />
+          </view>
+        </view>
+        <view class="weui-cell">
+          <view class="weui-cell__hd">
+            <view class="weui-label">联系电话</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input name="phone" class="weui-input" type="number" placeholder="请输入联系电话" value="{{address.phone}}" />
+          </view>
+        </view>
+        <view class="weui-cell select_address">
+          <view class="weui-cell__hd">
+            <view class="weui-label">所在地区</view>
+          </view>
+          <view class="weui-cell__bd" bindtap="popup_address">
+            <span class="select_address_txt">{{region||"请选择"}}</span>
+            <i class="iconfont"></i>
+          </view>
+          <input name="province_id" class="hide" type="hidden" value="{{selected_province_id}}" />
+          <input name="city_id" class="hide" type="hidden" value="{{selected_city_id}}" />
+          <input name="district_id" class="hide" type="hidden" value="{{selected_area_id}}" />
+        </view>
+        <view class="weui-cell">
+          <view class="weui-cell__hd">
+            <view class="weui-label">详细地址</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input name="detailed_address" class="weui-input" type="text" placeholder="请输入详细地址" value="{{address.detailed_address}}" />
+          </view>
+        </view>
+        <!-- input 输入框 end -->
+        <view class="blank_div"></view>
+        <!-- radio 选择器 start -->
+        <radio-group>
+          <label class="weui-cell weui-check__label" catchtap='checkedTap'>
+            <view class="weui-cell__hd">
+              <radio name="default_address" checked="{{checked}}" />
+            </view>
+            <view class="weui-cell__bd">设为默认地址</view>
+          </label>
+        </radio-group>
+        <!-- radio 选择器 end -->
+      </view>
+      <view class="weui-btn-area">
+        <button type="primary" class="save-btn" formType="submit">保存</button>
+      </view>
+    </form>  
+  </view>
+</view>
+<!-- 选择地址弹出层 start -->
+<popup popup_visible="{{popup_visible_address}}">
+  <view slot="content">
+    <view class="popup_address">
+      <view class="popup_address_top">
+        <view class="title">选择地址</view>
+        <view class="popup_address_close" bindtap="close_popup_address"><i class="iconfont"></i></view>
+      </view>
+      <view class="popup_address_tabs">
+        <view class="container">
+          <view class="item {{popup_address_location == 'province' ? 'color' : ''}}" bindtap="showHidePopupAddress" data-type="province" data-show_hide="ident">{{selected_province_name||'请选择'}}</view>
+          <view class="item {{popup_address_location == 'city' ? 'color' : ''}}" hidden="{{popup_address_location == 'city' || popup_address_location == 'area' ? false : true}}" bindtap="showHidePopupAddress" data-type="city" data-show_hide="ident">{{selected_city_name||'请选择'}}</view>
+          <view class="item {{popup_address_location == 'area' ? 'color' : ''}}" hidden="{{popup_address_location == 'area' ? false : true}}" bindtap="showHidePopupAddress" data-type="area" data-show_hide="ident">{{selected_area_name||'请选择'}}</view>
+        </view>
+      </view>
+      <view class="popup_address_items">
+        <view class="container" hidden="{{popup_address_location == 'province' ? false : true}}">
+          <view class="item" wx:for="{{province_data}}" data-id="{{item.id}}" data-name="{{item.name}}" data-type="province" bindtap="getCitys">{{item.name}}</view>
+        </view>
+        <view class="container" hidden="{{popup_address_location == 'city' ? false : true}}">
+          <view class="item" wx:for="{{city_data}}" data-id="{{item.id}}" data-name="{{item.name}}" data-type="city" bindtap="getCitys">{{item.name}}</view>
+        </view>
+        <view class="container" hidden="{{popup_address_location == 'area' ? false : true}}">
+          <view class="item" wx:for="{{area_data}}" data-id="{{item.id}}" data-name="{{item.name}}" data-type="area" bindtap="getCitys">{{item.name}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</popup>
+<!-- 选择地址弹出层 end -->

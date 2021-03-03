@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>后台管理</title>
+{{include file="layouts/_head"}}
+<style type="text/css">
+body {
+	min-width: 0;
+}
+</style>
+</head>
+<body>
+<div class="main">
+	<div class="bg-danger clearfix main-head-info error-info"></div>
+	<div class="main-con">
+		<form class="form-horizontal margin-t-30" id="form" method="post" action="{{:url('/admin/product/updateSku')}}" >
+			<input type="hidden" name="id" value="{{$sku.id}}">
+		  	<div class="form-group">
+				<span class="col-sm-2 control-label"> SKU：</span>
+				<div class="col-sm-8 input-group"><p class="form-control-static">{{$sku.sku}}</p></div>
+			</div>	
+			<div class="form-group">
+				<span class="col-sm-2 control-label"> 产品名：</span>
+				<div class="col-sm-8 input-group"><p class="form-control-static">{{$sku.name}}</p></div>
+			</div>
+			<div class="form-group">
+				<span class="col-sm-2 control-label"> 销售规格：</span>
+				<div class="col-sm-8 input-group">
+					<p class="form-control-static">
+						{{if !empty($sku.specifications)}}
+						{{volist name="sku.specifications" id="vo_specification"}}
+						<span style="margin-right: 8px"><color>{{$vo_specification.specification_name}}</color>：<color style="color: green; font-weight: 600">{{$vo_specification.specification_option_value}}</color></span>
+						{{/volist}}
+						{{/if}}
+					</p>
+				</div>
+			</div>	
+			<div class="form-group">
+                <span class="col-sm-2 control-label"><i class="iconfont iconfont-question" data-toggle="tooltip" data-placement="top" data-original-title="最终销售价格"></i> <span class="color-red">*</span> 销售价：</span>
+                <div class="col-sm-2 input-group">
+                    <input class="form-control" name="sale_price" value="{{$sku.sale_price}}">
+                    <span class="input-group-addon">元</span>
+                </div>
+            </div>
+			<div class="form-group">
+				<span class="col-sm-2 control-label"> 库存：</span>
+				<div class="col-sm-2 input-group"><input class="form-control" name="stock" value="{{$sku.stock}}"></div>
+			</div>
+			<div class="foot_btn_blank"></div>
+            <div class="foot_btn">
+                <div class="box">
+                    <button type="submit" class="btn btn-primary">提交</button>
+                </div>
+            </div>
+		</form>
+	</div>
+</div>
+{{include file="layouts/_foot"}}
+{{include file="shared/_jquery_validation"}}
+<script type="text/javascript">
+$("#form").validate({
+	rules: {
+		sale_price: {required: true},
+	},
+	messages: {
+		sale_price: '销售价不能为空',
+	},
+	submitHandler:function(){
+		layer.confirm('确认提交？', function() {
+			var load = layer.load();	
+			$("#form").ajaxSubmit(function(res) {
+				layer.close(load);
+				if (res.code == 401) {
+                    goLogin(); return false;
+                }
+				if (res.code == 400) {
+					layer.msg(res.message); return false;
+				}
+				if (res.code == 200) {
+					layer.msg('提交成功', {time: 1500}, function() {
+						window.parent.location.reload();
+						var index = parent.layer.getFrameIndex(window.name);
+						parent.layer.close(index);
+					});
+					return false;
+				}
+			});
+		});	
+	}
+});
+</script>
+</body>
+</html>

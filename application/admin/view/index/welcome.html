@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>后台管理</title>
+{{include file="layouts/_head"}}
+<link rel="stylesheet" type="text/css" href="/static/admin/style/statistics.css?version={{:Config('version.admin.version')}}">
+</head>
+<body>
+<div class="main">
+	<!-- 必要安装 start -->
+	<div class="plugins">
+		<div class="messages"></div>
+		<span class="iconfont close" title="关闭"></span>
+	</div>
+	<!-- 必要安装 end -->
+	<!-- 简要统计 start -->
+	<div class="row">
+		<div class="col-lg-3 col-xs-6">
+			<div class="small-box bg-aqua">
+				<div class="inner">
+					<h3 id="count_order">...</h3>
+					<p>订单数量</p>
+				</div>
+				<div class="icon">
+					<i class="iconfont">&#xe605;</i>
+				</div>
+				<a href="javascript:void(0);" onclick="layerOpen('{{:url("/admin/order")}}', '订单管理', '95%', '95%')" class="small-box-footer">查看 <i class="iconfont">&#xe61b;</i></a>
+			</div>
+		</div>
+		<div class="col-lg-3 col-xs-6">
+			<div class="small-box bg-green">
+				<div class="inner">
+					<h3 id="count_user">...</h3>
+					<p>注册用户</p>
+				</div>
+				<div class="icon">
+					<i class="iconfont">&#xe66d;</i>
+				</div>
+				<a href="javascript:void(0);" onclick="layerOpen('{{:url("/admin/user")}}', '用户列表', '95%', '95%')" class="small-box-footer">查看 <i class="iconfont">&#xe61b;</i></a>
+			</div>
+		</div>
+		<div class="col-lg-3 col-xs-6">
+			<div class="small-box bg-red">
+				<div class="inner">
+					<h3 id="count_product">...</h3>
+					<p>产品数量</p>
+				</div>
+				<div class="icon">
+					<i class="iconfont">&#xe601;</i>
+				</div>
+				<a href="javascript:void(0);" onclick="layerOpen('{{:url("/admin/product")}}', '产品列表', '95%', '95%')" class="small-box-footer">查看 <i class="iconfont">&#xe61b;</i></a>
+			</div>
+		</div>
+		<div class="col-lg-3 col-xs-6">
+			<div class="small-box bg-yellow">
+				<div class="inner">
+					<h3 id="count_product_category">...</h3>
+					<p>产品类目</p>
+				</div>
+				<div class="icon">
+					<i class="iconfont">&#xe638;</i>
+				</div>
+				<a href="javascript:void(0);" onclick="layerOpen('{{:url("/admin/product_category")}}', '产品分类', '95%', '95%')" class="small-box-footer">查看 <i class="iconfont">&#xe61b;</i></a>
+			</div>
+		</div>
+	</div>
+	<!-- 简要统计 end -->
+	<!-- 最新订单 start -->
+	<div class="float-left col-lg-12 col-xs-12">
+		<div class="row">
+			<div class="statistics_title">新订单</div>
+			<table class="table table-bordered table-hover" id="orders">
+				<thead>
+					<tr>
+						<th width="50">序号</th>
+						<th>订单编号</th>
+						<th>总金额</th>
+						<th>用户</th>
+						<th>支付方式</th>
+						<th>状态</th>
+						<th>创建时间</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="text-center" colspan="7"><div class="loading2"></div></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!-- 最新订单 end -->
+	<div class="row">
+		<div class="float-left col-lg-6 col-xs-12">
+			<div class="statistics_title">新产品</div>
+			<table class="table table-bordered table-hover" id="products">
+				<thead>
+					<tr>
+						<th width="50">序号</th>
+						<th>产品名</th>
+						<th>分类</th>
+						<th>创建时间</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="text-center" colspan="4"><div class="loading2"></div></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="float-left col-lg-6 col-xs-12">
+			<div class="statistics_title">新用户</div>
+			<table class="table table-bordered table-hover" id="users">
+				<thead>
+					<tr>
+						<th width="50">序号</th>
+						<th>昵称</th>
+						<th>注册时间</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="text-center" colspan="4"><div class="loading2"></div></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+{{include file="layouts/_foot"}}
+<script type="text/javascript" src="/static/admin/script/statistics.js?version={{:Config('version.admin.version')}}"></script>
+</body>
+</html>

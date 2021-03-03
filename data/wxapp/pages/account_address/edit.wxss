@@ -1,0 +1,73 @@
+page {
+  min-height: 100%;
+  background-color: #F2f2f2;
+}
+
+.select_address .iconfont {
+  float: right;
+  color: #ccc;
+}
+.select_address .iconfont::before {
+  content: '\e62a';
+}
+.select_address_txt {
+  width: 420rpx;
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow:ellipsis;
+  float: left;
+}
+/* 选择地址弹出层 start */
+.popup_address {
+  width: 100%;
+  height: auto;
+  background-color: #fff;
+}
+.popup_address_top {
+  padding: 40rpx 0;
+  position: relative;
+}
+.popup_address_close {
+  position: absolute;
+  top: 5rpx;
+  right: 15rpx;
+}
+.popup_address_close i::before {
+  content: '\e604';
+  font-size: 40rpx;
+  color: #ccc;
+}
+.popup_address_top .title {
+  text-align: center;
+}
+.popup_address_tabs {
+  padding: 0 0 30rpx 0;
+}
+.popup_address_tabs .container {
+  display: flex;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.popup_address_tabs .item {
+  margin-right: 20rpx;
+}
+.popup_address_items {
+  float: left;
+  display: inline;
+  position: relative;
+  left: 0;
+  overflow: hidden;
+  overflow-y: scroll;
+  width: 100%;
+  height: calc(60vh - 65px);
+  background-color: #fff;
+  padding: 10rpx 0;
+  border-top: 1px solid #eee;
+}
+.popup_address_items .item {
+  width: 100%;
+  line-height: 70rpx;
+  min-height: 70rpx;
+}
+/* 选择地址弹出层 end */

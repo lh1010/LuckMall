@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>后台管理</title>
+{{include file="layouts/_head"}}
+</head>
+<body>
+<div class="main">
+    <ol class="breadcrumb">
+        <li><i class="icon_home iconfont"></i>首页</li>
+        <li>文档管理</li>
+        <li class="active">文档列表</li>
+    </ol>
+    <div class="main-head text-left">
+        <form class="form-inline" action="" method="get">
+            <select class="form-control" name="category_id">
+                <option value="">文档分类</option>
+                {{volist name="categorys" key="key" id="vo"}}
+                <option value="{{$vo.id}}" {{if Request()->category_id == $vo.id}}selected{{/if}}>{{php}}for($i = 1; $i < $vo['level']; $i++) {echo '&nbsp;&nbsp;&nbsp;&nbsp;';}{{/php}}{{$vo.name}}</option>
+                {{/volist}}
+            </select>
+            <select class="form-control" name="status">
+                <option value="">状态</option>
+                <option value="1" {{if Request()->status == 1}}selected{{/if}}>开启</option>
+                <option value="0" {{if Request()->status == '0'}}selected{{/if}}>关闭</option>
+            </select>
+            <input type="text" class="form-control" name="keyword" value="{{:Request()->keyword}}" placeholder="标题" >
+            <button type="submit" class="btn btn-primary">搜索</button>
+        </form>
+    </div>
+    <div class="bg-1 clearfix main-head-info">
+        <a href="{{:url('/admin/article/create')}}" class="btn btn-success btn-sm" >创建文档</a>
+        <button type="submit" class="btn btn-danger btn-sm" onclick="delAction()">批量删除</button>
+        <span class="pull-right margin-t-5">共有数据：<strong>{{$articles->total()}}</strong> 条</span>
+    </div>
+    <div class="main-con">
+        {{if $articles->count() > 0}}
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" name="" value=""></th>
+                    <th>ID</th>
+                    <th>标题</th>
+                    <th>分类</th>
+                    <th>状态</th>
+                    <th>添加时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{volist name="articles" id="vo" key="key" }}
+                <tr id="{{$vo.id}}">
+                    <td><input type="checkbox" /></td>
+                    <td>{{$vo.id}}</td>
+                    <td title="{{$vo.title}}"><a href="">{{$vo.title|mb_substr=0,20,'utf-8'}}</a></td>
+                    <td>{{$vo.category_name}}</td>
+                    <td>
+                        {{if $vo.status == 1}}
+                        <span class="label label-success">开启</span>
+                        {{else}}
+                        <span class="label label-danger radius">关闭</span>
+                        {{/if}}
+                    </td>
+                    <td>{{$vo.create_time|substr=0,10}}</td>
+                    <td>
+                        <a class="btn btn-primary btn-xs" href="{{:url('/admin/article/edit')}}?id={{$vo.id}}">编辑</a>
+                        <button type="button" class="btn btn-danger btn-xs" onClick="delAction({{$vo.id}})">删除</button>
+                    </td>
+                </tr>
+                {{/volist}}
+            </tbody>
+        </table>
+        <div class="page">
+        {{$articles->appends(Request()->get())->render()|raw}}
+        </div>
+        {{else}}
+        <p class="color-red text-center">数据为空！</p>
+        {{/if}}
+    </div>
+</div>
+{{include file="layouts/_foot"}}
+<script type="text/javascript">
+function delAction(id = '')
+{
+    if (id == '') {
+        var trs = $("tbody :checkbox:checked").parents("tr");
+        if (trs.length <= 0) {
+            layer.msg('请勾选需删除的数据', {icon: 5, time: 1500});
+            return false;
+        }
+        var ids = '';
+        for (var i = 0; i < trs.length; i++) {
+            ids += trs[i].id+',';
+        }
+        id = ids.substr(0, ids.length - 1);
+    }
+    layer.confirm('确认删除？',function(index){
+        var load = layer.load();
+        $.ajax({
+            type: 'GET',
+            url: '{{:url("/admin/article/destory")}}?id='+id,
+            dataType: 'json',
+            success: function(data){
+                layer.close(load);
+                if (data.code == 200) {
+                    layer.msg('提交成功', {time: 1500}, function() {window.location.reload();});
+                } else if (data.code == 400) {
+                    layer.msg(data.message);
+                } else {
+                    layer.msg('操作失败');
+                }
+            },
+            error:function(data) {
+                console.log(data.msg);
+            },
+        });     
+    });
+}    
+</script>
+</body>
+</html>

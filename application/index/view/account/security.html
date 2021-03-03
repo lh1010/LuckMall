@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>安全设置 个人中心 {{:Config('system.app_name')}}</title>
+{{include file='layouts/_layout'}}
+<link rel="stylesheet" type="text/css" href="/static/index/style/user.css?v={{:Config('version.pc.version')}}" />
+</head>
+<body>
+{{include file='layouts/_site_nav'}}
+<div class="user">
+	{{include file='account/_account_head'}}
+	<div class="user-box">
+		<div class="container">
+			{{include file='account/_account_menu'}}
+			<div class="user-box-right">
+				<div class="rcon">
+					<div class="tabmenu">
+						<ul class="tab"><li class="active">安全设置</li></ul>
+					</div>
+					<div class="content-info">
+						<div class="safe-user-info">
+							<h3>您的账户信息</h3>
+							<div class="user-pic">
+								<span><img src="{{$data.user.avatar}}"></span>
+							</div>
+							<div class="user-intro">
+								<dl>
+									<dt>账户昵称：</dt>
+									<dd>{{$data.user.nickname}}</dd>
+								</dl>
+								<dl>
+									<dt>绑定手机：</dt>
+									<dd> {{if !empty($data.user.phone)}} {{php}}echo substr_replace($data['user']['phone'], '****', 3, 4);{{/php}} {{else}} 未绑定 {{/if}}</dd>
+								</dl>
+								<dl>
+									<dt>绑定邮箱：</dt>
+									<dd> {{if !empty($data.user.email)}} {{php}}echo substr_replace($data['user']['email'], '****', 3, 4);{{/php}} {{else}} 未绑定 {{/if}} </dd>
+								</dl>
+								<dl>
+									<dt>上次登录：</dt>
+									<dd>
+										{{$data.login_log.create_time}} {<span> IP地址：</span> [ {{$data.login_log.ip}} ]<span>（不是您登录的？请立即<a href="{{:url('account/set_password')}}" class="color">“更改密码”</a>）}</span>
+									</dd>
+								</dl>
+							</div>
+						</div>
+						<div class="warn-box">
+							<p>
+								<span>当前安全级别：</span>
+								<strong>{{$data.safety_grade.describe}}</strong>
+								<i class="validated{{$data.safety_grade.grade}}"></i>
+								{{if $data.safety_grade.grade < 4}}<span>（建议您启动全部安全设置，以保障账户安全）</span>{{/if}}
+							</p>
+						</div>
+						<div class="safe" id="safe">
+							<div class="safe-list">
+								{{if !empty($data.user.password)}}
+								<div class="fore1"><s class="safe-bg2"></s> <strong>登录密码</strong></div>
+								<div class="fore2"><span>已设置登录密码</span></div>
+								<div class="fore3"><a href="{{:url('account/set_password')}}" class="btn remove-bind">修改密码</a></div>
+								{{else}}
+								<div class="fore1"><s class="safe-bg1"></s> <strong>登录密码</strong></div>
+								<div class="fore2"><span>设置后，可直接使用密码登录。</span></div>
+								<div class="fore3"><a href="{{:url('account/set_password')}}" class="btn bind">设置密码</a></div>
+								{{/if}}
+							</div>
+							<div class="safe-list">
+								{{if !empty($data.user.phone)}}
+								<div class="fore1"><s class="safe-bg2"></s> <strong>手机验证</strong></div>
+								<div class="fore2"><span>您绑定的手机号： <font class="color">{{php}}echo substr_replace($data['user']['phone'], '****', 3, 4);{{/php}}</font> ，该手机号可用于账号登录、快速找回登录密码等。</span></div>
+								<div class="fore3"><a href="{{:url('account/set_phone')}}" class="btn remove-bind">修改手机</a></div>
+								{{else}}
+								<div class="fore1"><s class="safe-bg1"></s> <strong>手机验证</strong></div>
+								<div class="fore2"><span>绑定后，可用于账号登录、快速找回登录密码等。</span></div>
+								<div class="fore3"><a href="{{:url('account/set_phone')}}" class="btn bind">绑定手机</a></div>
+								{{/if}}
+							</div>
+							<div class="safe-list">
+								{{if !empty($data.user.email)}}
+								<div class="fore1"><s class="safe-bg2"></s> <strong>邮箱验证</strong></div>
+								<div class="fore2"><span>您绑定的邮箱： <font class="color">{{php}}echo substr_replace($data['user']['email'], '****', 3, 4);{{/php}}</font> ，该邮箱可用于账号登录、快速找回登录密码等。</span></div>
+								<div class="fore3"><a href="{{:url('account/set_email')}}" class="btn remove-bind">修改邮箱</a></div>
+								{{else}}
+								<div class="fore1"><s class="safe-bg1"></s> <strong>邮箱验证</strong></div>
+								<div class="fore2"><span>绑定后，可用于账号登录、快速找回登录密码等。</span></div>
+								<div class="fore3"><a href="{{:url('account/set_email')}}" class="btn bind">绑定邮箱</a></div>
+								{{/if}}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{{include file='layouts/_foot'}}
+</body>
+</html>

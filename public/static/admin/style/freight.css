@@ -1,0 +1,55 @@
+@charset "utf-8";
+
+.ship-area {
+    margin-top: 30px;
+}
+.ship-area-selected {
+    margin: 0 15px 20px 15px;
+}
+.ship-area-selected label {
+    margin-right: 5px;
+}
+.ship-area-select {
+    text-align: center;
+}
+.ship-area select {
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+.ship-area select:not(:first-child) {
+    margin-left: 10px;
+}
+.ship-area select option{
+    padding: 0px 5px 0px 10px;
+    height:25px;
+    line-height:25px;
+    color: #666;
+}
+.ship-area-btn {
+    text-align: center;
+    margin-top: 20px;
+}
+.ship-area-btn a.btn:not(:first-child) {
+    margin-left: 10px;
+}
+.freight-item {}
+.freight-title {
+    font-size: 16px;
+}
+.freight-title span.freight-type {
+    font-size: 14px;
+    color: #999;
+}
+.freight-title span.freight-description {
+    font-size: 12px;
+}
+.select-freight {
+    margin-left: 10px;
+    float: left;
+}
+.select-freight a {
+    float: left;
+    line-height: 290%;
+    margin-right: 10px;
+    font-size: 12px;
+}

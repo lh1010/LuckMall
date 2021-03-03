@@ -1,0 +1,21 @@
+<view class="search">
+  <view class="container">
+    <view class="left">
+      <i class="iconfont icon_search"></i>
+      <input type="text" placeholder="输入商品名称" bindinput="getKeywordValue" bindconfirm="toProductsTab"></input>
+    </view>
+    <view class="right">
+      <span class="btn" bindtap="toProductsTab">搜索</span>
+    </view>
+  </view>
+</view>
+<view class="hot_word" hidden="{{search_hot_words.length > 0 ? '' : 'true'}}">
+  <view class="container">
+    <view class="title">热门搜索</view>
+    <view class="items">
+      <view class="item" data-value="{{item.value}}" bindtap="setKeywordTap" wx:for="{{search_hot_words}}" wx:key="key">{{item.value}}</view>
+    </view>
+  </view>
+</view>
+
+

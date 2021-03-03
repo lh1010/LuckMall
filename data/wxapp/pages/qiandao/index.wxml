@@ -1,0 +1,16 @@
+<view class="top">
+  <view class="message_icon" bindtap="ruleTap">规则</view>
+  <view class="number_of_day">已连续签到<span>{{continuous_count}}</span>天</view>
+  <view class="btn" bindtap="qiandaoTap" wx:if="{{is_login && !today_already}}"><span>立即签到</span></view>
+  <view class="btn already" wx:if="{{is_login && today_already}}"><span>今日已签到</span></view>
+  <view class="btn login" wx:if="{{!is_login}}" bindtap="jumpPage" data-url="/pages/account/auth_login"><span>登录签到</span></view>
+</view>
+<view class="date">
+  <view class="month">{{year_month}}</view>
+  <view class="week">
+    <span wx:for="{{weeks}}" wx:key="key" class="{{item.on ? 'on' : ''}}">{{item.value}}</span>
+  </view>
+  <view class="day">
+    <span wx:for="{{days}}" wx:key="key" class="{{item.on ? 'on' : ''}} {{item.already ? 'already' : ''}}"><em>{{item.value}}</em></span>
+  </view>
+</view>

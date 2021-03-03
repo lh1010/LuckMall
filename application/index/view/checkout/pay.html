@@ -1,0 +1,154 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>支付 {{:Config('app.app_name')}}</title>
+{{include file='layouts/_layout'}}
+<link rel="stylesheet" type="text/css" href="/static/index/style/layer.css?v={{:Config('version.pc.version')}}" />
+</head>
+<body>
+{{include file='layouts/_site_nav_990'}}
+<div class="head">
+	<div class="w990">
+		<div class="logo-box">
+			<a href="{{:Config('system.app_url')}}" class="logo"><img src="{{:Config('system.app_logo')}}"></a>
+		</div>
+		<div class="cart-progress">
+		    <ul>
+		        <li class="finish finish-01">
+		            <i>1</i>
+		            <span><a href="{{:url('cart/index')}}">我的购物车</a></span>
+		            <b></b>
+		        </li>
+		        <li class="finish finish-02">
+		            <i>2</i><span>确认订单</span><b></b>
+		        </li>
+		        <li class="finish finish-03">
+		            <i>3</i><span>付款</span><b></b>
+		        </li>
+		        <li class="finish">
+		            <i>4</i><span>支付成功</span><b></b>
+		        </li>
+		    </ul>
+		</div>
+	</div>
+</div>
+<div class="checkout">
+	<div class="w990 checkout-box">
+		<!-- 支付方式 start -->
+		<div class="pay ">
+			<div class="main-box">
+				<h2 class="title">{{:Config('system.app_name')}} 收银台</h2>
+				<div class="pay-twice">
+					<div class="order-num">
+					    <p>
+					        订单提交成功，请您尽快完成付款！
+					        <span>订单号：{{$order['number']}}</span>
+					        <span class="order_detail"><a href="{{:url('account/order_show')}}?id={{$order.id}}" target="_blank">订单详情</a></span>
+					    </p>
+					</div>
+					<div class="order-info">
+					    <div class="float-left price-box">
+					        <span>应付金额：</span>
+					        <span class="price color">¥{{$order['total_price']}}</span>
+					    </div>
+					    <div class="float-left deliver-info">
+					        <p class="address">
+					        	收货地址：{{$order['name']}} {{$order['province_name']}} {{$order['city_name']}} {{$order['district_name']}} {{$order['detailed_address']}} {{$order['phone']}}
+					    	</p>
+					        <p class="time">请您在 <span class="color">25分08秒</span> 内完成支付，否则订单会被自动取消</p>
+					    </div>
+					</div>
+				</div>
+				<h2 class="title">支付方式</h2>
+				<div class="pay-type">
+					<p class="surplus-pay">剩余应付金额<strong class="color">¥{{$order.total_price}}</strong>请选择以下支付方式支付</p>
+					<div class="pay-all">          
+					    <ul class="payment-tab">
+					        {{if !empty($payments)}}
+					    	{{volist name="$payments" id="vo"}}
+					        <li class="clearfix">
+					            <label>
+					            	{{if $order.payment_id}}
+						            <input title="{{$vo.name}}" type="radio" name="payment_id" class="pay_code" value="{{$vo.id}}" {{if $order.payment_id == $vo.id}}checked="true"{{/if}} autocomplete="off">
+						            {{else}}
+						            <input title="{{$vo.name}}" type="radio" name="payment_id" class="pay_code" value="{{$vo.id}}" {{if $key == 1}}checked="true"{{/if}} autocomplete="off">
+						            {{/if}}
+						            <img title="{{$vo.name}}" src="{{$vo.pc_image}}" alt="" class="pay-img">
+					            </label>
+					        </li>
+					        {{/volist}}
+					        {{/if}}
+					    </ul>       
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 支付方式 end -->
+		<!-- 提交订单 start -->
+		<!-- 添加.bottom实现悬浮 -->
+		<div class="confirm-pay">
+		    <div class="submit-box">
+		        <div class="float-right">
+		            <a href="javascript:void(0);" class="submit-btn bg-color" onclick="pay()">立即付款</a>
+		        </div>
+		    </div>      
+		</div>
+		<!-- 提交订单 end -->
+	</div>
+</div>
+{{include file='layouts/_foot'}}
+<script type="text/javascript" src="/static/index/script/payment.js?v={{:Config('version.pc.version')}}"></script>
+<script type="text/javascript">
+$('.hasDetail i').click(function() {
+	if ($(this).parents('li').hasClass('selected') == true) {
+		$(this).parents('li').removeClass('selected');
+	} else {
+		$(this).parents('li').addClass('selected');
+	}
+	$(this).parents('li').find('.detail-table').slideToggle();
+})
+
+function pay()
+{
+	var payment_id = $('input[name="payment_id"]:checked').val();
+	var order_id = '{{$order.id}}';
+	var load = layer.load();
+	$.ajax({
+		url: '/api/payment',
+		type: 'post',
+		data: {
+			type: 'order',
+			payment_id: payment_id,
+			order_id: order_id
+		},
+		async: false,
+		success: function(res) {
+			layer.close(load);
+			if (res.code == 401) {
+				goLogin();
+			} else if (res.code == 200) {
+				var pay_result_url = '/payment/result.html?order_id=' + order_id;
+				if (res.data.url == undefined) {
+					window.location.href = pay_result_url;
+				} else {
+					payEndShow(pay_result_url);
+					var t = window.open();
+	    			t.document.write('<html><head><title>正在处理，请稍后...</title><meta charset="utf-8" /><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" /><link type="text/css" rel="stylesheet" href="/static/index/style/style.css" /></head><body><div class="loading-pay"><div class="loading-pay-img"><img src="/static/index/images/cart-loading.gif"><img src="/static/index/images/page-loading.gif"></div></div></body></html>');
+					layer.msg('正在跳转至支付页面...', {time: 1500}, function() {
+						var url = res.data.url;
+						return t.location = url;
+					});
+				}
+				
+			} else if (res.code == 400) {
+				layer.msg(res.message);
+			} else {
+				layer.msg('操作失败');
+			}
+		}
+	})
+}
+</script>
+</body>
+</html>

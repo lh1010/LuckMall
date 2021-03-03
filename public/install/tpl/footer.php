@@ -1,0 +1,1 @@
+<div class="footer"> &copy; 2020-2021 <a href="http://home.luckmall.lh1010.com" target="_blank">LuckMall</a> 优秀易用的开源商城系统</div>

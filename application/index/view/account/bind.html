@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>账号绑定 个人中心 {{:Config('system.app_name')}}</title>
+{{include file='layouts/_layout'}}
+<link rel="stylesheet" type="text/css" href="/static/index/style/user.css?v={{:Config('version.pc.version')}}" />
+</head>
+<body>
+{{include file='layouts/_site_nav'}}
+<div class="user">
+	{{include file='account/_account_head'}}
+	<div class="user-box">
+		<div class="container">
+			{{include file='account/_account_menu'}}
+			<div class="user-box-right">
+				<div class="rcon">
+					<div class="tabmenu">
+						<ul class="tab">
+							<li class="active">账号绑定</li>
+							<li class="li-spe">（绑定第三方账户，绑定成功后即可使用第三方账户快速登录）</li>
+						</ul>
+					</div>
+					<div class="content-info">
+						<div class="binding" id="safe">
+							<div class="safe-list">
+								<div class="fore1">
+									<s class="fore1-bg1"></s>
+									<strong>QQ账户</strong>
+								</div>
+								{{if isset($thirdAccounts['qq'])}}
+								<div class="fore2"><span>已绑定{{if isset($thirdAccounts['qq']['data']['nickname'])}}（昵称：{{$thirdAccounts['qq']['data']['nickname']}}）{{/if}}</span></div>
+								<div class="fore3"><a href="javascript:void(0);" onclick="unbindThirdAccount('qq')" class="btn bind">解除绑定</a></div>
+								{{else}}
+								<div class="fore2"><span>您还没有绑定QQ账户，绑定后您可以使用QQ账户快速登录。</span></div>
+								<div class="fore3"><a href="{{:url('oauth/qq')}}?entrance=bind" class="btn remove-bind">快速绑定</a></div>
+								{{/if}}
+							</div>
+							<div class="safe-list">
+								<div class="fore1">
+									<s class="fore1-bg3"></s>
+									<strong>微博账户</strong>
+								</div>
+								{{if isset($thirdAccounts['weibo'])}}
+								<div class="fore2"><span>已绑定（昵称：{{$thirdAccounts['weibo']['nickname']}}）</span></div>
+								<div class="fore3"><a href="javascript:void(0);" onclick="unbindThirdAccount('weibo')" class="btn bind">解除绑定</a></div>
+								{{else}}
+								<div class="fore2"><span>您还没有绑定微博账户，绑定后您可以使用微博账户快速登录。</span></div>
+								<div class="fore3"><a href="{{:url('oauth/weibo')}}?entrance=bind" class="btn remove-bind">快速绑定</a></div>
+								{{/if}}
+							</div>
+							<div class="safe-list">
+								<div class="fore1">
+									<s class="fore1-bg4"></s>
+									<strong>微信账户</strong>
+								</div>
+								{{if isset($thirdAccounts['weixin'])}}
+								<div class="fore2"><span>已绑定{{if isset($thirdAccounts['weixin']['data']['nickname'])}}（昵称：{{$thirdAccounts['weixin']['data']['nickname']}}）{{/if}}</span></div>
+								<div class="fore3"><a href="javascript:;" onclick="unbindThirdAccount('weixin')" class="btn bind">解除绑定</a></div>
+								{{else}}
+								<div class="fore2"><span>您还没有绑定微信账户，绑定后您可以使用微信账户快速登录。</span></div>
+								<div class="fore3"><a href="{{:url('oauth/weixin')}}?entrance=bind" class="btn remove-bind">快速绑定</a></div>
+								{{/if}}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{{include file='layouts/_foot'}}
+<script type="text/javascript" src="/static/index/script/account.js?v={{:Config('version.pc.version')}}"></script>
+</body>
+</html>

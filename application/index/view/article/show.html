@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{{$article.title}} 文档中心 {{:Config('app.app_name')}}</title>
+{{include file='layouts/_layout'}}
+</head>
+<body>
+{{include file='layouts/_site_nav'}}
+{{include file='layouts/_head'}}
+{{include file='layouts/_menu'}}
+<div class="policy">
+    <div class="policy_content container">
+        <h1 class="title">{{$article.title}}</h1>
+        <div class="box">
+        	{{$article.content|raw}}
+        </div>
+    </div>
+</div>
+{{include file='layouts/_foot'}}
+<script type="text/javascript">
+	$(".article-box dt").click(function() {
+		if($(this).hasClass('on') == false) {
+			$(this).addClass('on');
+			$(this).find('i').html('&#xe62e;');
+			$(this).siblings('dd').show();
+		} else {
+			$(this).removeClass('on');
+			$(this).find('i').html('&#xe60c;');
+			$(this).siblings('dd').hide();
+		}
+	})
+</script>
+</body>
+</html>

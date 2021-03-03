@@ -1,0 +1,28 @@
+<view class="placeholder_image" wx:if="{{!res_total && res_total != 0}}">
+  <image src="/images/slideshow_default.png"></image>
+</view>
+<view class="items" wx:if="{{res_total > 0}}">
+  <view class="item" wx:for="{{orders}}" wx:key="key" bindtap="jumpPage" data-url="/pages/integral/order?id={{item.id}}">
+    <view class="container">
+      <image class="product_image" src="{{item.product_image}}"></image>
+      <view class="info">
+        <view class="name">{{item.product_name}}</view>
+        <view class="price color">积分 {{item.product_integral}}</view>
+      </view>
+      <view class="date">{{item.create_time}}</view>
+    </view>
+  </view>
+</view>
+<view class="weui-loadmore" wx:if="{{loading}}">
+  <view class="weui-loading"></view>
+  <view class="weui-loadmore__tips">正在加载</view>
+</view>
+<view class="weui-loadmore" wx:if="{{loaded}}">
+  <view class="weui-loadmore__tips">已加载全部</view>
+</view>
+<view wx:if="{{res_total == 0}}">
+  <view class="empty_data">
+    <image src="/images/empty_data.png"></image>
+    <view class="message">暂无可兑换的商品~</view>
+  </view>
+</view>

@@ -1,0 +1,46 @@
+<view class="top" wx:if="{{is_login}}">
+  <view class="top_container container">
+    <view class="avatar"><image src="{{data.avatar}}"></image></view>
+    <view class="integral" bindtap="jumpPage" data-url="/pages/integral/show">
+      <span class="span1">{{data.integral}}</span>
+      <span class="span2">积分</span>
+    </view>
+    <view class="order">
+      <view class="btn" bindtap="jumpPage" data-url="/pages/integral/orders"><span>兑换记录</span></view>
+    </view>
+  </view>
+</view>
+<view class="top" wx:if="{{!is_login}}">
+  <view class="top_container container">
+    <view class="avatar"><image src="/images/avatar.png"></image></view>
+    <view class="integral" bindtap="jumpPage" data-url="/pages/account/auth_login">
+      <span class="span1">0</span>
+      <span class="span2">积分</span>
+    </view>
+    <view class="order">
+      <view class="btn" bindtap="jumpPage" data-url="/pages/account/auth_login"><span>登录查看积分</span></view>
+    </view>
+  </view>
+</view>
+<view class="products_items" wx:if="{{res_total > 0}}">
+  <view class="item" wx:for="{{products}}" wx:key="key" bindtap="jumpPage" data-url="/pages/integral/product?id={{item.id}}">
+    <image class="thumbnail" src="{{item.image}}"></image>
+    <view class="info">
+      <view class="name">{{item.name}}</view>
+      <view class="price color"><em>积分</em> {{item.integral}}</view>
+    </view>
+  </view>
+</view>
+<view class="weui-loadmore" wx:if="{{loading}}">
+  <view class="weui-loading"></view>
+  <view class="weui-loadmore__tips">正在加载</view>
+</view>
+<view class="weui-loadmore" wx:if="{{loaded}}">
+  <view class="weui-loadmore__tips">已加载全部</view>
+</view>
+<view class="products_items" wx:if="{{res_total == 0}}">
+  <view class="empty_data">
+    <image src="/images/empty_data.png"></image>
+    <view class="message">暂无可兑换的商品~</view>
+  </view>
+</view>

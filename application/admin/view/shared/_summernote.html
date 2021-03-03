@@ -1,0 +1,44 @@
+<link rel="stylesheet" type="text/css" href="/static/admin/plugins/summernote/summernote.css" />
+<script type="text/javascript" src="/static/admin/plugins/summernote/summernote.js"></script>
+<script src="/static/admin/plugins/summernote/lang/summernote-zh-CN.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.summernote').summernote({
+    	placeholder: '输入内容......',
+    	lang:'zh-CN',
+    	toolbar: [
+    		['style', ['style']],
+		    ['style', ['bold', 'italic', 'underline', 'clear']],
+		    ['font', ['strikethrough', 'superscript', 'subscript']],
+		    ['fontsize', ['fontsize']],
+		    ['color', ['color']],
+		    ['para', ['ul', 'ol', 'paragraph']],
+		    ['mypicture', ['mypicture']],
+		],
+		height: 300,
+    	fontSizes: ['8', '9', '10', '11', '12', '14', '18', '24', '36'],
+		buttons: {
+		    mypicture: mypicture
+		}
+    });
+});
+
+var mypicture = function (context) {
+  var ui = $.summernote.ui;
+  var button = ui.button({
+    contents: '<i class="note-icon-picture"/>',
+    tooltip: '插入图片',
+    click: function () {
+    	$(this).parents('.note-editor').prev('.summernote').addClass('summernote_checked');
+      	layer.open({
+			type: 2,
+			title: '图片空间',
+			area: ['65%', '65%'],
+			maxmin: true,
+			content: '/admin/file/fileManager?use_ident=summernote',
+		});
+    }
+  });
+  return button.render();
+}	
+</script>

@@ -1,0 +1,27 @@
+<view class="addresses">
+  <view class="item" wx:for="{{addresses}}" wx:key="key">
+    <view class="container">
+      <view class="info">
+        <view class="name">{{item.name}} {{item.phone}}</view>
+        <view class="detail_address">{{item.province_name}} {{item.city_name}} {{item.district_name}}  {{item.detailed_address}}</view>
+      </view>
+      <view class="operation">
+        <view class="left" catchtap="setDefaultTap" data-id="{{item.id}}"><i class="iconfont {{item.status == 1 ? 'on' : ''}}"></i>设为默认</view>
+        <view class="right">
+          <span class="edit" bindtap="editAddressTap" data-id="{{item.id}}"><i class="iconfont"></i>编辑</span>
+          <span class="delete" bindtap="deleteAddressTap" data-id="{{item.id}}"><i class="iconfont"></i>删除</span>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view wx:if="{{addresses_total == 0}}">
+  <view class="empty_data">
+    <image src="/images/empty_data.png"></image>
+    <view class="message">暂无地址~</view>
+  </view>
+</view>
+<view class="address_foot_blank"></view>
+<view class="address_foot">
+  <view class="btn" bindtap="createAddressTap">添加新地址</view>
+</view>

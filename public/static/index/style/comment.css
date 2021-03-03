@@ -1,0 +1,244 @@
+.create-comment {}
+.create-comment .cco-title {
+	font: 700 16px/26px "Microsoft YaHei";
+    color: #333;
+    text-align: center;
+}
+.create-comment .cco-info {
+	text-align: center;
+	margin-top: 10px;
+	color: #999;
+}
+.create-comment .cco-info .cco-info-order-number b {
+	color: #666;
+}
+.create-comment .cco-info .cco-info-time {
+	margin-left: 10px;
+}
+.create-comment .cco-shop {
+	margin-top: 30px;
+	width: 100%;
+	height: 60px;
+	background-color: #fff;
+	padding: 20px 0;
+}
+.create-comment .cco-shop .l {
+	float: left;
+	width: 260px;
+	border-right: 1px solid #eee;
+	padding-left: 20px;
+}
+.create-comment .cco-logo {
+	float: left;
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	border: 1px solid #eee;
+	overflow: hidden;
+	padding: 2px;
+}
+.create-comment .cco-logo img {
+	width: 100%;
+	height: 100%;
+}
+.create-comment .cco-name {
+	padding-left: 80px;
+}
+.create-comment .cco-name-name {
+	font-size: 16px;
+	font-weight: 600;
+	width: 150px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.create-comment .cco-shop-score-box {
+	margin-top: 5px;
+	margin-left: -2px;
+}
+.create-comment .cco-name .shop-score-item {
+	float: left;
+	color: #999;
+	position: relative;
+	text-align: center;
+}
+.create-comment .cco-name .shop-score-item:not(:first-child) {
+	margin-left: 5px;
+}
+.create-comment .cco-name .shop-score-title {
+    text-align: center;
+    line-height: 150%;
+}
+.create-comment .cco-shop-score-box .score {
+    height: 18px;
+    width: 31px;
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+}
+.create-comment .cco-shop .r {
+	float: left;
+	padding-left: 50px;
+	padding-top: 25px;
+}
+.create-comment .cco-star {
+	display: inline-flex;
+}
+.create-comment .cco-star:not(:first-child) {
+	margin-left: 15px;
+}
+.create-comment .cco-star .star {
+	margin-right: 32px;
+}
+.create-comment .cco-star .label {
+	margin-right: 8px;
+}
+.create-comment .cco-products {
+	margin-top: 20px;
+	background-color: #fff;
+	width: 100%;
+	overflow: hidden;
+}
+.create-comment .cco-products .item {
+	width: 100%;
+	overflow: hidden;
+	padding: 50px 0 50px 0;
+}
+.create-comment .cco-products .item:not(:last-child) {
+	border-bottom: 1px solid #eee;
+}
+.create-comment .cco-products .item .l {
+	float: left;
+	width: 260px;
+	border-right: 1px solid #eee;
+	text-align: center;
+}
+.create-comment .cco-products .item .thumbnail {
+	width: 100px;
+	height: 100px;
+	margin: 0 auto;
+	margin-bottom: 10px;
+}
+.create-comment .cco-products .item .thumbnail img {
+	width: 100%;
+	height: 100%;
+}
+.create-comment .cco-products .item .name {
+	margin: 0 auto;
+	width: 150px;
+	line-height: 150%;
+}
+.create-comment .cco-products .item .price {
+	margin-top: 10px;
+	font-weight: 600;
+}
+.create-comment .cco-products .item .r {
+	width: 830px;
+	padding: 0 50px;
+	float: left;
+}
+.create-comment .cco-products .item .r-item {
+	overflow: hidden;
+	width: 100%;
+}
+.create-comment .cco-products .item .r-item:not(:first-child) {
+	margin-top: 20px;
+}
+.create-comment .cco-products .item .r .label {
+	float: left;
+	width: 80px;
+}
+.create-comment .cco-products .item .r .cco-bd {
+	float: left;
+	width: 750px;
+}
+.create-comment .cco-products .item .r .cco-bd textarea {
+	width: 738px;
+	height: 60px;
+	border: 1px solid #ccc;
+	resize: none;
+	padding: 5px;
+}
+.create-comment .cco-products .item .r .cco-bd .uimg {
+	margin-top: 10px;
+}
+.create-comment .cco-products .item .r .cco-bd .uimg .images {
+	float: left;
+}
+.create-comment .cco-products .item .r .cco-bd .uimg .images .image {
+	width: 50px;
+	height: 50px;
+	float: left;
+	position: relative;
+	margin-right: 8px;
+}
+.create-comment .cco-products .item .r .cco-bd .uimg .images .image img {
+	width: 100%;
+	height: 100%;
+}
+.create-comment .cco-products .item .r .cco-bd .uimg .images .image .close {
+	position: absolute;
+	right: -2px;
+	top: -5px;
+	color: #E31939;
+	cursor: pointer;
+	display: none;
+}
+.create-comment .cco-products .item .r .cco-bd .uimg .images .image .close:after {
+	content: '\e606';
+}
+.create-comment .cco-products .item .r .cco-bd .uimg .images .image:hover .close {
+	display: block;
+}
+.create-comment .cco-products .item .r .cco-bd .uimg .up-btn {
+	float: left;
+	width: 50px;
+	height: 50px;
+	border: 1px solid #eee;
+	background: url(../images/up-btn-ccc.png) no-repeat;
+	background-size: 60% 60%;
+	background-position: center;
+	cursor: pointer;
+	margin-right: 8px;
+}
+.create-comment .cco-products .item .r .cco-bd .uimg .up-btn i {
+	font-size: 26px;
+	display: block;
+	margin: 0 auto;
+}
+.create-comment .cco-products .item .r .cco-bd .uimg .message {
+	line-height: 50px;
+	color: #ccc;
+}
+.create-comment .cco-btn {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	background-color: #fff;
+	width: 100%;
+	overflow: hidden;
+	padding: 30px 0;
+	text-align: center;
+}
+.create-comment .cco-btn button {
+	background-color: #E31939;
+	border: 1px solid #E31939;
+	border-radius: 2px;
+	color: #fff;
+	padding: 10px 80px;
+	font-size: 16px;
+	cursor: pointer;
+}
+.create-comment .cco-btn button:hover {
+	background-color: #D50E2E;
+	border: 1px solid #D50E2E;
+}
+.create-comment .cco-btn .cco-nm {
+	margin-left: 10px;
+	display: inline;
+}
+.create-comment .cco-btn .cco-nm input {
+	vertical-align: sub;
+}
+.create-comment .cco-btn .cco-nm .txt {
+	padding-top: 2px;
+}

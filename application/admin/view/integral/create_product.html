@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>后台管理</title>
+{{include file="layouts/_head"}}
+</head>
+<body>
+<div class="main">
+	<ol class="breadcrumb">
+		<li><i class="icon_home iconfont"></i>首页</li>
+	  	<li>积分商城</li>
+	  	<li><a href="javascript:history.go(-1);">积分产品</a></li>
+	  	<li class="active">创建</li>
+	</ol>
+	<div class="bg-danger clearfix main-head-info error-info"></div>
+	<div class="main-con">
+		<form class="form-horizontal margin-t-30" id="form" method="post" action="{{:url('/admin/integral/storeProduct')}}" >
+		  	<div class="tab-box">	
+			  	<div class="form-group">
+			    	<span class="col-sm-2 control-label"><span class="color-red">*</span> 产品名：</span>
+			    	<div class="col-sm-8 input-group"><input class="form-control" name="name"></div>
+			  	</div>
+			  	<div class="form-group">
+                    <span class="col-sm-2 control-label"><i class="iconfont iconfont-question" data-toggle="tooltip" data-placement="top" data-original-title="建议尺寸：400X400"></i> 封面图：</span>
+                    <div class="col-sm-4 input-group">
+                        <div class="fmr wh-80x80" data-name="image"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+				    <span class="col-sm-2 control-label"><i class="iconfont iconfont-question" data-toggle="tooltip" data-placement="top" data-original-title="兑换积分为整数类型"></i> 兑换积分：</span>
+				    <div class="col-sm-2 input-group">
+				      <input class="form-control" name="integral" >
+				    </div>
+				</div>
+				<div class="form-group">
+				    <span class="col-sm-2 control-label">排序：</span>
+				    <div class="col-sm-2 input-group">
+				      <input class="form-control" name="sort" >
+				    </div>
+				</div>
+				<div class="form-group">
+                    <span class="col-sm-2 control-label">产品详情：</span>
+                    <div class="col-sm-8 input-group">
+                        <textarea class="summernote" name="content"></textarea>
+                    </div>
+                </div>
+				<div class="form-group">
+				    <span class="col-sm-2 control-label">状态：</span>
+				    <div class="col-sm-2 input-group">
+					<select class="form-control" name="status">
+						<option value="1">开启</option>
+						<option value="0">关闭</option>
+					</select>
+				    </div>
+				</div>
+			</div>
+			<div class="foot_btn_blank"></div>
+            <div class="foot_btn">
+                <div class="box">
+                    <button type="submit" class="btn btn-primary">提交信息</button>
+                </div>
+            </div>
+		</form>
+	</div>
+</div>
+{{include file="layouts/_foot"}}
+{{include file="shared/_jquery_validation"}}
+{{include file="shared/_summernote"}}
+<script type="text/javascript">
+$("#form").validate({
+	rules: {
+		name: {required: true}
+	},
+	messages: {
+		name: '产品名不能为空'
+	},
+	submitHandler:function(){
+		layer.confirm('确认提交？', function() {
+			layer.closeAll(); var load = layer.load();
+			$("#form").ajaxSubmit(function(res) {
+				layer.close(load);
+                if (res.code == 401) {
+                    goLogin(); return false;
+                }
+                if (res.code == 200) {
+                    layer.msg('提交成功', { time: 1500 }, function () { window.location.href = '{{:url("/admin/integral/products")}}' });
+                } else if (res.code == 400) {
+                    layer.msg(res.message); return false;
+                } else {
+                    layer.msg('操作失败'); return false;
+                }
+			});
+		});	
+	}
+});
+
+</script>
+</body>
+</html>

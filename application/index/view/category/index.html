@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>产品分类 {{:Config('system.app_name')}}</title>
+{{include file='layouts/_layout'}}
+</head>
+<body>
+{{include file='layouts/_site_nav'}}
+{{include file='layouts/_head'}}
+{{include file='layouts/_menu'}}
+<div class="categoryList">
+	<div class="container">
+		<div class="nav">
+			<a href="{{$Think.app.app_url}}">首页</a> > <span>全部产品分类</span>
+		</div>
+		{{if !empty($productCategorys)}}
+		<div class="all-category-items">
+			<ul>
+				{{volist name="productCategorys" id="vo"}}
+				<li><a href="#{{$vo.name}}">{{$vo.name}}</a></li>
+				{{/volist}}
+			</ul>
+		</div>
+		{{volist name="productCategorys" id="vo"}}
+		<div class="all-category-floor" id="{{$vo.name}}">
+			<h2 class="floor-top"><a href="{{:url('product/products', ['category_id' => $vo.id])}}">{{$vo.name}}</a></h2>
+			<div class="floor-bot">
+				{{volist name="$vo.twoCategorys" id="vo_two"}}
+				<dl>
+					<dt><a href="{{:url('product/products', ['category_id' => $vo_two.id])}}">{{$vo_two.name}}</a></dt>
+					<dd>
+						{{volist name="$vo_two.threeCategorys" id="vo_three"}}
+						<a href="{{:url('product/products', ['category_id' => $vo_three.id])}}">{{$vo_three.name}}</a>
+						{{/volist}}
+					</dd>
+				</dl>
+				{{/volist}}
+			</div>
+		</div>
+		{{/volist}}
+		{{else}}
+		<div class="noresult">
+			<p><img src="/static/index/images/noresult.png"></p>
+			<p>没有符合条件的记录</p>
+		</div>
+		{{/if}}
+	</div>
+</div>
+{{include file='layouts/_foot_article'}}
+{{include file='layouts/_foot'}}
+{{include file='shared/_right_sidebar'}}
+</body>
+</html>

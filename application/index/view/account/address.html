@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>地址管理 个人中心 {{:Config('system.app_name')}}</title>
+{{include file='layouts/_layout'}}
+<link rel="stylesheet" type="text/css" href="/static/index/style/user.css?v={{:Config('version.pc.version')}}" />
+</head>
+<body>
+{{include file='layouts/_site_nav'}}
+<div class="user">
+	{{include file='account/_account_head'}}
+	<div class="user-box">
+		<div class="container">
+			{{include file='account/_account_menu'}}
+			<div class="user-box-right">
+				<div class="rcon">
+					<div class="tabmenu">
+						<ul class="tab">
+							<li class="active">收货地址</li>
+						</ul>
+					</div>
+					<div class="content-info">
+						<div class="address-info">
+							<h2><a href="javascript:void(0);" onclick="createAddress()">新增收货地址</a><span>（已保存了 {{php}} echo count($addresses); {{/php}} 条地址，还能保存 {{php}} echo (8 - count($addresses)); {{/php}} 条地址）</span></h2>
+							<div id="table_list">
+								{{if $addresses}}
+								<h2>已保存的地址</h2>
+								<div class="shipping-address">
+									<table class="shipping-list" cellpadding="0" cellspacing="0">
+										<colgroup>
+											<col style="width: 10%;">
+											<col style="width: 15%;">
+											<col style="width: 20%;">
+											<col style="width: 10%;">
+											<col style="width: 14%;">
+											<col style="width: 9%;">
+										</colgroup>
+										<tbody>
+											<tr>
+												<th>收货人</th>
+												<th>收货地址</th>
+												<th>详细地址</th>
+												<th>手机号</th>
+												<th>操作</th>
+												<th></th>
+											</tr>
+											{{volist name="$addresses" id="vo"}}
+											<tr>
+												<td align="center">{{$vo.name}}</td>
+												<td align="left">{{$vo.province_name}} {{$vo.city_name}} {{$vo.district_name}}</td>
+												<td align="center">{{$vo.detailed_address}}</td>
+												<td align="center">{{$vo.phone}}</td>
+												<td align="center">
+													<a href="javascript:void(0)" onclick="updateAddress({{$vo.id}})">修改</a>
+													<span class="line">|</span>
+													<a href="javascript:void(0)" onclick="deleteAddress({{$vo.id}})">删除</a>
+												</td>
+												<td align="center">
+													{{if $vo.status == 1}}
+													<span class="address-default">默认地址</span>
+													{{else}}
+													<a class="note" href="javascript:void()" onclick="setDefault({{$vo.id}})">设为默认</a>
+													{{/if}}
+												</td>
+											</tr>
+											{{/volist}}
+										</tbody>
+									</table>
+								</div>
+								{{else}}
+								<div class="noresult">
+									<p><img src="/static/index/images/noresult.png"></p>
+									<p>没有符合条件的记录</p>
+								</div>
+								{{/if}}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{{include file='layouts/_foot'}}
+<script type="text/javascript" src="/static/index/script/address.js?v={{:Config('version.pc.version')}}"></script>
+</body>
+</html>

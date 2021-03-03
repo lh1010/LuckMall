@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>后台管理</title>
+{{include file="layouts/_head"}}
+</head>
+<body>
+<div class="main">
+	<ol class="breadcrumb">
+		<li><i class="icon_home iconfont"></i>首页</li>
+		<li>产品管理</li>
+		<li><a href="javascript:history.go(-1);">产品分类</a></li>
+		<li class="active">创建分类</li>
+	</ol>
+	<div class="main-head-info error-info bg-danger"></div>
+	<div class="main-con">
+		<ul class="nav nav-tabs" id="tabs">
+		  <li class="active"><a href="javascript:void(0)" data-id="#a">基础信息</a></li>
+		  <li><a href="javascript:void(0)" data-id="#seo">SEO</a></li>
+		</ul>
+		<form class="form-horizontal margin-t-30" id="form" method="post" action="{{:url('/admin/product_category/store')}}" >
+		  	<div id="a" class="tab-box">	
+				<div class="form-group">
+				    <span class="col-sm-2 control-label"><span class="color-red">*</span> 分类名字：</span>
+				    <div class="col-sm-8 input-group">
+				      <input class="form-control" name="name">
+				    </div>
+				</div>
+				<div class="form-group">
+				    <span class="col-sm-2 control-label">上级分类：</span>
+				    <div class="col-sm-2 input-group">
+						<select class="form-control" name="parent_id">
+							<option value="0">顶级分类</option>
+							{{volist name="categorys" key="key" id="vo"}}
+							{{if Request()->parent_id == $vo.id}}
+							<option selected="true" value="{{$vo.id}}">{{php}}for($i = 1; $i < $vo['level']; $i++) {echo '&nbsp;&nbsp;&nbsp;&nbsp;';}{{/php}}{{$vo.name}}</option>
+							{{else}}
+							<option value="{{$vo.id}}">{{php}}for($i = 1; $i < $vo['level']; $i++) {echo '&nbsp;&nbsp;&nbsp;&nbsp;';}{{/php}}{{$vo.name}}</option>
+							{{/if}}
+							{{/volist}}
+						</select>
+				    </div>
+				</div>
+				<div class="form-group">
+					<span class="col-sm-2 control-label"><i class="iconfont iconfont-question" data-toggle="tooltip"
+							data-placement="top" data-original-title="微信小程序封面图，一级和三级分类显示；一级分类建议尺寸：600X250，三级分类建议尺寸：200X200"></i>
+						小程序封面图：</span>
+					<div class="col-sm-4 input-group">
+						<div class="fmr wh-80x80" data-name="wechat_app_cover"></div>
+					</div>
+				</div>
+				<div class="form-group">
+				    <span class="col-sm-2 control-label"><i class="iconfont iconfont-question" data-toggle="tooltip" data-placement="top" data-original-title="排序值越大，排序越高"></i> 排序：</span>
+				    <div class="col-sm-2 input-group"><input class="form-control" name="sort"></div>
+				</div>
+				<div class="form-group">
+				    <span class="col-sm-2 control-label">状态：</span>
+				    <div class="col-sm-2 input-group">
+						<select class="form-control" name="status">
+							<option value="1">开启</option>
+							<option value="0">关闭</option>
+						</select>
+				    </div>
+				</div>
+			</div>
+			<div id="seo" class="tab-box">	
+			  <div class="form-group">
+			    <span class="col-sm-2 control-label">关键词：</span>
+			    <div class="col-sm-8 input-group">
+			      <input class="form-control" name="keyword">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <span class="col-sm-2 control-label">简要描述：</span>
+			    <div class="col-sm-8 input-group">
+			      <textarea class="form-control" rows="3" name="description"></textarea>
+			    </div>
+			  </div>
+			</div>
+			<div class="foot_btn_blank"></div>
+            <div class="foot_btn">
+                <div class="box">
+                    <button type="submit" class="btn btn-primary">提交信息</button>
+                </div>
+            </div>
+		</form>
+	</div>
+</div>
+{{include file="layouts/_foot"}}
+{{include file="shared/_jquery_validation"}}
+<script type="text/javascript">
+$("#form").validate({
+	rules: {
+		name: {required: true}
+	},
+	messages: {
+		name: '分类名字不能为空'
+	},
+	submitHandler:function(){
+		layer.confirm('确认提交？', function() {
+			layer.closeAll(); var load = layer.load();
+			$("#form").ajaxSubmit(function(res) {
+				layer.close(load);
+                if (res.code == 401) {
+                    goLogin(); return false;
+                }
+                if (res.code == 200) {
+                    layer.msg('提交成功', {time: 1500}, function() {window.location.href = '{{:url("/admin/product_category")}}'});
+                } else if (res.code == 400) {
+                    layer.msg(res.message); return false;
+                } else {
+                    layer.msg('操作失败'); return false;
+                }
+			});
+		});	
+	},
+    invalidHandler: function(form, validator) {
+    	goTop();
+    }
+});
+</script>
+</body>
+</html>

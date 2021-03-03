@@ -1,0 +1,212 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>我的订单 个人中心 {{:Config('system.app_name')}}</title>
+{{include file='layouts/_layout'}}
+<link rel="stylesheet" type="text/css" href="/static/index/style/user.css?v={{:Config('version.pc.version')}}" />
+</head>
+<body>
+{{include file='layouts/_site_nav'}}
+<div class="user">
+	{{include file='account/_account_head'}}
+	<div class="user-box">
+		<div class="container">
+			{{include file='account/_account_menu'}}
+			<div class="user-box-right">
+				<div class="rcon">
+					<div class="tabmenu">
+						<div class="user-status">
+							<span {{if !Request()->get('status')}}class="active"{{/if}}>
+								<a href="{{:url('account/order')}}">
+									<span>所有订单</span>
+									<em>{{$data.counts.all}}</em>
+									<span class="vertical-line">|</span>
+								</a>
+							</span>
+							<span {{if Request()->get('status') == 10}}class="active"{{/if}}>
+								<a href="{{:url('account/order')}}?status=10">
+									<span>待付款</span>
+									<em>{{$data.counts.10}}</em>
+									<span class="vertical-line">|</span>
+								</a>
+							</span>
+							<span {{if Request()->get('status') == 20}}class="active"{{/if}}>
+								<a href="{{:url('account/order')}}?status=20">
+									<span>待发货</span>
+									<em>{{$data.counts.20}}</em>
+									<span class="vertical-line">|</span>
+								</a>
+							</span>
+							<span {{if Request()->get('status') == 30}}class="active"{{/if}}>
+								<a href="{{:url('account/order')}}?status=30">
+									<span>待收货</span>
+									<em>{{$data.counts.30}}</em>
+									<span class="vertical-line">|</span>
+								</a>
+							</span>
+							<span {{if Request()->get('status') == 40}}class="active"{{/if}}>
+								<a href="{{:url('account/order')}}?status=40">
+									<span>已完成</span>
+									<em>{{$data.counts.40}}</em>
+								</a>
+							</span>
+						</div>
+					</div>
+					<div class="content-info">
+						<div class="content-list order-list">
+							<!-- search start -->
+							<form method="get" name="orderFrom" action="">
+								{{if Request()->get('status')}}
+								<input type="hidden" name="status" value="{{:Request()->get('status')}}">
+								{{/if}}	
+								<div class="order-screen-term">
+									<label>
+										<span>订单编号：</span>
+										<input type="text" class="form-control" name="number" placeholder="请输入订单号" value="{{:Request()->get('number')}}">
+									</label>
+									<label>
+										<input type="button" onclick="document.orderFrom.submit();" value="搜索" class="search">
+									</label>
+								</div>
+							</form>
+							<!-- search end -->
+							<div id="table_list">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>商品</th>
+											<th>单价</th>
+											<th>数量</th>
+											<th>金额</th>
+											<th>状态</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+								</table>
+								<!-- order list start -->
+								{{if $data.orders->count() > 0}}
+								{{volist name="$data.orders" id="vo" key="key"}}
+								<div class="trade-order">
+									<table class="trade-order-goods">
+										<tbody>
+											<tr class="trade-order-info">
+												<td colspan="6">
+													<label><span>{{$vo.create_time}}</span></label>
+													<span>订单号：</span>
+													<span>{{$vo.number}}</span>
+												</td>
+											</tr>
+											{{volist name="$vo.order_snaps" id="vo_snap" key="key_snap"}}	
+											{{if $key_snap == 1}}
+											<tr>
+												<td class="goods-info">
+													<a class="goods-img" href="{{:url('/account/order_show')}}?id={{$vo.id}}"><img src="{{$vo_snap.product_image}}"></a>
+													<div class="item-con">
+														<div class="item-name"><span>{{$vo_snap.product_name}}</span></div>
+													</div>
+												</td>
+												<td class="goods-price">
+													<p class="color">{{$vo_snap.total_price}}</p>
+										 		</td>
+												<td class="goods-num">{{$vo_snap.count}}</td>
+												<td class="goods-payment" rowspan="3">
+													<p>总金额： ¥{{$vo.total_price}}</p>
+													<p>待付款：<strong class="color">¥{{$vo.total_price}}</strong></p>
+													<p>
+													{{if $vo.shipping_freight_total_price > 0}}
+													（含快递：¥{{$vo.shipping_freight_total_price}}）
+													{{else}}
+													（免邮）
+													{{/if}}
+													</p>
+													<p><span>{{$vo.payment_name}}</span></p>
+												</td>
+												<td class="trading-status" rowspan="3">
+													<div class="operate color">{{$vo.status_str}}</div>
+													<div class="operate"><a href="{{:url('account/order_show')}}?id={{$vo.id}}">订单详情</a></div>
+												</td>
+												<td class="trading-operate dismantle" rowspan="3">
+													{{if $vo.status == 10}}
+													<div class="operate">
+														<p class="confirm-receipt-time">剩余23时41分</p>
+													</div>
+													<div class="operate">
+														<a href="{{:url('checkout/pay')}}?order_id={{$vo.id}}" target="_blank" class="on-payment">立即付款</a>	
+													</div>
+													<div class="operate">
+														<a class="cancel-payment edit-order" href="javascript:void(0);" onclick="cancelOrder({{$vo.id}})">取消订单</a>
+													</div>
+													{{/if}}
+													{{if $vo.status == 20}}
+													<div class="operate">
+														等待卖家发货
+													</div>
+													{{/if}}
+													{{if $vo.status == 30}}
+													<div class="operate">
+														<div class="operate">
+															<a href="javascript:void();" class="on-payment" onclick="confirmOrder({{$vo.id}})">确认收货</a>	
+														</div>
+													</div>
+													{{/if}}
+													{{if $vo.status == 40 || $vo.status == -10}}
+													<div class="operate">
+														<div class="operate">
+															<a href="javascript:void();" onclick="deleteOrder({{$vo.id}})" title="删除订单">删除</a>
+														</div>
+													</div>
+													{{/if}}
+												</td>
+											</tr>
+											{{else}}
+											<tr>
+												<td class="goods-info border-top">
+													<div>
+														<a class="goods-img" href="{{:url('/account/order_show')}}?id={{$vo.id}}"><img src="{{$vo_snap.product_image}}"></a>
+														<div class="item-con">
+															<div class="item-name"><span>{{$vo_snap.product_name}}</span></div>
+														</div>
+													</div>
+												</td>
+												<td class="goods-price border-top">
+													<p class="color">{{$vo_snap.total_price}}</p>
+												</td>
+												<td class="goods-num border-top">{{$vo_snap.count}}</td>
+											</tr>
+											{{/if}}
+											{{/volist}}
+										</tbody>
+									</table>
+								</div>
+								{{/volist}}
+								<div class="page">
+									{{$data.orders->appends(Request()->get())->render()|raw}}
+								</div>
+								{{else}}
+								<div class="noresult">
+									<p><img src="/static/index/images/noresult.png"></p>
+									<p>没有符合条件的记录</p>
+								</div>
+								{{/if}}
+								<!-- order list end -->
+							</div>
+							<div class="operat-tips">
+								<h4>订单注意事项</h4>
+								<ul class="operat-panel">
+									<li><span>下单后订单会为您保留1天，如1天内未付款，系统将自动取消您的订单。</span></li>
+									<li><span>若下单后长时间未付款，卖家将有可能关闭您的订单。</span></li>
+									<li><span>卖家发货后，“确认收货”倒计时自动开启，到期系统将自动确认收货。</span></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{{include file='layouts/_foot'}}
+<script type="text/javascript" src="/static/index/script/order.js?v={{:Config('version.pc.version')}}"></script>
+</body>
+</html>

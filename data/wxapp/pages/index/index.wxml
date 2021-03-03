@@ -1,0 +1,44 @@
+<!-- 轮播图 start -->
+<view class="swiper-container" >
+  <view class="slideshow_default" wx:if="{{!slideshows}}">
+    <image src="/images/slideshow_default.png"></image>
+  </view>
+  <swiper class="swiper" indicator-dots="true" indicator-active-color="#fff" autoplay circular wx:if="{{slideshows}}">
+    <swiper-item wx:for="{{slideshows}}" wx:key="key" bindtap="jumpPage" data-url="{{item.link_ident == 1 ? item.link : '/pages/out/index?url=' + item.link}}"><image src="{{item.image}}" /></swiper-item>
+  </swiper>
+  <view class="search" bindtap="jumpPage" data-url="/pages/search/index">
+    <input type="text" placeholder="输入商品名称" bindinput="bindinput" bindconfirm="bindconfirm" disabled="true"></input>
+    <i class="iconfont icon_search"></i>
+  </view>
+</view>
+<!-- 轮播图 start -->
+<!-- 九宫格 start -->
+<view class="sudoku_default" wx:if="{{!sudokus}}">
+  <image src="/images/sudoku_default.png"></image>
+</view>
+<view class="category-box" wx:if="{{sudokus}}">
+  <view class="category-list" wx:for="{{sudokus}}" wx:key="key">
+    <view class="category-column" bindtap="jumpPage" data-url="{{item.page_ident == 1 ? item.page_url : '/pages/out/index?url=' + item.page_url}}">
+      <image mode="aspectFill" class="category-imgbox" src="{{item.image}}"></image>
+      <view class="category-title">{{item.title}}</view>
+    </view>     
+  </view>
+</view>
+<!-- 九宫格 end -->
+<view class="blank_div"></view>
+<!-- 商品列表 start -->
+<view wx:for="{{sections}}" wx:key="key">
+  <view class="products_title">
+    <span>{{item.name}}</span>
+  </view>
+  <view class="products-container">
+    <view class="products-box" bindtap="toProductTap" wx:for="{{item.values}}" wx:key="key_value" wx:for-item="item_value" data-sku="{{item_value.sku}}">
+      <image class="thumbnail" src="{{item_value.image}}"></image>
+      <view class="info">
+        <view class="name">{{item_value.name}}</view>
+        <view class="price color"><em>¥</em> {{item_value.sale_price}}</view>
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 商品列表 end -->

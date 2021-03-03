@@ -1,0 +1,57 @@
+<view class="wrap_container" hidden="{{is_login}}">
+  <image class="icon_product_empty" src="/images/nav/3-001.png"></image>
+  <view class="txt_box">登录后可同步购物车的产品</view>
+  <button class="to_index_btn" bindtap="loginTap">授权登录</button>
+</view>
+<view hidden="{{!is_login}}">
+  <!-- 购物车产品为空 start -->
+  <view class="wrap_container" hidden="{{cart_products}}">
+    <image class="icon_product_empty" src="/images/nav/3-001.png"></image>
+    <view class="txt_box">购物车空空如也～</view>
+    <view class="to_index_btn" bindtap="toIndexTap">去逛逛</view>
+  </view>
+  <!-- 购物车产品为空 end -->
+  <!-- 购物车产品 start -->
+  <view hidden="{{!cart_products}}">
+    <view class="cart_top">
+      <view class="container">
+        <view class="left">购买数量 <span class="color">{{selected_count}}</span></view>
+        <view class="right">
+          <span class="btn {{manage_cart_ident ? 'hide' : ''}}" catchtap="manageCartTap">管理</span>
+          <span class="btn {{!manage_cart_ident ? 'hide' : ''}}" catchtap="manageCartTap">取消</span>
+        </view>
+      </view>
+    </view>
+    <view class="cart_items">
+      <view class="item" wx:for="{{cart_products}}" wx:key="key">
+        <view class="container">
+          <view class="checkbox"><i class="iconfont {{item.selected == 1 ? 'icon_selected' : ''}}" data-sku="{{item.sku}}" data-selected="{{item.selected}}" catchtap="setSelected"></i></view>
+          <image class="product_image" src="{{item.image}}" bindtap="toProductTap" data-sku="{{item.sku}}"></image>
+          <view class="info">
+            <view class="name" bindtap="toProductTap" data-sku="{{item.sku}}">{{item.name}}</view>
+            <view class="product_specification" wx:if="{{item.specifications.length > 0}}">规格：<span wx:for="{{item.specifications}}" wx:for-item="item_specification">{{item_specification.specification_option_value}}</span></view>
+            <view class="price color">¥ {{item.sale_price}}</view>
+          </view>
+          <view class="cart_number">
+            <view class="number_box minus {{item.count <= 1 ? 'hui' : ''}}" bindtap="setCountTab" data-type="minus" data-sku="{{item.sku}}" data-current_count="{{item.count}}" data-stock="{{item.stock}}">-</view>
+            <view class="number_box input"><input type="number" disabled="true" value="{{item.count}}"></input></view>
+            <view class="number_box plus {{item.count >= item.stock ? 'hui' : ''}}" bindtap="setCountTab" data-type="plus" data-sku="{{item.sku}}" data-current_count="{{item.count}}" data-stock="{{item.stock}}">+</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="cart_foot_blank"></view>
+    <view class="cart_foot">
+      <view class="container" hidden="{{manage_cart_ident}}">
+        <view class="checkbox" catchtap="allSelecedTap"><i class="iconfont {{all_selected ? 'icon_selected' : ''}}"></i> <span>全选（{{selected_count}}）</span></view>
+        <view class="btn" bindtap="toCheckoutTap"><span>结算</span></view>
+        <view class="total_price color">¥ {{selected_total_price}}</view>
+      </view>
+      <view class="container" hidden="{{!manage_cart_ident}}">
+        <view class="checkbox" catchtap="allSelecedTap"><i class="iconfont {{all_selected ? 'icon_selected' : ''}}"></i> <span>全选（{{selected_count}}）</span></view>
+        <view class="btn" catchtap="deleteCartTap"><span>删除选中</span></view>
+      </view>
+    </view>
+  </view>
+  <!-- 购物车产品 end -->
+</view>

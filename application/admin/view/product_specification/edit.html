@@ -1,0 +1,190 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>后台管理</title>
+{{include file="layouts/_head"}}
+<style type="text/css">
+#options .operation input {
+	margin-right: 5px;
+	width: 100px;
+}
+#options .items {
+	margin-top: 12px;
+	margin-bottom: -5px;
+	border: 1px solid #eee;
+	padding: 13px 8px 8px 8px;
+}
+#options .items p {
+	padding-bottom: 6px;
+	border-bottom: 1px solid #eee;
+}
+.option_value {
+	display: inline-block;
+	padding: 10px 12px !important;
+	margin-bottom: 5px;
+	margin-right: 3px;
+	cursor: pointer;
+	position: relative;
+}
+.option_value::after {
+	position: absolute;
+	top: -5px;
+	left: -3px;
+	content: 'x';
+	color: #c9302c;
+	font-size: 12px;
+	display: none;
+}
+.option_value:hover::after {
+	display: block;
+}
+</style>
+</head>
+<body>
+<div class="main">
+	<ol class="breadcrumb">
+		<li><i class="icon_home iconfont"></i>首页</li>
+	  	<li>产品管理</li>
+	  	<li>产品模型</li>
+	  	<li><a href="javascript:history.go(-1);">销售规格</a></li>
+	  	<li class="active">编辑规格</li>
+	</ol>
+	<div class="bg-danger clearfix main-head-info error-info"></div>
+	<div class="main-con">
+		<form class="form-horizontal margin-t-30" id="form" method="post" action="{{:url('/admin/product_specification/update')}}" >
+			<input type="hidden" name="id" value="{{$product_specification.id}}">
+		  	<div class="tab-box">	
+				<div class="form-group">
+					<span class="col-sm-2 control-label"><span class="color-red">*</span> 名字：</span>
+					<div class="col-sm-8 input-group"><input class="form-control" name="name" value="{{$product_specification.name}}"></div>
+				</div>
+				<div class="form-group">
+					<span class="col-sm-2 control-label">所属产品模型：</span>
+					<div class="col-sm-2 input-group">
+						<select class="form-control" disabled="disabled">
+							{{volist name="$product_models" id="vo"}}
+							<option value="{{$vo.id}}" {{if $product_specification.product_model_id == $vo.id}} selected="true" {{/if}}>{{$vo.name}}</option>
+							{{/volist}}
+						</select>
+					</div>
+				</div>
+				<input type="hidden" name="product_type_id" value="{{$product_specification.product_model_id}}">
+				<div class="form-group">
+					<span class="col-sm-2 control-label">排序：</span>
+					<div class="col-sm-2 input-group">
+						<input class="form-control" name="sort" value="{{$product_specification.sort}}">
+					</div>
+				</div>
+				<div class="form-group" id="options">
+					<span class="col-sm-2 control-label"><i class="iconfont iconfont-question" data-toggle="tooltip" data-placement="top" data-original-title="请使用|区分，如：黑色|白色|红色"></i> 可选项值：</span>
+					<div class="col-sm-6 input-group form-control-static">
+						<div class="operation">
+							<input class="form-control" type="text" id="option_value" />
+							<a class="btn btn-default" href="javascript:void(0);" onclick="addOptionValue();">添加</a>
+						</div>
+						<div class="items {{if empty($product_specification.options)}} none {{/if}}">
+							<p><i class="iconfont iconfont-question" data-toggle="tooltip" data-placement="top" data-original-title="鼠标点击可移除已有选项"></i> 已有可选项：</p>
+							{{volist name="product_specification.options" id="vo"}}
+							<span class="label label-success option_value">
+								{{$vo.value}}
+								<input type="hidden" name="option_ids[]" value="{{$vo.id}}">
+								<input type="hidden" name="option_values[]" value="{{$vo.value}}">
+							</span>
+							{{/volist}}
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+				    <span class="col-sm-2 control-label">状态：</span>
+				    <div class="col-sm-2 input-group">
+					<select class="form-control" name="status">
+						<option {{if $product_specification.status == 1}}selected="true"{{/if}} value="1">开启</option>
+						<option {{if $product_specification.status == 0}}selected="true"{{/if}} value="0">关闭</option>
+					</select>
+				    </div>
+				</div>
+			</div>
+			<div class="foot_btn_blank"></div>
+            <div class="foot_btn">
+                <div class="box">
+                    <button type="submit" class="btn btn-primary">提交</button>
+                </div>
+            </div>
+		</form>
+	</div>
+</div>
+{{include file="layouts/_foot"}}
+{{include file="shared/_jquery_validation"}}
+<script type="text/javascript">
+$("#form").validate({
+	rules: {
+		name: {required: true},
+		product_model_id: {required: true}
+	},
+	messages: {
+		name: '规格名不能为空',
+		product_model_id: '所属产品模型不能为空'
+	},
+	submitHandler:function(){
+		layer.confirm('确认提交？', function() {
+			var load = layer.load();
+			$("#form").ajaxSubmit(function(res) {
+				layer.close(load);
+				if (res.code == 401) {
+                    goLogin(); return false;
+                }
+				if (res.code == 400) {
+					layer.msg(res.message); return false;
+				}
+				if (res.code == 200) {
+					layer.msg('提交成功', {time: 1500}, function() {window.location.reload();});
+					return false;
+				}
+			});
+		});	
+	}
+});
+
+// 操作可选项值 start
+$('#options').on('click', '.option_value', function() {
+	var thisNode = $(this);
+	layer.confirm('确认移除？', function() {
+		layer.closeAll();
+		thisNode.remove();
+		options_items_switch();
+	})
+})
+function addOptionValue()
+{
+	var option_value = $('#option_value').val();
+	if (option_value == '') return false;
+	var array = [];
+	$('input[name="option_values[]"]').each(function() {
+		array.push($(this).val());
+	})
+	if (array.indexOf(option_value) >= 0) {
+		layer.msg('该选项已存在');
+		return false;
+	}
+	var str = '';
+	str += '<span class="label label-success option_value">';
+	str += option_value;
+	str += '<input type="hidden" name="option_ids[]" value="">';
+	str += '<input type="hidden" name="option_values[]" value="'+option_value+'">';
+	str += '</span>';								
+	$('#options .items').append(str);
+	options_items_switch();					
+}
+function options_items_switch()
+{
+	if ($('input[name="option_values[]"]').length == 0) {
+		$('#options .items').hide();
+	} else {
+		$('#options .items').show();
+	}
+}
+// 操作可选项值 end
+</script>
+</body>
+</html>

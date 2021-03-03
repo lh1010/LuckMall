@@ -1,0 +1,146 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>设置邮箱 安全设置 个人中心 {{:Config('system.app_name')}}</title>
+{{include file='layouts/_layout'}}
+<link rel="stylesheet" type="text/css" href="/static/index/style/user.css?v={{:Config('version.pc.version')}}" />
+</head>
+<body>
+{{include file='layouts/_site_nav'}}
+<div class="user">
+	{{include file='account/_account_head'}}
+	<div class="user-box">
+		<div class="container">
+			{{include file='account/_account_menu'}}
+			<div class="user-box-right">
+				<div class="rcon">
+					<div class="tabmenu">
+						<ul class="tab">
+							<li class="active">设置邮箱</li>
+						</ul>
+					</div>
+					<div class="content-info">
+						<div class="safe-con">
+							{{if empty($user.email)}}
+							<!-- 步骤 start -->
+							<div class="stepflex stepflex2">
+								<dl class="doing dl2"><dt class="s-num">1</dt><dd class="s-text">设置邮箱</dd></dl>
+								<dl class="dl3"><dt class="s-num">2</dt><dd class="s-text">完成</dd></dl>
+							</div>
+							<!-- 过程 start -->
+							<form class="form-horizontal" id="fm_set_email" action="{{:url('/api/user/updateEmail')}}" method="post">
+								<div class="form-group form-group-spe">
+									<label for="editmobilemodel-mobile" class="input-left">
+										<span class="color-red">*</span> <span>邮箱：</span>
+									</label>
+									<div class="form-control-box">
+										<input type="text" class="form-control" id="email" name="email">
+									</div>
+								</div>
+								<div class="form-group form-group-spe">
+									<label class="input-left"><span class="color-red">*</span> <span>邮箱验证码：</span></label>
+									<div class="form-control-box">
+										<input type="text" class="input-small" maxlength="4" placeholder="动态验证码" name="emailCode">
+										<a href="javascript:void(0);" onclick="sendEmailCode();" class="phonecode ident" data-ident="ident">获取邮箱验证码</a>
+									</div>
+								</div>
+								<div class="act">
+									<input type="submit" value="下一步">
+								</div>
+							</form>
+							<!-- 过程 end -->
+							<!-- 步骤 end -->
+							{{else}}
+							<!-- 步骤 start -->
+							<div class="stepflex">
+								<dl class="dl1 doing"><dt class="s-num">1</dt><dd class="s-text">验证身份</dd></dl>
+								<dl class="dl2"><dt class="s-num">2</dt><dd class="s-text">修改邮箱</dd></dl>
+								<dl class="dl3"><dt class="s-num">3</dt><dd class="s-text">完成</dd></dl>
+							</div>
+							<!-- 步骤 end -->
+							<!-- 过程 start -->
+							<form class="form-horizontal" id="fm_validate_security" action="{{:url('/api/account/validateSecurity')}}" method="post" autocomplete="off">
+								<div class="form-group form-group-spe">
+									<label class="input-left">
+										<span class="color-red">*</span> <span>验证身份方式：</span>
+									</label>
+									<div class="form-control-box">
+										<span class="select">
+											<select class="form-control" id="validateSelect" name="securityModel[type]">
+												{{if !empty($user.password)}}<option value="password">密码验证</option>{{/if}}
+												{{if !empty($user.email)}}<option value="email">邮箱验证</option>{{/if}}
+												{{if !empty($user.phone)}}<option value="phone">手机验证</option>{{/if}}
+											</select>
+										</span>
+									</div>
+								</div>
+								<div class="form-group form-group-spe validateIdent validatePasswordIdent none">
+									<label for="editmobilemodel-mobile" class="input-left">
+										<span class="color-red">*</span> <span>密码：</span>
+									</label>
+									<div class="form-control-box">
+										<input type="password" class="form-control" name="securityModel[password]">
+									</div>
+								</div>
+								<div class="form-group form-group-spe validateIdent validateEmailIdent none">
+									<label class="input-left"><span>已验证邮箱：</span></label>
+									<span class="input-none">{{if !empty($user.email)}} {{php}}echo substr_replace($user['email'], '****', 3, 4);{{/php}} {{/if}}</span>
+								</div>
+								<div class="form-group form-group-spe validateIdent validatePhoneIdent none">
+									<label class="input-left"><span>已验证手机：</span></label>
+									<span class="input-none">{{if !empty($user.phone)}} {{php}}echo substr_replace($user['phone'], '****', 3, 4);{{/php}} {{/if}}</span>
+								</div>
+								<div class="form-group form-group-spe validateIdent validateEmailIdent none">
+									<label class="input-left"><span class="color-red">*</span> <span>邮箱验证码：</span></label>
+									<div class="form-control-box">
+										<input type="text" class="input-small" maxlength="4" placeholder="动态验证码" name="securityModel[emailCode]">
+										<a href="javascript:void(0);" onclick="sendEmailCode('security_validate');" data-ident="ident1" class="phonecode ident1" id="email_code_btn">获取邮箱验证码</a>
+									</div>
+								</div>
+								<div class="form-group form-group-spe validateIdent validatePhoneIdent none">
+									<label class="input-left"><span class="color-red">*</span> <span>手机验证码：</span></label>
+									<div class="form-control-box">
+										<input type="text" class="input-small" maxlength="4" placeholder="动态验证码" name="securityModel[phoneCode]">
+										<a href="javascript:void(0);" onclick="sendPhoneCode('security_validate');" class="phonecode ident3" data-ident="ident3">获取手机验证码</a>
+									</div>
+								</div>
+								<div class="act"><input type="submit" id="btn_validate" value="下一步"></div>
+							</form>
+							<form class="form-horizontal fm_set_security none" id="fm_set_email" action="{{:url('/api/user/updateEmail')}}" method="post">
+								<div class="form-group form-group-spe">
+									<label for="editmobilemodel-mobile" class="input-left">
+										<span class="color-red">*</span> <span>邮箱：</span>
+									</label>
+									<div class="form-control-box">
+										<input type="text" class="form-control" id="email" name="email">
+									</div>
+								</div>
+								<div class="form-group form-group-spe">
+									<label class="input-left"><span class="color-red">*</span> <span>邮箱验证码：</span></label>
+									<div class="form-control-box">
+										<input type="text" class="input-small" maxlength="4" placeholder="动态验证码" name="emailCode">
+										<a href="javascript:void(0);" onclick="sendEmailCode();" class="phonecode ident2" data-ident="ident2">获取邮箱验证码</a>
+									</div>
+								</div>
+								<div class="act">
+									<input type="submit" value="下一步">
+								</div>
+							</form>
+							<!-- 过程 end -->
+							{{/if}}
+							<!-- 结果 start -->
+							<div class="safe-con-end none"></div>
+							<!-- 结果 end -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{{include file='layouts/_foot'}}
+{{include file="shared/_jquery_validation"}}
+<script type="text/javascript" src="/static/index/script/security.js?v={{:Config('version.pc.version')}}"></script>
+</body>
+</html>

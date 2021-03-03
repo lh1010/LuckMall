@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>购物车 {{:Config('system.app_name')}}</title>
+{{include file='layouts/_layout'}}
+</head>
+<body>
+{{include file='layouts/_site_nav_990'}}
+{{include file='layouts/_head_990'}}
+<div class="cart">
+	<div class="w990">
+		{{if $count > 0}}
+		<div class="cart-title">
+			<h1 class="color">我的购物车<em>{{$count}}</em></h1>
+		</div>
+		<div class="cart-main">
+			<div class="cart-main-top">
+				<ul>
+					<li class="li-chk"><div class="cart-checkbox select" data-type="all"><label>勾选此店铺下所有产品</label><span>全选</span></div></li>
+					<li class="li-item">产品信息</li>
+					<li class="li-info"></li>
+					<li class="li-price">单价（元）</li>
+					<li class="li-amount">数量</li>
+					<li class="li-sum">金额（元）</li>
+					<li class="li-operate">操作</li>
+				</ul>
+			</div>
+			{{if $data.cart_products}}
+			{{volist name="$data.cart_products" id="vo"}}
+			<div class="shop">
+				<div class="items">
+					<div class="item" data-sku="{{$vo.sku}}">
+						<ul>
+							<li class="li-chk"><div class="cart-checkbox {{if $vo.selected == 1}}select{{/if}}" data-sku="{{$vo.sku}}" data-type="product"><label>勾选产品</label></div></li>
+							<li class="li-item">
+								<div class="pic">
+									<a href="{{:url('product/show', ['sku' => $vo.sku])}}"><img src="{{$vo.image}}"></a>
+								</div>
+								<div class="pname"><a href="{{:url('product/show', ['sku' => $vo.sku])}}">{{$vo.name}}</a></div>
+							</li>
+							<li class="li-info">
+								{{volist name="$vo.specifications" id="vo_specification"}}
+								<p class="sku-line">{{$vo_specification.specification_name}}：{{$vo_specification.specification_option_value}}</p>
+								{{/volist}}
+							</li>
+							<li class="li-price">
+								<div class="price-line">
+									<em class="price">¥{{$vo.sale_price}}</em>
+								</div>
+							</li>
+							<li class="li-amount">
+								<span class="amount-widget">
+								    <input type="text" class="amount-input" readonly="true" value="{{$vo.count}}" >
+								    <span class="amount-btn">
+								        <span class="amount-plus" onclick="setCount('inc')">
+								            <i>+</i>
+								        </span>
+								        <span class="amount-minus" onclick="setCount('dec')">
+								            <i>-</i>
+								        </span>
+								    </span>
+								</span>
+							</li>
+							<li class="li-sum"><em class="color">¥<span class="cart-product-total">{{$vo.total_price}}</span></em></li>
+							<li class="li-operate"><a href="javascript:void();" onclick="deleteCart('one', {{$vo.id}})">删除</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			{{/volist}}
+			{{/if}}
+		</div>
+		<div class="cart-foot">
+			<div class="cart-foot-wrapper">
+				<div class="select-all">
+					<div class="cart-checkbox select" data-type="all">
+						<label for="">勾选所有产品</label><span>全选</span>
+					</div>
+				</div>
+				<div class="operations">
+					<a href="javascript:void(0);" onclick="deleteCart('selected')" class="del">删除</a>
+				</div>
+				<div class="cart-bar-right">
+				    <div class="amount-sum">
+				        <span class="txt">已选产品</span>
+				        <em class="color" id="select_count">0</em>
+				        <span class="txt">件</span>
+				    </div>
+				    <div class="price-sum">
+				        <span class="txt">合计（不含运费）:</span>
+				        <strong class="price color">¥<span id="total_price">0.00</span></strong>
+				    </div>
+				    <div class="btn-area">
+				        <a href="{{:url('checkout/index')}}" class="submit-btn">结 算</a>
+				    </div>              
+				</div>
+			</div>
+		</div>
+		{{else}}
+		<div class="cart-empty">
+			<div class="message">
+			<ul>
+				<li class="txt">购物车还是空空的呢，快去看看心仪的商品吧~</li>
+				<li>
+					<a href="{{:Config('app.app_host')}}" class="btn-link" title="去购物">去购物&gt;</a>
+				</li>
+			</ul>
+		</div>
+		</div>
+		{{/if}}
+	</div>
+</div>
+{{include file='layouts/_foot'}}
+<script type="text/javascript" src="/static/index/script/cart.js?v={{:Config('version.pc.version')}}"></script>
+<script type="text/javascript">
+setSelected();
+calculateTotal(getSkus());
+</script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>图片空间</title>
+{{include file="layouts/_head"}}
+<style>
+body {
+    min-width: 0;
+}
+</style>
+</head>
+<body>
+<input type="hidden" id="use_ident" value="{{:Request()->use_ident}}">
+<div class="image_space">
+    <div class="image_space_top">
+        {{if !empty($data.prev)}}<a href="{{$data.prev}}" class="btn btn-default btn-sm"><i class="iconfont">&#xe623;</i></a>{{/if}}
+        <a class="btn btn-default btn-sm" href="javascript:window.location.reload();"><i class="iconfont">&#xe68c;</i></a>
+        <a class="btn btn-primary btn-sm" id="btn_upload"><i class="iconfont">&#xe665;</i></a>
+        <button class="btn btn-default btn-sm" id="btn_folder"><i class="iconfont">&#xe604;</i></button>
+    </div>
+    <div class="image_space_box">
+        {{if isset($data.items)}}
+        {{volist name="data.items" id="vo"}}
+        <div class="item" title="{{$vo.name}}">
+            {{if $vo.type == 'dir'}}
+            <a href="{{$vo.url}}"><img src="/static/admin/images/files.png"></a>
+            {{/if}}
+            {{if $vo.type == 'file'}}
+            <img src="{{$vo.url}}" class="file">
+            {{/if}}
+            <span class="filename">{{$vo.name}}</span>
+        </div>
+        {{/volist}}
+        {{else}}
+        <p class="color-666 margin-t-5">暂无图片</p>
+        {{/if}}
+    </div>
+    {{$data.pagination->render()|raw}}    
+</div>
+<form action="{{:url('/admin/file/uploads')}}" method="post" id="fm_upload" enctype="multipart/form-data" style="display:none">
+    <input type="hidden" name="dir" value="{{:Request()->dir}}">
+    <input type="file" name="files[]" id="fm_upload_file" multiple />
+</form>
+{{include file="layouts/_foot"}}
+{{include file="shared/_jquery_validation"}}
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#btn_upload').click(function() {
+        $('#fm_upload_file').click();
+    })
+})
+
+$('#fm_upload_file').change(function() {
+    $('#fm_upload').ajaxSubmit(function(res) {
+        if (res.code == 200) {
+            window.location.reload();
+            return false;
+        } else {
+            layer.msg('上传失败');
+            return false;
+        }
+    })
+})
+
+$('#btn_folder').popover({
+    html: true,
+    placement: 'bottom',
+    trigger: 'click',
+    title: '新建文件夹',
+    content: function() {
+        html  = '<div class="input-group">';
+        html += '  <input type="text" name="folder" placeholder="文件夹" class="form-control">';
+        html += '  <span class="input-group-btn"><button type="button" class="btn" onclick="createFolder();"><i class="iconfont">&#xe600;</i></button></span>';
+        html += '</div>';
+        return html;
+    }
+});
+
+function createFolder()
+{
+    $.ajax({
+        url: "{{:url('/admin/file/createFolder')}}",
+        type: 'post',
+        data: {
+            dir: '{{:Request()->dir}}',
+            new_dir: $('input[name="folder"]').val()
+        },
+        success: function(res) {
+            if (res.code == 200) {
+                window.location.reload();
+                return false;
+            } else {
+                layer.msg(res.message);
+                return false;
+            }
+        }
+    })
+}
+
+$('.file').click(function() {
+    // 兼容 summernote 编辑器
+    if ($('#use_ident').val() == 'summernote') {
+        parent.$('.summernote_checked').summernote('insertImage', $(this).attr('src'));
+        parent.$('.summernote_checked').removeClass('summernote_checked');
+    } else {
+        var input_name = parent.$('.fmr_current_ident').attr('data-name') != undefined ? parent.$('.fmr_current_ident').attr('data-name') : 'file';
+        var str = '';
+        str += '<input name="'+input_name+'" type="hidden" value="'+$(this).attr('src')+'" />';
+        str += '<img src="'+$(this).attr('src')+'" />';
+        str += '<i class="iconfont fmr_remove"></i>';
+        parent.$('.fmr_current_ident').addClass('uploaded');
+        parent.$('.fmr_current_ident').html(str);
+    }
+    var index = parent.layer.getFrameIndex(window.name);
+    parent.layer.close(index);
+})
+</script>
+</body>
+</html>

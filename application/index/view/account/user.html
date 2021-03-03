@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>我的订单 个人中心 {{:Config('system.app_name')}}</title>
+{{include file='layouts/_layout'}}
+<link rel="stylesheet" type="text/css" href="/static/index/style/user.css?v={{:Config('version.pc.version')}}" />
+</head>
+<body>
+{{include file='layouts/_site_nav'}}
+<div class="user">
+	{{include file='account/_account_head'}}
+	<div class="user-box">
+		<div class="container">
+			{{include file='account/_account_menu'}}
+			<div class="user-box-right">
+				<div class="rcon">
+					<div class="tabmenu">
+						<div class="user-status">
+							<span class="active">
+								<a href="{{:url('account/user')}}">
+									<span>基本信息</span>
+									<span class="vertical-line">|</span>
+								</a>
+							</span>
+							<span>
+								<a href="{{:url('account/avatar')}}">
+									<span>头像信息</span>
+								</a>
+							</span>
+						</div>
+					</div>
+					<div class="content-info">
+						<div id="c-1">
+							<form id="fm" class="form-horizontal" method="post" action="{{:url('api/user/update')}}">			
+								<div class="form-group form-group-spe">
+									<label class="input-left"><span>当前头像：</span></label>
+									<div class="profile-avatar"><img src="{{$user.avatar}}"></div>
+								</div>
+								<div class="form-group form-group-spe">
+									<label for="usermodel-nickname" class="input-left"><span class="color-red">*</span> <span>昵称：</span></label>
+									<div class="form-control-box">	
+										<input type="text" class="form-control" name="nickname" value="{{$user.nickname}}" AUTOCOMPLETE="off">	
+									</div>
+								</div>			
+								<div class="form-group form-group-spe">
+									<label class="input-left"><span>性别：</span></label>
+									<div class="form-control-box">
+										<div>
+											<label class="control-label cur-p m-r-10"><input type="radio" value="0" name="sex" {{if $user.sex == 0}}checked="true"{{/if}} AUTOCOMPLETE="off"> 保密</label>
+											<label class="control-label cur-p m-r-10"><input type="radio" value="1" name="sex" {{if $user.sex == 1}}checked="true"{{/if}} AUTOCOMPLETE="off"> 男</label>
+											<label class="control-label cur-p m-r-10"><input type="radio" value="2" name="sex" {{if $user.sex == 2}}checked="true"{{/if}} AUTOCOMPLETE="off"> 女</label>
+										</div>	
+									</div>
+								</div>
+								<div class="act">
+									<input type="submit" value="保存">
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{{include file='layouts/_foot'}}
+{{include file="shared/_jquery_validation"}}
+<script type="text/javascript">
+$("#fm").validate({
+	rules: {
+		nickname: {required: true},
+	},
+	messages: {
+		nickname: '昵称不能为空',
+	},
+	submitHandler: function() {
+		var load = layer.load();
+		$("#fm").ajaxSubmit(function(data) {
+			layer.close(load);
+			if (data.code == 401) {
+				goLogin();
+				return false;
+			} else if (data.code == 200) {
+				layer.msg('保存成功', {time: 1500}, function() {
+					window.location.reload();
+				});
+			} else if (data.code == 400) {
+				layer.msg(data.message);
+			} else {
+				layer.msg('操作失败');
+			}
+		});
+	}
+});
+</script>
+</body>
+</html>

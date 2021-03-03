@@ -1,0 +1,56 @@
+<view class="wrap_container">
+  <view class="product_image">
+    <image src="{{product.image}}" class="slide-image" mode="aspectFill" lazy-load="true" />
+  </view>
+  <!-- 商品基础信息 start -->
+  <view class="product-info">
+    <view class="product-name">{{product.name}}</view>
+    <view class="product-profile">
+      <view class="sale-price"><text>积分</text> {{product.integral}}</view>
+    </view>
+    <view class="product-info-fx">
+      <view class="btn">
+        <span class="span1" wx:if="{{address_id && address_id != false}}" bindtap="selectAddressPopupTap">地址重选</span>
+        <span wx:if="{{btn_is_click}}" catchtap="exchangeProduct" data-product_id="{{product.id}}">立即兑换</span>
+        <span class="loading" wx:if="{{!btn_is_click}}">兑换中</span>
+      </view>
+    </view>
+  </view>
+  <!-- 商品基础信息 end -->
+  <view class="blank_div"></view>
+  <!-- 商品详情 start -->
+  <view class="product-content-container">
+    <view class="product-content">
+      <rich-text nodes="{{content}}"></rich-text>
+    </view>
+  </view>
+  <!-- 商品详情 end -->
+</view>
+<!-- 选择地址弹出层 start -->
+<popup popup_visible="{{popup_visible_address}}">
+  <view slot="content">
+    <view class="popup_address">
+      <view class="popup_address_top">
+        <view class="title">选择地址</view>
+        <view class="popup_address_close" bindtap="close_popup_address"><i class="iconfont"></i></view>
+      </view>
+      <view class="addresses">
+
+        <view class="item {{item.id == address_id ? 'on' : ''}}" wx:for="{{addresses}}" wx:key="key" catchtap="selectAddressTap" data-id="{{item.id}}" wx:if="{{addresses_total > 0}}">
+          <view class="container">
+            <view class="info">
+              <view class="name">{{item.name}} {{item.phone}}</view>
+              <view class="detail_address">{{item.province_name}} {{item.city_name}} {{item.district_name}}  {{item.detailed_address}}</view>
+            </view>
+            <view class="icon" wx:if="{{item.id == address.id}}"><i class="iconfont"></i></view>
+          </view>
+        </view>
+
+        <view class="address_empty" wx:if="{{addresses_total == 0}}">暂无地址~</view>
+
+        <view class="container"><view class="btn" bindtap="toAccountAddressTap">管理地址</view></view>
+      </view>
+    </view>
+  </view>
+</popup>
+<!-- 选择地址弹出层 end -->

@@ -1,0 +1,145 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>后台管理</title>
+{{include file="layouts/_head"}}
+<style type="text/css">
+.adver_table .fmr {
+    background-size: auto 80%;
+    height: 100px;
+    border: none;
+}
+</style>
+</head>
+<body>
+<div class="main">
+	<ol class="breadcrumb">
+        <li><i class="icon_home iconfont"></i>首页</li>
+	  	<li>广告管理</li>
+	  	<li><a href="javascript:history.go(-1);">广告列表</a></li>
+	  	<li class="active">创建广告</li>
+	</ol>
+	<div class="bg-danger clearfix main-head-info error-info"></div>
+	<div class="main-con">
+		<ul class="nav nav-tabs" id="tabs">
+		  	<li class="active"><a href="javascript:void(0)" data-id="#general">基础信息</a></li>
+		  	<li><a href="javascript:void(0)" data-id="#image">广告图集</a></li>
+		</ul>
+		<form class="form-horizontal margin-t-30" id="form" method="post" action="{{:url('/admin/adver/store')}}" >
+		  	<div class="tab-box" id="general">	
+			  	<div class="form-group">
+			    	<span class="col-sm-2 control-label"><span class="color-red">*</span> 广告名：</span>
+			    	<div class="col-sm-8 input-group">
+			    		<input class="form-control" name="name">
+			    	</div>
+			  	</div>
+			  	<div class="form-group">
+				    <span class="col-sm-2 control-label">简要描述：</span>
+				    <div class="col-sm-8 input-group">
+				     	<textarea class="form-control" rows="3" name="description"></textarea>
+				    </div>
+			  	</div>
+                <div class="form-group">
+                    <span class="col-sm-2 control-label"><i class="iconfont iconfont-question" data-toggle="tooltip" data-placement="top" data-original-title="备注使用设备"></i> <span class="color-red">*</span> 设备：</span>
+                    <div class="col-sm-2 input-group">
+                    <select class="form-control" name="client">
+                        <option value="">请选择</option>
+                        {{volist name="clientArray" id="vo"}}
+                        <option value="{{$key}}">{{$vo}}</option>
+                        {{/volist}}
+                    </select>
+                    </div>
+                </div>
+			  	<div class="form-group">
+				    <span class="col-sm-2 control-label">状态：</span>
+				    <div class="col-sm-2 input-group">
+					<select class="form-control" name="status">
+						<option value="1">开启</option>
+						<option value="0">关闭</option>
+					</select>
+				    </div>
+			  	</div>
+			</div>
+			<div class="tab-box clearfix" id="image">
+		  		<div class="clearfix width-full margin-b-20">
+                    <i class="iconfont iconfont-question" data-toggle="tooltip" data-placement="top" data-original-title="多图为轮播图；排序值越大，排序越高；"></i>
+                    <button type="button" class="btn btn-success" onclick="appendImage()">新增图集</button>
+                </div>
+                <div class="col-md-3 image-box">
+                    <a class="del" href="javascript:void(0);" onclick="removeImage()">X</a>
+                    <table class="table table-bordered adver_table">
+                      <tbody>
+                        <tr><th>广告图</th></tr>
+                        <tr>
+                          <td><div class="fmr" data-name="images[]"></div></td>
+                        </tr>
+                        <tr>
+                          <td><input class="form-control" name="sorts[]" placeholder="排序值"></td>
+                        </tr>
+                        <tr>
+                          <td><input class="form-control" name="links[]" placeholder="页面链接"></td>
+                        </tr>
+                        <tr>
+                          <td>
+                          	<select class="form-control color-999" name="link_idents[]">
+                          		<option value="1">内部页面 / 当前页打开</option>
+								<option value="2">外部链接 / 新窗口打开</option>
+							</select>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table> 
+                </div>            
+			</div>
+			<div class="foot_btn_blank"></div>
+            <div class="foot_btn">
+                <div class="box">
+                    <button type="submit" class="btn btn-primary">提交</button>
+                </div>
+            </div>
+		</form>
+	</div>
+</div>
+{{include file="layouts/_foot"}}
+{{include file="shared/_jquery_validation"}}
+<script type="text/javascript" src="/static/admin/plugins/luck.file.upload.js"></script>
+<script type="text/javascript" src="/static/admin/script/adver.js"></script>
+<script type="text/javascript">
+$("#form").validate({
+    rules: {
+        name: {required: true},
+        client: {required: true},
+        type: {required: true},
+    },
+    messages: {
+        name: '广告名不能为空',
+        client: '设备不能为空',
+        type: '广告类型不能为空',
+    },
+    submitHandler:function(){
+        layer.confirm('确认提交？', {
+            btn: ['确认','取消']
+        }, function(){
+            var load = layer.load();
+            $("#form").ajaxSubmit(function(data) {
+                layer.close(load);
+                if (data.code == 401) {
+                    goLogin('admin');
+                } else if (data.code == 200) {
+                    layer.msg('提交成功', {time: 1500}, function() {window.location.href = '{{:url("/admin/adver")}}'});
+                } else if (data.code == 400) {
+                    layer.msg(data.message);
+                } else {
+                    layer.msg('操作失败');
+                }
+            });
+        }); 
+    },
+    invalidHandler: function(form, validator) {
+         goTop();
+    }
+});
+</script>
+</body>
+</html>

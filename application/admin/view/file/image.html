@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>图片空间</title>
+{{include file="layouts/_head"}}
+</head>
+<body>
+<div class="main">
+    <ol class="breadcrumb">
+        <li><i class="icon_home iconfont"></i>首页</li>
+        <li>设置中心</li>
+        <li class="active">图片管理</li>
+    </ol>
+    <div class="image_space image_space_manager">
+        <div class="image_space_top">
+            {{if !empty($data.prev)}}<a href="{{$data.prev}}" class="btn btn-default btn-sm"><i class="iconfont">&#xe623;</i></a>{{/if}}
+            <a class="btn btn-default btn-sm" href="javascript:window.location.reload();"><i class="iconfont">&#xe68c;</i></a>
+            <button class="btn btn-primary btn-sm" id="btn_upload"><i class="iconfont">&#xe665;</i></button>
+            <button class="btn btn-default btn-sm" id="btn_folder"><i class="iconfont">&#xe604;</i></button>
+            <button class="btn btn-danger btn-sm" id="btn_delete"><i class="iconfont">&#xe676;</i></button>
+            <button class="btn btn-default btn-sm none" id="btn_set"><i class="iconfont">&#xe64c;</i></button>
+        </div>
+        <div class="image_space_box">
+            {{if isset($data.items)}}
+            {{volist name="data.items" id="vo"}}
+            <div class="item">
+                {{if $vo.type == 'dir'}}
+                <a href="{{$vo.url}}"><img src="/static/admin/images/files.png"></a>
+                {{/if}}
+                {{if $vo.type == 'file'}}
+                <img src="{{$vo.url}}" class="file">
+                {{/if}}
+                <div class="filename" title="{{$vo.name}}">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input"  name="filepath" value="{{$vo.path}}"> {{$vo.name}}
+                      </label>
+                    </div>
+                </div>
+            </div>
+            {{/volist}}
+            {{else}}
+            <p class="color-666 margin-t-5">暂无图片</p>
+            {{/if}}
+        </div>
+        {{$data.pagination->render()|raw}}    
+    </div>
+</div>
+<form action="{{:url('/admin/file/uploads')}}" method="post" id="fm_upload" enctype="multipart/form-data" style="display:none">
+    <input type="hidden" name="dir" value="{{:Request()->dir}}">
+    <input type="file" name="files[]" id="fm_upload_file" multiple />
+</form>
+{{include file="layouts/_foot"}}
+{{include file="shared/_jquery_validation"}}
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#btn_upload').click(function() {
+        $('#fm_upload_file').click();
+    })
+})
+
+$('#fm_upload_file').change(function() {
+    $('#fm_upload').ajaxSubmit(function(res) {
+        if (res.code == 200) {
+            window.location.reload();
+            return false;
+        } else {
+            layer.msg('上传失败');
+            return false;
+        }
+    })
+})
+
+$('#btn_folder').popover({
+    html: true,
+    placement: 'bottom',
+    trigger: 'click',
+    title: '新建文件夹',
+    content: function() {
+        html  = '<div class="input-group">';
+        html += '  <input type="text" name="folder" placeholder="文件夹" class="form-control">';
+        html += '  <span class="input-group-btn"><button type="button" class="btn" onclick="createFolder();"><i class="iconfont">&#xe600;</i></button></span>';
+        html += '</div>';
+        return html;
+    }
+});
+
+$('#btn_set').click(function() {
+    $('.image_space .filename input').show();
+})
+
+$('#btn_delete').click(function() {
+    var filepaths = [];
+    $("input[name='filepath']:checked").each(function(i){
+          filepaths[i] = $(this).val();
+    });
+    if (filepaths.length == 0) {
+        layer.msg('请选择要删除文件');
+        return false
+    }
+
+    layer.confirm('确定删除？', function() {
+        layer.closeAll();
+        var load = layer.load();
+        $.ajax({
+            url: '/admin/file/delete',
+            type: 'post',
+            data: {
+                filepaths: filepaths
+            },
+            success: function(res) {
+                layer.close(load);
+                if (res.code == 200) {
+                    window.location.reload();
+                    return false;
+                } else {
+                    layer.msg(res.message);
+                    return false;
+                }
+            }
+        })
+    });
+})
+
+function createFolder()
+{
+    var load = layer.load();
+    $.ajax({
+        url: "{{:url('/admin/file/createFolder')}}",
+        type: 'post',
+        data: {
+            dir: '{{:Request()->dir}}',
+            new_dir: $('input[name="folder"]').val()
+        },
+        success: function(res) {
+            layer.close(load);
+            if (res.code == 200) {
+                window.location.reload();
+                return false;
+            } else {
+                layer.msg(res.message);
+                return false;
+            }
+        }
+    })
+}
+
+$('.file').click(function() {
+    var input_name = parent.$('.fmr_current_ident').attr('data-name') != undefined ? parent.$('.fmr_current_ident').attr('data-name') : 'file';
+    var str = '';
+    str += '<input name="'+input_name+'" type="hidden" value="'+$(this).attr('src')+'" />';
+    str += '<img src="'+$(this).attr('src')+'" />';
+    str += '<i class="iconfont fmr_remove"></i>';
+    parent.$('.fmr_current_ident').css('background-size', '0%');
+    parent.$('.fmr_current_ident').html(str);
+    var index = parent.layer.getFrameIndex(window.name);
+    parent.layer.close(index);
+})
+</script>
+</body>
+</html>

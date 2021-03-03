@@ -1,0 +1,11 @@
+.top .container {
+  text-align: center;
+  padding: 20rpx 0 0 0;
+  font-weight: bold;
+}
+.content {
+  padding: 30rpx 0;
+}
+.content rich-text {
+  line-height: 30px;
+}

@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>后台管理</title>
+{{include file="layouts/_head"}}
+</head>
+<body>
+<header>
+	<div class="logo">
+		<a href="">
+			<h1>Admin 后台管理</h1>
+		</a>
+	</div>
+	<div class="bd">
+		<ul class="menu" id="menu">
+			<li class="active"><i class="iconfont">&#xe61a;</i>首页</li>
+			<li><i class="iconfont">&#xe63a;</i>产品</li>
+			<li><i class="iconfont">&#xe63a;</i>订单物流</li>
+			<li><i class="iconfont">&#xe63a;</i>运营</li>
+			<li><i class="iconfont">&#xe63a;</i>设置</li>
+		</ul>
+		<ul class="account">
+			<li class="user_info">
+				<i class="iconfont"></i>{{$Request.session.admin.username}}
+				<div class="items">
+					<div class="item" onclick="layerOpen('{{:url("/admin/account/edit")}}', '设置资料', '768px', '425px')">设置资料</div>
+					<a href="{{:Config('system.app_url')}}" target="_blank"><div class="item">查看首页</div></a>
+				</div>
+			</li>
+			<li onclick="logout_admin();"><i class="iconfont">&#xe74d;</i> 退出</li>
+		</ul>
+	</div>
+</header>
+<div id="sidebar">
+	<div class="box">
+		<div class="items">
+			<div class="items-title"><i class="iconfont">&#xe63a;</i><strong>Dashboard</strong></div>
+			<div class="item">
+				<a href="{{:url('/admin/index/welcome')}}" target="main">仪表盘</a>
+			</div>
+		</div>
+	</div>
+	<div class="box">
+		<div class="items">
+			<div class="items-title"><i class="iconfont">&#xe63a;</i><strong>产品管理</strong></div>
+			<div class="item">
+				<a href="{{:url('/admin/product_category')}}" target="main">产品分类</a>
+				<a href="{{:url('/admin/product')}}" target="main">产品列表</a>
+				<a href="{{:url('/admin/product/sku')}}" target="main">SKU列表</a>
+				<a href="{{:url('/admin/brand')}}" target="main">品牌管理</a>
+				<a href="{{:url('/admin/product_model')}}" target="main">产品模型</a>
+			</div>
+		</div>
+	</div>
+	<div class="box">
+		<div class="items">
+			<div class="items-title"><i class="iconfont">&#xe63a;</i><strong>订单物流</strong></div>
+			<div class="item">
+				<a href="{{:url('/admin/shipping_mark')}}" target="main">配送方式</a>
+				<a href="{{:url('/admin/shipping_freight')}}" target="main">运费模板</a>
+				<a href="{{:url('/admin/order')}}" target="main">订单管理</a>
+			</div>
+		</div>
+	</div>
+	<div class="box">
+		<div class="items">
+			<div class="items-title"><i class="iconfont">&#xe63a;</i><strong>用户管理</strong></div>
+			<div class="item">
+				<a href="{{:url('/admin/user')}}" target="main">用户列表</a>
+			</div>
+		</div>
+		<div class="items">
+			<div class="items-title"><i class="iconfont">&#xe63a;</i><strong>文档管理</strong></div>
+			<div class="item">
+				<a href="{{:url('/admin/article/category')}}" target="main">文档分类</a>
+				<a href="{{:url('/admin/article')}}" target="main">文档列表</a>
+			</div>
+		</div>
+		<div class="items">
+			<div class="items-title"><i class="iconfont">&#xe63a;</i><strong>积分商城</strong></div>
+			<div class="item">
+				<a href="{{:url('/admin/integral/product')}}" target="main">积分产品</a>
+				<a href="{{:url('/admin/integral/order')}}" target="main">兑换记录</a>
+			</div>
+		</div>
+	</div>
+	<div class="box">
+		<div class="items">
+			<div class="items-title"><i class="iconfont">&#xe63a;</i><strong>设置中心</strong></div>
+			<div class="item">
+				<a href="{{:url('/admin/set/system')}}" target="main">系统设置</a>
+				<a href="{{:url('/admin/adver')}}" target="main">广告管理</a>
+				<a href="{{:url('/admin/section')}}" target="main">版块管理</a>
+				<a href="{{:url('/admin/hot_word')}}" target="main">搜索热词</a>
+				<a href="{{:url('/admin/design/nav')}}" target="main">导航管理</a>
+				<a href="{{:url('/admin/design/friendlink')}}" target="main">友情链接</a>
+				<a href="{{:url('/admin/file/image')}}" target="main">图片管理</a>
+			</div>
+		</div>
+		<div class="items">
+			<div class="items-title"><i class="iconfont">&#xe63a;</i><strong>微信小程序</strong></div>
+			<div class="item">
+				<a href="{{:url('/admin/wxapp/sudoku')}}" target="main">首页九宫格</a>
+			</div>
+		</div>
+		<div class="items">
+			<div class="items-title"><i class="iconfont">&#xe63a;</i><strong>管理员管理</strong></div>
+			<div class="item">
+				<a href="{{:url('/admin/administrator')}}" target="main">管理员列表</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main">
+	<iframe src="{{:url('/admin/index/welcome')}}" frameborder="0" name="main"></iframe>
+</div>
+<script type="text/javascript" src="/static/admin/plugins/jquery/3.3.1/jquery.js"></script>
+<script type="text/javascript" src="/static/admin/plugins/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/static/admin/script/common.js"></script>
+<script type="text/javascript">
+switchMenu();
+</script>
+</body>
+</html>

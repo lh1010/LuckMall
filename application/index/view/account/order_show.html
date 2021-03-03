@@ -1,0 +1,168 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>我的订单 个人中心 {{:Config('system.app_name')}}</title>
+{{include file='layouts/_layout'}}
+<link rel="stylesheet" type="text/css" href="/static/index/style/user.css?v={{:Config('version.pc.version')}}" />
+</head>
+<body>
+{{include file='layouts/_site_nav'}}
+<div class="user">
+	{{include file='account/_account_head'}}
+	<div class="user-box">
+		<div class="container">
+			{{include file='account/_account_menu'}}
+			<div class="user-box-right">
+				<div class="rcon">
+					<div class="tabmenu">
+						<ul class="tab">
+							<li class="active">订单详情</li>
+						</ul>
+					</div>
+					<div class="content-info">
+						<div class="order-info">
+							<div class="order-info-head">
+								<div class="l">
+									<div class="title"><h3>订单信息</h3></div>
+									<ul>
+										<li class="table-list">
+											<div class="trade-imfor-dt">收货地址：</div>
+											<div class="trade-imfor-dd">
+												<div class="address-detail">
+													{{$order.name}}，{{$order.phone}}，{{$order.province_name}}，{{$order.city_name}}，{{$order.district_name}}，{{$order.detailed_address}}
+												</div>
+											</div>
+										</li>
+										<li class="table-list">
+											<div class="trade-imfor-dt">送货时间：</div>
+											<div class="trade-imfor-dd">
+												立即配送
+											</div>
+										</li>
+										<li class="table-list">
+											<div class="trade-imfor-dt">买家留言：</div>
+											<div class="trade-imfor-dd">
+												{{if $order.message}}{{$order.message}}{{else}}无{{/if}}
+											</div>
+										</li>
+										<li class="table-list separate-top">
+											<div class="trade-imfor-dt">订单编号：</div>
+											<div class="trade-imfor-dd">{{$order.number}}</div>
+										</li>
+										<li class="table-list">
+											<div class="trade-imfor-dt">支付方式：</div>
+											<div class="trade-imfor-dd">{{$order.payment_name}}</div>
+										</li>
+									</ul>
+								</div>
+								<div class="r">
+									{{if $order.status == '-10'}}
+									<dl class="status">
+										<dt class="status-icon"><img src="/static/index/images/order_warning.png"></dt>
+										<dd class="status-title">
+											<h3>订单状态：{{$order.status_str}}</h3>
+										</dd>
+									</dl>
+									{{/if}}
+									{{if $order.status == 10}}
+									<dl class="status">
+										<dt class="status-icon"><img src="/static/index/images/order_status_10.png"></dt>
+										<dd class="status-title">
+											<h3>订单状态：{{$order.status_str}}</h3>
+										</dd>
+									</dl>
+									{{/if}}
+									{{if $order.status == 20}}
+									<dl class="status">
+										<dt class="status-icon"><img src="/static/index/images/order_status_20.png"></dt>
+										<dd class="status-title">
+											<h3>订单状态：{{$order.status_str}}</h3>
+										</dd>
+									</dl>
+									{{/if}}
+									{{if $order.status == 21}}
+									<dl class="status">
+										<dt class="status-icon"><img src="/static/index/images/order_status_21.png"></dt>
+										<dd class="status-title">
+											<h3>订单状态：{{$order.status_str}}</h3>
+										</dd>
+									</dl>
+									<ul class="status-prompt">
+										<li>1，请确认与商家已沟通退款事宜。</li>
+										<li>2，商家确认退款后，资金将原路返还。</li>
+									</ul>
+									{{/if}}
+									{{if $order.status == 30}}
+									<dl class="status">
+										<dt class="status-icon"><img src="/static/index/images/order_status_30.png"></dt>
+										<dd class="status-title">
+											<h3>订单状态：{{$order.status_str}}</h3>
+										</dd>
+									</dl>
+									<ul class="status-prompt">
+										<li>订单正在配送中</li>
+									</ul>
+									{{/if}}
+									{{if $order.status == 40}}
+									<dl class="status">
+										<dt class="status-icon"><img src="/static/index/images/order_status_40.png"></dt>
+										<dd class="status-title">
+											<h3>订单状态：{{$order.status_str}}</h3>
+										</dd>
+									</dl>
+									<ul class="status-prompt">
+										<li>感谢您的使用，祝您购物愉快！</li>
+									</ul>
+									{{/if}}
+								</div>
+							</div>
+							<table class="order_snaps" cellspacing="0" cellpadding="0">
+							    <thead>
+							        <tr>
+							            <th>封面图</th>
+							            <th>产品名</th>
+							            <th>销售规格</th>
+							            <th>成交单价</th>
+							            <th>购买数量</th>
+							            <th>总金额</th>
+							        </tr>
+							    </thead>
+							    <tbody>
+							    	{{volist name="$order.order_snaps" id="vo"}}
+							        <tr class="products">
+							            <td class="product_image"><a href="{{:url('product/show', ['sku' => $vo.sku])}}" target="_blank"><img src="{{$vo.product_image}}"></a></td>
+							            <td class="product_name">
+							            	<a href="{{:url('product/show', ['sku' => $vo.sku])}}" target="_blank"><span>{{$vo.product_name}}</span></a>
+							            </td>
+							            <td>
+							            	{{if !empty($vo.specifications)}}
+	                                        {{volist name="$vo.specifications" id="vo_specification"}}
+					                        <span class="margin-r-3">{{$vo_specification.specification_option_value}}</span>
+					                        {{/volist}}
+					                        {{else}}
+					                        无
+					                        {{/if}}
+	                                    </td>
+							            <td>¥ {{$vo.sale_price}}</td>
+							            <td>{{$vo.count}}</td>
+							            <td>¥ {{$vo.total_price}}</td>
+							        </tr>
+							        {{/volist}}
+							        <tr>
+							            <td class="total_price" colspan="7">
+											商品总额：￥{{$order.product_total_price}} + 运费：￥{{$order.shipping_freight_total_price}} = <b>订单总金额：￥{{$order.total_price}}</b>
+										</td>
+							        </tr>
+							    </tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{{include file='layouts/_foot'}}
+</body>
+</html>
