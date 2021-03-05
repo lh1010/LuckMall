@@ -15,11 +15,6 @@ CREATE TABLE IF NOT EXISTS `luck_administrator` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4;
 
--- ----------------------------
--- 转存表中的数据 luck_administrator
--- ----------------------------
-INSERT INTO `luck_administrator` VALUES ('1', 'admin', '0985251f3d13076beec69aca778ea31f', '1', '', '', '后台管理员', '2021-03-02 09:34:15', '2021-03-02 10:26:51', '1');
-
 -- --------------------------------------------------------
 
 -- ----------------------------
