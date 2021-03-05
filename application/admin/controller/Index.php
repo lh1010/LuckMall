@@ -30,7 +30,7 @@ class Index extends Base
     {
     	$message = '';
         // 地区表
-    	$res = Db::query("select * from information_schema.tables where table_name = '" . Config('database.prefix') . "city'");
+    	$res = Db::query("select * from information_schema.tables where table_name = '" . Config('database.prefix') . "city' and table_schema = '" . Config('database.database') . "'");
     	if (empty($res)) {
     		$message .= '<p class="bg-warning message">缺少必需插件：<b>地区库</b><a href="javascript:void(0);" onclick="installCity();">点击安装</a></p>';
     	}
