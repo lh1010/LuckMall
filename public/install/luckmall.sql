@@ -500,11 +500,11 @@ CREATE TABLE IF NOT EXISTS `luck_product_category` (
 -- ----------------------------
 -- 转存表中的数据 luck_product_category
 -- ----------------------------
-INSERT INTO `luck_product_category` VALUES ('1', '0', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30', '1', '家用电器', '', '', '0', '', '2021-02-26 15:20:42', '2021-02-26 15:26:06', '1');
-INSERT INTO `luck_product_category` VALUES ('2', '1', '2,3,4,5,6', '1,2', '大家电', '', '', '0', '', '2021-02-26 15:20:53', '2021-02-26 15:22:18', '1');
-INSERT INTO `luck_product_category` VALUES ('3', '2', '3', '1,2,3', '电视', '', '', '0', '', '2021-02-26 15:21:07', '2021-02-26 15:21:24', '1');
-INSERT INTO `luck_product_category` VALUES ('4', '2', '4', '1,2,4', '空调', '', '', '0', '', '2021-02-26 15:21:12', '2021-02-26 15:21:24', '1');
-INSERT INTO `luck_product_category` VALUES ('5', '2', '5', '1,2,5', '洗衣机', '', '', '0', '', '2021-02-26 15:22:10', '2021-02-26 15:22:10', '1');
+INSERT INTO `luck_product_category` VALUES ('1', '0', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30', '1', '家用电器', '', '', '0', '/images/adver/mobile banner/banner1[luck1605506219luck].jpg', '2021-02-26 15:20:42', '2021-03-05 14:58:02', '1');
+INSERT INTO `luck_product_category` VALUES ('2', '1', '2,3,4,5,6', '1,2', '大家电', '', '', '0', '', '2021-02-26 15:20:53', '2021-03-05 14:28:15', '1');
+INSERT INTO `luck_product_category` VALUES ('3', '2', '3', '1,2,3', '电视', '', '', '0', '/images/product_category/mobile_app/电视[luck1614927751luck].jpg', '2021-02-26 15:21:07', '2021-03-05 15:02:34', '1');
+INSERT INTO `luck_product_category` VALUES ('4', '2', '4', '1,2,4', '空调', '', '', '0', '/images/product_category/mobile_app/空调[luck1614927793luck].jpg', '2021-02-26 15:21:12', '2021-03-05 15:03:14', '1');
+INSERT INTO `luck_product_category` VALUES ('5', '2', '5', '1,2,5', '洗衣机', '', '', '0', '/images/product_category/mobile_app/洗衣机[luck1614928164luck].jpg', '2021-02-26 15:22:10', '2021-03-05 15:09:25', '1');
 INSERT INTO `luck_product_category` VALUES ('6', '2', '6', '1,2,6', '冰箱', '', '', '0', '', '2021-02-26 15:22:18', '2021-02-26 15:22:18', '1');
 INSERT INTO `luck_product_category` VALUES ('7', '1', '7,8,9,10,11,12,13', '1,7', '厨卫大电', '', '', '0', '', '2021-02-26 15:22:32', '2021-02-26 15:23:16', '1');
 INSERT INTO `luck_product_category` VALUES ('8', '7', '8', '1,7,8', '油烟机', '', '', '0', '', '2021-02-26 15:22:39', '2021-02-26 15:22:39', '1');
@@ -530,11 +530,11 @@ INSERT INTO `luck_product_category` VALUES ('27', '21', '27', '1,21,27', '加湿
 INSERT INTO `luck_product_category` VALUES ('28', '21', '28', '1,21,28', '挂烫机/熨斗', '', '', '0', '', '2021-02-26 15:25:24', '2021-02-26 15:25:24', '1');
 INSERT INTO `luck_product_category` VALUES ('29', '21', '29', '1,21,29', '清洁机', '', '', '0', '', '2021-02-26 15:25:31', '2021-02-26 15:25:32', '1');
 INSERT INTO `luck_product_category` VALUES ('30', '21', '30', '1,21,30', '插座', '', '', '0', '', '2021-02-26 15:25:38', '2021-02-26 15:25:39', '1');
-INSERT INTO `luck_product_category` VALUES ('31', '0', '31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52', '31', '女装', '', '', '0', '', '2021-02-26 15:28:48', '2021-02-26 15:32:26', '1');
+INSERT INTO `luck_product_category` VALUES ('31', '0', '31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52', '31', '女装', '', '', '0', '/images/adver/mobile banner/banner2[luck1605506225luck].jpg', '2021-02-26 15:28:48', '2021-03-05 15:06:31', '1');
 INSERT INTO `luck_product_category` VALUES ('32', '31', '32,33,34,35,36,37,38', '31,32', '上装', '', '', '0', '', '2021-02-26 15:29:17', '2021-02-26 15:30:37', '1');
-INSERT INTO `luck_product_category` VALUES ('33', '32', '33', '31,32,33', '字母T恤', '', '', '0', '', '2021-02-26 15:29:27', '2021-02-26 15:29:27', '1');
-INSERT INTO `luck_product_category` VALUES ('34', '32', '34', '31,32,34', '衬衫', '', '', '0', '', '2021-02-26 15:29:38', '2021-02-26 15:29:38', '1');
-INSERT INTO `luck_product_category` VALUES ('35', '32', '35', '31,32,35', '百搭衬衫', '', '', '0', '', '2021-02-26 15:29:46', '2021-02-26 15:29:46', '1');
+INSERT INTO `luck_product_category` VALUES ('33', '32', '33', '31,32,33', '字母T恤', '', '', '0', '/images/product_category/mobile_app/字母T恤[luck1614928052luck].jpg', '2021-02-26 15:29:27', '2021-03-05 15:07:34', '1');
+INSERT INTO `luck_product_category` VALUES ('34', '32', '34', '31,32,34', '衬衫', '', '', '0', '/images/product_category/mobile_app/白衬衫[luck1614928069luck].jpg', '2021-02-26 15:29:38', '2021-03-05 15:07:51', '1');
+INSERT INTO `luck_product_category` VALUES ('35', '32', '35', '31,32,35', '百搭衬衫', '', '', '0', '/images/product_category/mobile_app/百搭衬衫[luck1614928118luck].jpg', '2021-02-26 15:29:46', '2021-03-05 15:08:40', '1');
 INSERT INTO `luck_product_category` VALUES ('36', '32', '36', '31,32,36', '雪纺衫', '', '', '0', '', '2021-02-26 15:30:20', '2021-02-26 15:30:20', '1');
 INSERT INTO `luck_product_category` VALUES ('37', '32', '37', '31,32,37', '打底衫', '', '', '0', '', '2021-02-26 15:30:28', '2021-02-26 15:30:28', '1');
 INSERT INTO `luck_product_category` VALUES ('38', '32', '38', '31,32,38', '长袖T恤', '', '', '0', '', '2021-02-26 15:30:37', '2021-02-26 15:30:37', '1');
