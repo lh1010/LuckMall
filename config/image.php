@@ -3,7 +3,7 @@
 return [
     
     'product_catrgory' => [
-        'wechat_app_cover_default' => Config('app.app_url').'/static/m/images/category_default.png',
+        'wxapp_cover_default' => Config('app.app_url').'/static/m/images/category_default.png',
     ],
     
     'product' => [

@@ -48,11 +48,10 @@
 							data-placement="top" data-original-title="微信小程序封面图，一级和三级分类显示；一级分类建议尺寸：600X250，三级分类建议尺寸：200X200"></i>
 						小程序封面图：</span>
 					<div class="col-sm-4 input-group">
-						<div class="fmr wh-80x80 {{if !empty($category.wechat_app_cover)}} uploaded {{/if}}"
-							data-name="wechat_app_cover">
-							{{if !empty($category.wechat_app_cover)}}
-							<input name="cover" type="hidden" value="{{$category.wechat_app_cover}}"><img
-								src="{{$category.wechat_app_cover}}"><i class="iconfont fmr_remove"></i>
+						<div class="fmr wh-80x80 {{if !empty($category.wxapp_cover)}} uploaded {{/if}}"
+							data-name="wxapp_cover">
+							{{if !empty($category.wxapp_cover)}}
+							<input name="wxapp_cover" type="hidden" value="{{$category.wxapp_cover}}"><img src="{{$category.wxapp_cover}}"><i class="iconfont fmr_remove"></i>
 							{{/if}}
 						</div>
 					</div>

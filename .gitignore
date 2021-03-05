@@ -2,3 +2,5 @@
 .env
 *.log
 runtime
+config/readfile/*
+!config/readfile/index.html

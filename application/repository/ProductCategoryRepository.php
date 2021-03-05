@@ -61,7 +61,7 @@ class ProductCategoryRepository
         switch ($type) {
             case '2':
                 foreach ($data as $key => $value) {
-                    empty($value['wechat_app_cover']) && $value['parent_id'] != 0 ? $data[$key]['wechat_app_cover'] = Config('image.product_catrgory.wechat_app_cover_default') : null;
+                    empty($value['wxapp_cover']) && $value['parent_id'] != 0 ? $data[$key]['wxapp_cover'] = Config('image.product_catrgory.wxapp_cover_default') : null;
                 }
                 break;    
         }

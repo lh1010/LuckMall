@@ -164,7 +164,7 @@ class ProductCategoryRepository
         if (isset($params['name'])) $data['name'] = $params['name'];
         if (isset($params['keyword'])) $data['keyword'] = $params['keyword'];
         if (isset($params['description'])) $data['description'] = $params['description'];
-        if (isset($params['wechat_app_cover'])) $data['wechat_app_cover'] = $params['wechat_app_cover'];
+        $data['wxapp_cover'] = isset($params['wxapp_cover']) ? $params['wxapp_cover'] : '';
         if (isset($params['sort'])) $data['sort'] = $params['sort'];
         if (isset($params['status'])) $data['status'] = $params['status'];
         return $data;

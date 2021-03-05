@@ -490,7 +490,7 @@ CREATE TABLE IF NOT EXISTS `luck_product_category` (
   `keyword` varchar(255) NOT NULL DEFAULT '',
   `description` varchar(255) NOT NULL DEFAULT '',
   `sort` mediumint(8) NOT NULL DEFAULT '0',
-  `wechat_app_cover` varchar(255) NOT NULL DEFAULT '' COMMENT '微信小程序封面图',
+  `wxapp_cover` varchar(255) NOT NULL DEFAULT '',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `status` tinyint(3) NOT NULL DEFAULT '1' COMMENT '1=Enabled 0=Disabled',
