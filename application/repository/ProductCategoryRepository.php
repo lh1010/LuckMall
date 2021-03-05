@@ -61,9 +61,10 @@ class ProductCategoryRepository
         switch ($type) {
             case '2':
                 foreach ($data as $key => $value) {
-                    empty($value['wxapp_cover']) && $value['parent_id'] != 0 ? $data[$key]['wxapp_cover'] = Config('image.product_catrgory.wxapp_cover_default') : null;
+                    $wxapp_cover_default = $value['parent_id'] != 0 ? Config('image.product_catrgory.wxapp_cover_default') : '';
+                    $data[$key]['wxapp_cover'] = !empty($value['wxapp_cover']) ? Config('app.app_url') . $value['wxapp_cover'] : $wxapp_cover_default;
                 }
-                break;    
+                break;
         }
         return $data;
     }
