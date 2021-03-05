@@ -4468,13 +4468,3 @@ img {
     -webkit-text-stroke-width: 0.2px;
     -moz-osx-font-smoothing: grayscale;
 }
-/* iconfont 在线代码 测试使用 上线后可删除 */
-@font-face {
-  font-family: 'iconfont';  /* project id 1157698 */
-  src: url('//at.alicdn.com/t/font_1157698_dhjfm9cvuh4.eot');
-  src: url('//at.alicdn.com/t/font_1157698_dhjfm9cvuh4.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_1157698_dhjfm9cvuh4.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_1157698_dhjfm9cvuh4.woff') format('woff'),
-  url('//at.alicdn.com/t/font_1157698_dhjfm9cvuh4.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_1157698_dhjfm9cvuh4.svg#iconfont') format('svg');
-}
