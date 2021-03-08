@@ -151,6 +151,7 @@ class Set extends Base
             $client['wx_app']['name'] = $request->param('name');
             $client['wx_app']['appid'] = $request->param('appid');
             $client['wx_app']['secret'] = $request->param('secret');
+            $client['wx_app']['qrcode'] = $request->has('qrcode') ? $request->param('qrcode') : '';
             $data = '';
             $data = "<?php\n\n";
             $data .= 'return ';

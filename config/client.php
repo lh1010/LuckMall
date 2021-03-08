@@ -17,6 +17,7 @@ return [
         'logo' => isset($res['wx_app']['logo']) ? $res['wx_app']['logo'] : '',
         'appid' => isset($res['wx_app']['appid']) ? $res['wx_app']['appid'] : '',
         'secret' => isset($res['wx_app']['secret']) ? $res['wx_app']['secret'] : '',
+        'qrcode' => isset($res['wx_app']['qrcode']) && !empty($res['wx_app']['qrcode']) ? $res['wx_app']['qrcode'] : '/static/index/images/wxapp_qrcode.jpg',
     ],
 
     // 微信公众号
