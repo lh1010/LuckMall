@@ -248,20 +248,20 @@ function curl_post($url, $params = '', $header = [])
  */
 function download_image($url, $path, $file_name = '')
 {
-	if (!is_dir($path)) mkdir($path, 0777);
-	if (!is_readable($path)) chmod($path, 0777);
-	
+	if (!is_dir($path)) mkdir($path, 0777, true);
+	if (!is_readable($path)) chmod($path, 0777, true);
+
 	if (empty($file_name)) $file_name = md5(time()) . '.png';
 	$file_name = $path . $file_name;
 
 	ob_start();
-    readfile($url);   
+    readfile($url);
     $content = ob_get_contents();   
     ob_end_clean();   
 	$size = strlen($content);
 	
 	$fp = @fopen($file_name, "a");   
-    fwrite($fp, $content);   
+    fwrite($fp, $content); 
 	fclose($fp);
 	
 	return $file_name;
