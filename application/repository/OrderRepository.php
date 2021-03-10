@@ -221,7 +221,7 @@ class OrderRepository
         if ($type == 'cart') {
             foreach ($product_data as $key => $value) {
                 $data[$key]['order_id'] = $order_id;
-                $data[$key]['product_id'] = $value['product_id'];
+                $data[$key]['product_id'] = $value['id'];
                 $data[$key]['sku'] = $value['sku'];
                 $data[$key]['product_name'] = $value['name'];
                 $data[$key]['product_image'] = $value['image'];
@@ -236,7 +236,7 @@ class OrderRepository
             }
         } else {
             $data[0]['order_id'] = $order_id;
-            $data[0]['product_id'] = $product_data['product_id'];
+            $data[0]['product_id'] = $product_data['id'];
             $data[0]['sku'] = $product_data['sku'];
             $data[0]['product_name'] = $product_data['name'];
             $data[0]['product_image'] = $product_data['image'];
