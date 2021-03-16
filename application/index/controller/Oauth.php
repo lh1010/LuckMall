@@ -136,7 +136,7 @@ class Oauth extends Base
         $params['type'] = 'weixin';
         $params['device'] = 'web';
         $params['openid'] = $OAuth->openid;
-        $params['unionid'] = $userInfo['unionid'];
+        $params['unionid'] = isset($userInfo['unionid']) ? $userInfo['unionid'] : '';
         $params['data'] = $userInfo;
         // 绑定
         if ($this->oauth_entrance == 'bind') {

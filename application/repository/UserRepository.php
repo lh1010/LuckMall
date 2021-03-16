@@ -75,7 +75,7 @@ class UserRepository
         $data['nickname'] = isset($params['nickname']) && !empty($params['nickname']) ? $params['nickname'] : 'u'.time();;
         if (isset($params['email'])) $data['email'] = $params['email'];
         if (isset($params['phone'])) $data['phone'] = $params['phone'];
-        if (isset($params['avatar'])) $data['avatar'] = $params['avatar'];
+        if (isset($params['avatar'])) $data['avatar'] = str_replace(Config('app.app_url'), '', $params['avatar']);
         if (isset($params['sex'])) $data['sex'] = $params['sex'];
         if (isset($params['password'])) $data['password'] = $params['password'];
         if (isset($params['wx_openid'])) $data['wx_openid'] = $params['wx_openid'];

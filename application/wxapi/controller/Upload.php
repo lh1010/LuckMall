@@ -27,12 +27,11 @@ class Upload extends Base
         if ($file) {
             $info = $file->move('uploads/images/user/avatar/' . $user_id . '/');
             if ($info) {
-                $imageUrl = '/uploads/images/user/avatar/' . $user_id . '/' . $info->getSaveName();
-                $imageUrl = Config('app.app_host') . str_replace('\\','/', $imageUrl);
+                $imagePath = '/uploads/images/user/avatar/' . $user_id . '/' . $info->getSaveName();
+                $imageUrl = Config('app.app_url') . str_replace('\\','/', $imagePath);
                 return jsonSuccess($imageUrl);
             } else {
                 return jsonFailed('上传失败，图片尺寸不合适');
-                //return jsonFailed($file->getError());
             }
         }
     }

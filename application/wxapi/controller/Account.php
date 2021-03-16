@@ -38,7 +38,7 @@ class Account extends Base
 		$url = 'https://api.weixin.qq.com/sns/jscode2session?appid='.$appid.'&secret='.$secret.'&js_code='.$code.'&grant_type=authorization_code';
         $res = curl_get($url);
 		$res = json_decode($res, true);
-		$unionid = $res['unionid'];
+		$unionid = isset($res['unionid']) ? $res['unionid'] : '';
 		$openid = $res['openid'];
 		$sessionKey = $res['session_key'];
 		$code2seesion = base64_encode($unionid .'[luck]'. $openid .'[luck]'. $sessionKey);

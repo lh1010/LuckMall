@@ -44,64 +44,6 @@ class Upload extends Base
     }
 
     /**
-     * real name auth
-     * upload user card image
-     */
-    public function userCard(Request $request)
-    {
-        $file = $request->file('cardFile');
-        if ($file) {
-            $user = getUser();
-            $info = $file->validate($this->rules)->move('images/user/card/'.$user['id'].'/');
-            if ($info) {
-                $imageUrl = '/images/user/card/'.$user['id'].'/'.$info->getSaveName();
-                $imageUrl = str_replace('\\','/', $imageUrl);
-                return jsonSuccess($imageUrl);
-            } else {
-                return jsonFailed('仅支持 JPG、PNG、JPEG 格式，文件小于4MB');
-            }
-        }
-    }
-
-    /**
-     * shop apply auth info
-     */
-    public function shopApplyAuthInfo(Request $request)
-    {
-        $file = $request->file('file');
-        if ($file) {
-            $user = getUser();
-            $info = $file->validate($this->rules)->move('images/user/authInfo/'.$user['id'].'/');
-            if ($info) {
-                $imageUrl = '/images/user/authInfo/'.$user['id'].'/'.$info->getSaveName();
-                $imageUrl = str_replace('\\','/', $imageUrl);
-                return jsonSuccess($imageUrl);
-            } else {
-                return jsonFailed('仅支持 JPG、PNG、JPEG 格式，文件小于4MB');
-            }
-        }
-    }
-
-    /**
-     * upload comment image
-     */
-    public function comment(Request $request)
-    {
-        $file = $request->file('file');
-        if ($file) {
-            $user = getUser();
-            $info = $file->validate($this->rules)->move('images/comment/'.$user['id'].'/');
-            if ($info) {
-                $imageUrl = '/images/comment/'.$user['id'].'/'.$info->getSaveName();
-                $imageUrl = str_replace('\\','/', $imageUrl);
-                return jsonSuccess($imageUrl);
-            } else {
-                return jsonFailed('仅支持 JPG、PNG、JPEG 格式，文件小于4MB');
-            }
-        }
-    }
-
-    /**
      * crop image
      * @param string $imgPath
      * @param string crop image path

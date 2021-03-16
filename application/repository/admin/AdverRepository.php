@@ -91,6 +91,7 @@ class AdverRepository
             $query = Db::name('adver');
             $data = $this->setCreateUpdateData($params);
             $query->where('id', $id)->update($data);
+            Db::name('adver_value')->where('adver_id', $id)->delete();
             if (isset($params['images'])) {
                 $data = [];
                 foreach ($params['images'] as $key => $value) {
@@ -101,7 +102,6 @@ class AdverRepository
                     $data[$key]['link_ident'] = $params['link_idents'][$key];
                     $data[$key]['sort'] = is_numeric($params['sorts'][$key]) ? $params['sorts'][$key] : 0;
                 }
-                Db::name('adver_value')->where('adver_id', $id)->delete();
                 Db::name('adver_value')->insertAll($data);
             }
             Db::commit();

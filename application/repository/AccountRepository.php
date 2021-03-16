@@ -191,7 +191,7 @@ class AccountRepository
     }
 
     /**
-     * 第三方登录
+     * OAuth2
      * @param string $params['openid']
      * @param string $params['unionid']
      * @param string $params['type']
@@ -202,43 +202,43 @@ class AccountRepository
      */
     public function login_third($params, $login_device = 'web')
     {
+        $oauth = Config('oauth.' . $params['type']);
         $search_params = [];
         $search_params['type'] = $params['type'];
         $search_params['status'] = 1;
         $search_params['openid'] = $params['openid'];
-        if (isset($params['unionid'])) $search_params['unionid'] = $params['unionid'];
         $thirdAccount = app(UserRepository::class)->getThirdAccount($search_params);
-        $oauth = Config('oauth.' . $params['type']);
-        // 首次登录
+
         if (empty($thirdAccount)) {
-            Db::startTrans();
-            try {
+            $data = [];
+            if (isset($params['unionid']) && !empty($params['unionid'])) {
+                $search_params['unionid'] = $params['unionid']; unset($search_params['openid']);
+                $thirdAccount = app(UserRepository::class)->getThirdAccount($search_params);
+                $data['unionid'] = $params['unionid'];
+            }
+            if (empty($thirdAccount)) {
                 $user_data = $this->set_login_third_user_data($params['data'], $params['type'], $login_device, $is_upload_avatar = 1);
                 $res = app(UserRepository::class)->create($user_data);
                 $user_id = $res['data']['user_id'];
                 $nickname = $res['data']['nickname'];
-                $data = [];
-                $data['user_id'] = $user_id;
-                $data['type'] = $params['type'];
-                $data['openid'] = $params['openid'];
-                $data['nickname'] = $nickname;
-                $data['data'] = json_encode($params['data']);
-                $data['device'] = $login_device;
-                if (isset($params['unionid'])) $data['unionid'] = $params['unionid'];
-                Db::name('user_thirdlogin')->insert($data);
-                Db::commit();
-            } catch (Exception $e) {
-                Db::rollback();
-                return arrayFailed($oauth['appname'] . '登录失败');
-            }   
+            } else {
+                $user_id = $thirdAccount['user_id'];
+                $nickname = $thirdAccount['nickname'];
+            }
+            $data['user_id'] = $user_id;
+            $data['type'] = $params['type'];
+            $data['openid'] = $params['openid'];
+            $data['nickname'] = $nickname;
+            $data['data'] = json_encode($params['data']);
+            $data['device'] = $login_device;
+            Db::name('user_thirdlogin')->insert($data); 
         } else {
-            // 再次登录
             $user_data = $this->set_login_third_user_data($params['data'], $params['type']);
             Db::name('user_thirdlogin')->where('id', $thirdAccount['id'])->update(['nickname' => $user_data['nickname'], 'data' => json_encode($params['data'])]);
             $user_id = $thirdAccount['user_id'];
             $nickname = $thirdAccount['nickname'];
         }
-        
+
         $log = $this->loginSuccess(['user_id' => $user_id, 'nickname' => $nickname], $login_device);
         return arraySuccess($log['token']);
     }
@@ -263,6 +263,7 @@ class AccountRepository
         if ($type == 'weixin' && $device == 'wxapp') {
             $params['nickname'] = $data['nickName'];
             $params['phone'] = $data['phoneNumber'];
+            if (isset($data['gender'])) $params['sex'] = $data['gender'];
             if ($is_upload_avatar = 1 && isset($data['avatarUrl']) && !empty($data['avatarUrl'])) $params['avatar'] = '/' . download_image($data['avatarUrl'], 'uploads/images/user/avatar/weixin/');
         }
         // 微博网页端
