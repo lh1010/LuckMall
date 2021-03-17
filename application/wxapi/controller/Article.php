@@ -26,6 +26,12 @@ class Article extends Base
     public function getArticle(Request $request)
     {
         $article = Db::name('article')->where('id', $request->param('id'))->find();
+        if (!empty($article)) {
+            $preg = "/<img(.*?)src=\"(.*?)\"(.*?)>/is";
+            if (preg_match_all($preg, $article['content'], $matches)) {
+                $article['content'] = preg_replace($preg, '<img src="' . Config('app.app_url') . '$2" />', $article['content']);
+            }
+        }
         return jsonSuccess($article);
     }
 }
