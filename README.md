@@ -14,7 +14,7 @@ http://home.luckmall.lh1010.com
 
 管理后台：https://b2c.luckmall.lh1010.com/admin
 
-后台账号密码：admin/123123a
+后台账号密码：向客服获取演示密码
 
 微信小程序二维码：
 
