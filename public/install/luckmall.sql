@@ -76,12 +76,6 @@ CREATE TABLE IF NOT EXISTS `luck_adver_value` (
 -- ----------------------------
 -- 转存表中的数据 luck_adver_value
 -- ----------------------------
-INSERT INTO `luck_adver_value` VALUES ('26', '2', '/images/adver/电脑首页轮播/1[luck1600152307luck].jpg', '', '1', '0');
-INSERT INTO `luck_adver_value` VALUES ('27', '2', '/images/adver/电脑首页轮播/2[luck1600152310luck].jpg', '', '1', '0');
-INSERT INTO `luck_adver_value` VALUES ('32', '3', '/images/adver/adver_demo[luck1600151282luck].jpg', 'http://baidu.com', '2', '0');
-INSERT INTO `luck_adver_value` VALUES ('33', '3', '/images/adver/adver_demo[luck1600151282luck].jpg', 'http://lh1010.com', '1', '0');
-INSERT INTO `luck_adver_value` VALUES ('34', '3', '/images/adver/adver_demo[luck1600151282luck].jpg', '', '1', '0');
-INSERT INTO `luck_adver_value` VALUES ('35', '3', '/images/adver/adver_demo[luck1600151282luck].jpg', '', '1', '0');
 INSERT INTO `luck_adver_value` VALUES ('36', '5', '/images/adver/login_adver[luck1600675432luck].jpg', '', '1', '0');
 INSERT INTO `luck_adver_value` VALUES ('37', '6', '/images/adver/register_adver[luck1600675538luck].jpg', '', '1', '0');
 INSERT INTO `luck_adver_value` VALUES ('38', '4', '/images/adver/游戏手机[luck1600153363luck].jpg', '', '1', '0');
@@ -89,6 +83,12 @@ INSERT INTO `luck_adver_value` VALUES ('39', '1', '/images/adver/mobile banner/b
 INSERT INTO `luck_adver_value` VALUES ('40', '1', '/images/adver/mobile banner/banner2[luck1605506225luck].jpg', '', '1', '0');
 INSERT INTO `luck_adver_value` VALUES ('41', '1', '/images/adver/mobile banner/banner3[luck1605506227luck].jpg', '', '1', '0');
 INSERT INTO `luck_adver_value` VALUES ('49', '7', '/images/adver/logo_right_adver[luck1614670270luck].gif', '', '1', '0');
+INSERT INTO `luck_adver_value` VALUES ('50', '3', '/images/adver/adver_demo[luck1600151282luck].jpg', 'http://baidu.com', '2', '0');
+INSERT INTO `luck_adver_value` VALUES ('51', '3', '/images/adver/adver_demo[luck1600151282luck].jpg', '', '1', '0');
+INSERT INTO `luck_adver_value` VALUES ('52', '3', '/images/adver/adver_demo[luck1600151282luck].jpg', '', '1', '0');
+INSERT INTO `luck_adver_value` VALUES ('53', '3', '/images/adver/adver_demo[luck1600151282luck].jpg', '', '1', '0');
+INSERT INTO `luck_adver_value` VALUES ('54', '2', '/images/adver/电脑首页轮播/banner1[luck1616037467luck].jpg', '', '1', '0');
+INSERT INTO `luck_adver_value` VALUES ('55', '2', '/images/adver/电脑首页轮播/banenr2[luck1616037467luck].jpg', '', '1', '0');
 
 -- --------------------------------------------------------
 
