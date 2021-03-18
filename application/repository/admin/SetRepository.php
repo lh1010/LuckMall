@@ -42,6 +42,7 @@ class SetRepository
         if (isset($params['address']) && !empty($params['address'])) $array['address'] = $params['address'];
         if (isset($params['copyright']) && !empty($params['copyright'])) $array['copyright'] = $params['copyright'];
         if (isset($params['beian']) && !empty($params['beian'])) $array['beian'] = $params['beian'];
+        if (isset($params['statistical_code']) && !empty($params['statistical_code'])) $array['statistical_code'] = $params['statistical_code'];
         $data = '';
         $data = "<?php\n\n";
         $data .= 'return ';

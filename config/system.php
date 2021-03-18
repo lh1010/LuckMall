@@ -36,4 +36,7 @@ return [
     // 版权
     'copyright' => isset($res['copyright']) ? $res['copyright'] : 'Copyright **** 版权所有',
 
+    // 统计代码
+    'statistical_code' => isset($res['statistical_code']) ? $res['statistical_code'] : '',
+
 ];
